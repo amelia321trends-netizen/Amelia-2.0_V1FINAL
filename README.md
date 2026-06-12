@@ -16,7 +16,7 @@ Para explorar las visualizaciones interactivas de Chart.js y aplicar filtros din
 
 ### SODIMAC COLOMBIA S.A
 - **Pais:** Colombia | **Ciudades Cobertura:** Bogota, Medellin, Cali, Barranquilla
-- **Peso Estimado de Marca Propia:** 46.4% | **Indice de Trafico Digital:** 90/100
+- **Peso Estimado de Marca Propia:** 44.8% | **Indice de Trafico Digital:** 89/100
 
 #### Productos Mas Vendidos / Potenciados
 - Modulo Fregadero MDP-RH 100cm
@@ -56,7 +56,7 @@ Para explorar las visualizaciones interactivas de Chart.js y aplicar filtros din
 
 ### NOVAVENTA S.A.S
 - **Pais:** Colombia | **Ciudades Cobertura:** Medellin, Bogota, Bucaramanga, Cali
-- **Peso Estimado de Marca Propia:** 16.5% | **Indice de Trafico Digital:** 73/100
+- **Peso Estimado de Marca Propia:** 16.1% | **Indice de Trafico Digital:** 73/100
 
 #### Productos Mas Vendidos / Potenciados
 - Mueble Zapatero RTA 12 Pares
@@ -94,7 +94,7 @@ Para explorar las visualizaciones interactivas de Chart.js y aplicar filtros din
 
 ### INVERSIONES VIRTUAL MUEBLES S.A.S
 - **Pais:** Colombia | **Ciudades Cobertura:** Medellin, Bogota, Envigado
-- **Peso Estimado de Marca Propia:** 89.2% | **Indice de Trafico Digital:** 75/100
+- **Peso Estimado de Marca Propia:** 88.5% | **Indice de Trafico Digital:** 76/100
 
 #### Productos Mas Vendidos / Potenciados
 - Centro de TV Nordico Blanco-Roble
@@ -133,7 +133,7 @@ Para explorar las visualizaciones interactivas de Chart.js y aplicar filtros din
 
 ### TUHOME SPA
 - **Pais:** Chile | **Ciudades Cobertura:** Santiago, Concepcion, Valparaiso, Antofagasta
-- **Peso Estimado de Marca Propia:** 94.8% | **Indice de Trafico Digital:** 81/100
+- **Peso Estimado de Marca Propia:** 96.1% | **Indice de Trafico Digital:** 79/100
 
 #### Productos Mas Vendidos / Potenciados
 - Escritorio Home Office Z-60 Nogal
@@ -174,7 +174,7 @@ Para explorar las visualizaciones interactivas de Chart.js y aplicar filtros din
 
 ### FERRETERIA EPA
 - **Pais:** Venezuela | **Ciudades Cobertura:** Caracas, Valencia, Maracaibo, Barquisimeto
-- **Peso Estimado de Marca Propia:** 30.4% | **Indice de Trafico Digital:** 72/100
+- **Peso Estimado de Marca Propia:** 29.7% | **Indice de Trafico Digital:** 72/100
 
 #### Productos Mas Vendidos / Potenciados
 - Gabinete Auxiliar de Planchado MDP
@@ -215,7 +215,7 @@ Para explorar las visualizaciones interactivas de Chart.js y aplicar filtros din
 
 ### CENCOSUD COLOMBIA SA
 - **Pais:** Colombia | **Ciudades Cobertura:** Bogota, Medellin, Cali, Barranquilla
-- **Peso Estimado de Marca Propia:** 30% | **Indice de Trafico Digital:** 85/100
+- **Peso Estimado de Marca Propia:** 28.9% | **Indice de Trafico Digital:** 86/100
 
 #### Productos Mas Vendidos / Potenciados
 - Centro de TV Florencia Wengue
@@ -255,7 +255,7 @@ Para explorar las visualizaciones interactivas de Chart.js y aplicar filtros din
 
 ### MOBBLY S.A.S
 - **Pais:** Colombia | **Ciudades Cobertura:** Bogota, Medellin, Cali
-- **Peso Estimado de Marca Propia:** 79.7% | **Indice de Trafico Digital:** 63/100
+- **Peso Estimado de Marca Propia:** 80% | **Indice de Trafico Digital:** 64/100
 
 #### Productos Mas Vendidos / Potenciados
 - Escritorio Gamer Pro con Luces LED
@@ -294,7 +294,7 @@ Para explorar las visualizaciones interactivas de Chart.js y aplicar filtros din
 
 ### CORPORACION FAVORITA C.A.
 - **Pais:** Ecuador | **Ciudades Cobertura:** Quito, Guayaquil, Cuenca, Manta
-- **Peso Estimado de Marca Propia:** 21.3% | **Indice de Trafico Digital:** 84/100
+- **Peso Estimado de Marca Propia:** 20.8% | **Indice de Trafico Digital:** 83/100
 
 #### Productos Mas Vendidos / Potenciados
 - Aparador Buffet Nordico 150cm
@@ -333,7 +333,7 @@ Para explorar las visualizaciones interactivas de Chart.js y aplicar filtros din
 
 ### ALMACENES EXITO S.A.
 - **Pais:** Colombia | **Ciudades Cobertura:** Medellin, Bogota, Cali, Barranquilla
-- **Peso Estimado de Marca Propia:** 23.6% | **Indice de Trafico Digital:** 91/100
+- **Peso Estimado de Marca Propia:** 23.8% | **Indice de Trafico Digital:** 92/100
 
 #### Productos Mas Vendidos / Potenciados
 - Closet RTA 3 Puertas Finlandek
@@ -373,7 +373,7 @@ Para explorar las visualizaciones interactivas de Chart.js y aplicar filtros din
 
 ### GEO F. NOVEY S.A.
 - **Pais:** Panama | **Ciudades Cobertura:** Ciudad de Panama, David, Chitre, Colon
-- **Peso Estimado de Marca Propia:** 36.3% | **Indice de Trafico Digital:** 74/100
+- **Peso Estimado de Marca Propia:** 36.3% | **Indice de Trafico Digital:** 75/100
 
 #### Productos Mas Vendidos / Potenciados
 - Modulo Fregadero RH Novey 120cm
@@ -412,7 +412,7 @@ Para explorar las visualizaciones interactivas de Chart.js y aplicar filtros din
 
 ### GRUPO CORONA Y ALIADOS
 - **Pais:** Colombia | **Ciudades Cobertura:** Bogota, Medellin, Barranquilla, Cartagena
-- **Peso Estimado de Marca Propia:** 33.8% | **Indice de Trafico Digital:** 82/100
+- **Peso Estimado de Marca Propia:** 34.1% | **Indice de Trafico Digital:** 85/100
 
 #### Productos Mas Vendidos / Potenciados
 - Gabinete de Bano suspendido 60cm RH
