@@ -1354,6 +1354,7 @@
         <button class="tab-button" onclick="switchTab('tab-crm')">Suite CRM</button>
         <button class="tab-button" onclick="switchTab('tab-strategy')">Estrategia B2B</button>
         <button class="tab-button" onclick="switchTab('tab-history')">Historial & Comparativa</button>
+        <button class="tab-button" onclick="switchTab('tab-expansion')">Decisiones & Expansión</button>
     </div>
 
     <!-- PESTAÑA 1: CONSOLIDADO GENERAL -->
@@ -2180,6 +2181,125 @@
 
 </div>
 
+    <!-- PESTAÑA 8: EXPANSIÓN Y NUEVOS MERCADOS B2B -->
+    <div id="tab-expansion" class="tab-content">
+        <!-- HEADER CARD -->
+        <div class="crm-header-card" style="background: linear-gradient(135deg, #fff5f5, #fed7d7); border-color: rgba(239, 68, 68, 0.15); margin-bottom: 24px;">
+            <h2 style="color: #c53030;">Decisiones a Futuro & Expansión de Canales B2B</h2>
+            <p>Estrategia de penetración en canales de descuento masivo (Hard Discount) y análisis de tendencias del nuevo consumidor de bajo costo.</p>
+        </div>
+
+        <!-- SECCIÓN 1: NUEVOS CANALES HARD DISCOUNT -->
+        <div class="chart-box" style="margin-bottom: 24px;">
+            <div class="chart-title" style="border-left-color: #e53e3e;">🛒 Futuros Canales: Supermercados Low-Cost (D1 & Ara)</div>
+            <p class="desc-text" style="margin-bottom: 20px;">
+                El consumidor actual busca máxima economía y conveniencia. Los canales "Hard Discount" (D1, Tiendas Ara) y "Dollar Stores" (Dolarcity) representan una oportunidad de alto volumen y alta rotación de inventarios para muebles RTA de auto-compra.
+            </p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+                <!-- D1 -->
+                <div style="background-color: #fff; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 18px; display: flex; flex-direction: column; gap: 8px;">
+                    <div style="font-weight: 700; color: #c53030; font-size: 15px; display:flex; align-items:center; gap:6px;">
+                        <span style="background:#e53e3e; color:white; padding:2px 8px; border-radius:4px; font-size:11px;">D1</span> Muebles Utilitarios de Cocina
+                    </div>
+                    <p style="font-size: 12.5px; color: var(--text-secondary); line-height: 1.45;">
+                        <strong>Propuesta de Producto:</strong> Carritos organizadores de cocina con ruedas y alacenas auxiliares de una sola puerta.<br>
+                        <strong>Modelo de Negocio:</strong> Venta estacional en el "Extraordinario D1" (in-and-out). Precios de venta al público inferiores a $120.000 COP.<br>
+                        <strong>Logística:</strong> Cajas planas ultra-compactas de melamina de 12mm que el consumidor puede llevarse cargando a pie.
+                    </p>
+                </div>
+
+                <!-- ARA -->
+                <div style="background-color: #fff; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 18px; display: flex; flex-direction: column; gap: 8px;">
+                    <div style="font-weight: 700; color: #c53030; font-size: 15px; display:flex; align-items:center; gap:6px;">
+                        <span style="background:#dd6b20; color:white; padding:2px 8px; border-radius:4px; font-size:11px;">ARA</span> Organizadores del Hogar
+                    </div>
+                    <p style="font-size: 12.5px; color: var(--text-secondary); line-height: 1.45;">
+                        <strong>Propuesta de Producto:</strong> Estanterías zapateras básicas, cajoneras modulares plásticas/melamina y percheros RTA.<br>
+                        <strong>Modelo de Negocio:</strong> Exhibición temporal en góndolas centrales de ofertas quincenales, enfocada en la organización práctica de micro-apartamentos.<br>
+                        <strong>Logística:</strong> Melamina estándar de rápido ensamble Click sin herrajes complejos de tornillos.
+                    </p>
+                </div>
+
+                <!-- DOLARCITY -->
+                <div style="background-color: #fff; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 18px; display: flex; flex-direction: column; gap: 8px;">
+                    <div style="font-weight: 700; color: #c53030; font-size: 15px; display:flex; align-items:center; gap:6px;">
+                        <span style="background:#38a169; color:white; padding:2px 8px; border-radius:4px; font-size:11px;">DC</span> Accesorios & Repuestos RTA
+                    </div>
+                    <p style="font-size: 12.5px; color: var(--text-secondary); line-height: 1.45;">
+                        <strong>Propuesta de Producto:</strong> Mini-organizadores de escritorio, percheros infantiles, repuestos de herrajes (Minifix, taquetes de madera, tapas plásticas) y manuales físicos de rediseño de muebles DIY.<br>
+                        <strong>Modelo de Negocio:</strong> Inventario permanente en el pasillo de ferretería ligera y organización de espacios.<br>
+                        <strong>Logística:</strong> Blísters sellados y cajas exhibidoras de alta rotación (PUP).
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 2: TENDENCIAS DEL CONSUMIDOR DIGITAL LOW-COST -->
+        <div class="chart-box" style="margin-bottom: 24px;">
+            <div class="chart-title" style="border-left-color: #e53e3e;">📈 Tendencias del Consumidor Low-Cost B2B</div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+                <div style="background-color: #f8fafc; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 18px;">
+                    <h4 style="font-size: 14px; font-weight: 700; color: #c53030; margin-bottom: 8px;">👤 1. El Comprador "Smart Shopper"</h4>
+                    <p style="font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; margin: 0;">
+                        Busca soluciones para espacios temporales (vivienda de alquiler o cuartos estudiantiles). Exige que el mueble sea <strong>barato</strong>, pero no sacrifica la apariencia. Demanda colores limpios (blanco, gris) y ensamble intuitivo sin herramientas profesionales.
+                    </p>
+                </div>
+                <div style="background-color: #f8fafc; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 18px;">
+                    <h4 style="font-size: 14px; font-weight: 700; color: #c53030; margin-bottom: 8px;">📦 2. Logística Autogestionada</h4>
+                    <p style="font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; margin: 0;">
+                        Los costos de despacho tradicionales representan un 15-20% del valor de un mueble económico. La tendencia es la auto-compra y transporte directo: cajas con asas que quepan en la cajuela de un taxi o que el usuario pueda llevarse cargando en transporte público.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ACCIONES A FUTURO Y ESTRATEGIA GEOGRÁFICA -->
+        <div class="chart-box" style="margin-bottom: 24px;">
+            <div class="chart-title" style="border-left-color: #e53e3e;">🗺️ Estrategia y Acciones de Expansión Geográfica</div>
+            <p class="desc-text" style="margin-bottom: 16px;">
+                Las grandes capitales ya están saturadas. La estrategia de expansión RTA debe apuntar a la penetración de ciudades intermedias en auge comercial e inmobiliario (VIS - Vivienda de Interés Social):
+            </p>
+            <div style="overflow-x:auto;">
+                <table class="crm-table" style="width:100%; border-collapse:collapse; min-width: 600px;">
+                    <thead>
+                        <tr style="background:#f8fafc; border-bottom:2px solid var(--border);">
+                            <th style="text-align:left; padding:12px; font-size:12px;">Ciudad / Región</th>
+                            <th style="padding:12px; font-size:12px;">Población Target</th>
+                            <th style="padding:12px; font-size:12px;">Acción de Expansión</th>
+                            <th style="padding:12px; font-size:12px;">Categoría Clave</th>
+                            <th style="padding:12px; font-size:12px;">Prioridad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom:1px solid var(--border);">
+                            <td style="padding:12px; font-weight:700; font-size:12.5px; text-align:left;">Bucaramanga & Envigado (Colombia)</td>
+                            <td style="padding:12px; font-size:12px;">Clase media joven y estudiantes universitarios</td>
+                            <td style="padding:12px; font-size:12px; text-align:left;">Alianza de distribución B2B con puntos locales express de Sodimac y Éxito.</td>
+                            <td style="padding:12px; font-size:12px;">Home Office / Gamer</td>
+                            <td style="padding:12px;"><span style="background:#fee2e2; color:#ef4444; font-size:11px; padding:2px 8px; border-radius:12px; font-weight:700;">Alta</span></td>
+                        </tr>
+                        <tr style="border-bottom:1px solid var(--border);">
+                            <td style="padding:12px; font-weight:700; font-size:12.5px; text-align:left;">David & Chitré (Panamá)</td>
+                            <td style="padding:12px; font-size:12px;">Propietarios de viviendas de interés social y alquiler</td>
+                            <td style="padding:12px; font-size:12px; text-align:left;">Distribución mediante locales de Novey con foco en cocinas de melamina RH.</td>
+                            <td style="padding:12px; font-size:12px;">Cocinas Modulares RH</td>
+                            <td style="padding:12px;"><span style="background:#fee2e2; color:#ef4444; font-size:11px; padding:2px 8px; border-radius:12px; font-weight:700;">Alta</span></td>
+                        </tr>
+                        <tr style="border-bottom:1px solid var(--border);">
+                            <td style="padding:12px; font-weight:700; font-size:12.5px; text-align:left;">Manta & Cuenca (Ecuador)</td>
+                            <td style="padding:12px; font-size:12px;">Hogares en remodelación y condominios costeros</td>
+                            <td style="padding:12px; font-size:12px; text-align:left;">Surtir centros de TV y Buffets modernos mediante la red de Favorita/Sukasa.</td>
+                            <td style="padding:12px; font-size:12px;">Sala / Comedor</td>
+                            <td style="padding:12px;"><span style="background:#fef3c7; color:#d97706; font-size:11px; padding:2px 8px; border-radius:12px; font-weight:700;">Media</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
 <!-- DATA CONTAINER (INJECTED BY PYTHON/POWERSHELL SCRIPT) -->
 <script id="market-data" type="application/json">
 {
@@ -2189,11 +2309,11 @@
     "dominant_trend": "Benefit-Driven (RH & Ensamble)",
     "total_whitespaces": 8,
     "trends": [
-      {"name": "Cocinas Modulares", "x": 73, "y": 86, "phase": "Madurez"},
-      {"name": "Home Office", "x": 43, "y": 61, "phase": "Crecimiento"},
-      {"name": "Centros de TV", "x": 61, "y": 71, "phase": "Crecimiento"},
-      {"name": "Dormitorio RTA", "x": 79, "y": 47, "phase": "Madurez"},
-      {"name": "Banos RH", "x": 34, "y": 40, "phase": "Introduccion"}
+      {"name": "Cocinas Modulares", "x": 75, "y": 85, "phase": "Madurez"},
+      {"name": "Home Office", "x": 48, "y": 61, "phase": "Crecimiento"},
+      {"name": "Centros de TV", "x": 59, "y": 70, "phase": "Crecimiento"},
+      {"name": "Dormitorio RTA", "x": 79, "y": 50, "phase": "Madurez"},
+      {"name": "Banos RH", "x": 38, "y": 42, "phase": "Introduccion"}
     ],
     "clients": [
       {
@@ -2205,9 +2325,9 @@
         "menu_hierarchy": [ "Muebles de Cocina - Modulares", "Muebles de TV y Centros de Entretenimiento", "Estanterias y Closets RTA", "Muebles de Bano RH Resistentes a Humedad" ],
         "cdt_focus": "Benefit/Price-Driven (Atributos Tecnicos & Funcionalidad)",
         "cdt_tree": [ "1. Dimensiones y espacio disponible (Filtro numerico)", "2. Resistencia del material (Aglomerado estandar vs Tablero RH)", "3. Relacion precio-capacidad de almacenado" ],
-        "own_brand_weight": 45.7,
-        "traffic_score": 95,
-        "crm_lead_score": 34,
+        "own_brand_weight": 44.4,
+        "traffic_score": 89,
+        "crm_lead_score": 32,
         "crm_suggested_pitch": "Presentar optimizacion de espesores MDP estandar para alto volumen",
         "crm_next_action": "Presentar propuesta de cotizacion preferencial en tableros de melamina estandar con espesores optimizados para grandes distribuidores que buscan liderar en precio.",
         "coastal_churn_risk": false,
@@ -2229,9 +2349,9 @@
         "menu_hierarchy": [ "Muebles Practicos del CatÃ¡logo Novaventa", "Organizadores de Cocina Practicos" ],
         "cdt_focus": "Benefit/Price-Driven (Atributos Tecnicos & Funcionalidad)",
         "cdt_tree": [ "1. Dimensiones y espacio disponible (Filtro numerico)", "2. Resistencia del material (Aglomerado estandar vs Tablero RH)", "3. Relacion precio-capacidad de almacenado" ],
-        "own_brand_weight": 15.7,
-        "traffic_score": 76,
-        "crm_lead_score": 85,
+        "own_brand_weight": 15.8,
+        "traffic_score": 77,
+        "crm_lead_score": 86,
         "crm_suggested_pitch": "Ofrecer portafolio MDP-RH y Melamina Anti-humedad para Cocina/Bano",
         "crm_next_action": "Programar visita presencial con el equipo tecnico para certificar la resistencia a la humedad del portafolio MDP-RH y proponer el reemplazo de modulos de aglomerado estandar en zonas costeras.",
         "coastal_churn_risk": false,
@@ -2253,7 +2373,7 @@
         "menu_hierarchy": [ "Salas y Centros de TV Design", "Escritorios Flexibles Modernos", "Zapateros y Armarios Multifuncion" ],
         "cdt_focus": "Design-Driven (Estetica, Acabados & Estilo de Vida)",
         "cdt_tree": [ "1. Combinacion de colores y estilo estetico (Nordico, Wengue, Industrial)", "2. Tipo de ensamble visual (Flotante, de patas de madera)", "3. Calificaciones de diseno y reviews en web" ],
-        "own_brand_weight": 89.5,
+        "own_brand_weight": 89.4,
         "traffic_score": 80,
         "crm_lead_score": 5,
         "crm_suggested_pitch": "Presentar nuevos acabados esteticos de tendencia (Nordico, Wengue y Gamer)",
@@ -2277,8 +2397,8 @@
         "menu_hierarchy": [ "Coleccion Cocina y Despensa Modulares", "Centros de Entretenimiento Modernos", "Linea Oficina y Escritorios RTA", "Muebles Auxiliares de Bano", "Novedades Diseno Industrial RTA" ],
         "cdt_focus": "Benefit/Price-Driven (Atributos Tecnicos & Funcionalidad)",
         "cdt_tree": [ "1. Dimensiones y espacio disponible (Filtro numerico)", "2. Resistencia del material (Aglomerado estandar vs Tablero RH)", "3. Relacion precio-capacidad de almacenado" ],
-        "own_brand_weight": 93.6,
-        "traffic_score": 79,
+        "own_brand_weight": 93.5,
+        "traffic_score": 78,
         "crm_lead_score": 3,
         "crm_suggested_pitch": "Presentar optimizacion de espesores MDP estandar para alto volumen",
         "crm_next_action": "Presentar propuesta de cotizacion preferencial en tableros de melamina estandar con espesores optimizados para grandes distribuidores que buscan liderar en precio.",
@@ -2301,9 +2421,9 @@
         "menu_hierarchy": [ "Muebles Modulares para Cocina", "Escritorios RTA Practicos", "Linea de Organizadores Economicos", "Muebles de Bano Basicos" ],
         "cdt_focus": "Benefit/Price-Driven (Atributos Tecnicos & Funcionalidad)",
         "cdt_tree": [ "1. Dimensiones y espacio disponible (Filtro numerico)", "2. Resistencia del material (Aglomerado estandar vs Tablero RH)", "3. Relacion precio-capacidad de almacenado" ],
-        "own_brand_weight": 31,
-        "traffic_score": 69,
-        "crm_lead_score": 95,
+        "own_brand_weight": 30.5,
+        "traffic_score": 71,
+        "crm_lead_score": 98,
         "crm_suggested_pitch": "Ofrecer portafolio MDP-RH y Melamina Anti-humedad para Cocina/Bano",
         "crm_next_action": "Programar visita presencial con el equipo tecnico para certificar la resistencia a la humedad del portafolio MDP-RH y proponer el reemplazo de modulos de aglomerado estandar en zonas costeras.",
         "coastal_churn_risk": false,
@@ -2325,8 +2445,8 @@
         "menu_hierarchy": [ "Centros de TV y Entretenimiento Easy", "Escritorios y Sillas de Oficina", "Muebles de Cocina y Comedor RTA" ],
         "cdt_focus": "Design-Driven (Estetica, Acabados & Estilo de Vida)",
         "cdt_tree": [ "1. Combinacion de colores y estilo estetico (Nordico, Wengue, Industrial)", "2. Tipo de ensamble visual (Flotante, de patas de madera)", "3. Calificaciones de diseno y reviews en web" ],
-        "own_brand_weight": 29.4,
-        "traffic_score": 88,
+        "own_brand_weight": 30.4,
+        "traffic_score": 90,
         "crm_lead_score": 100,
         "crm_suggested_pitch": "Ofrecer portafolio MDP-RH y Melamina Anti-humedad para Cocina/Bano",
         "crm_next_action": "Programar visita presencial con el equipo tecnico para certificar la resistencia a la humedad del portafolio MDP-RH y proponer el reemplazo de modulos de aglomerado estandar en zonas costeras.",
@@ -2349,8 +2469,8 @@
         "menu_hierarchy": [ "Escritorios Gamer y Home Office RTA", "Estanterias Modulares Libres de Ruido", "Mesas de TV y Centros de Diseno" ],
         "cdt_focus": "Design-Driven (Estetica, Acabados & Estilo de Vida)",
         "cdt_tree": [ "1. Combinacion de colores y estilo estetico (Nordico, Wengue, Industrial)", "2. Tipo de ensamble visual (Flotante, de patas de madera)", "3. Calificaciones de diseno y reviews en web" ],
-        "own_brand_weight": 80.7,
-        "traffic_score": 68,
+        "own_brand_weight": 80.1,
+        "traffic_score": 66,
         "crm_lead_score": 8,
         "crm_suggested_pitch": "Presentar nuevos acabados esteticos de tendencia (Nordico, Wengue y Gamer)",
         "crm_next_action": "Coordinar sesion de co-creacion de diseno con su equipo de compras para presentar la nueva paleta de colores de tendencia (Rovere, Nordico, Wengue y Gamer) y planificar la renovacion del catalogo.",
@@ -2373,9 +2493,9 @@
         "menu_hierarchy": [ "Muebles RTA de Diseno Exclusivo Sukasa", "Aparadores y Centros de TV Modernos", "Muebles Organizadores de Lujo" ],
         "cdt_focus": "Design-Driven (Estetica, Acabados & Estilo de Vida)",
         "cdt_tree": [ "1. Combinacion de colores y estilo estetico (Nordico, Wengue, Industrial)", "2. Tipo de ensamble visual (Flotante, de patas de madera)", "3. Calificaciones de diseno y reviews en web" ],
-        "own_brand_weight": 20.8,
+        "own_brand_weight": 19.9,
         "traffic_score": 81,
-        "crm_lead_score": 42,
+        "crm_lead_score": 43,
         "crm_suggested_pitch": "Presentar nuevos acabados esteticos de tendencia (Nordico, Wengue y Gamer)",
         "crm_next_action": "Coordinar sesion de co-creacion de diseno con su equipo de compras para presentar la nueva paleta de colores de tendencia (Rovere, Nordico, Wengue y Gamer) y planificar la renovacion del catalogo.",
         "coastal_churn_risk": false,
@@ -2397,7 +2517,7 @@
         "menu_hierarchy": [ "Muebles de Dormitorio y Closets RTA", "Escritorios Finlandia Finlandek", "Muebles Auxiliares de Cocina y Bano" ],
         "cdt_focus": "Benefit/Price-Driven (Atributos Tecnicos & Funcionalidad)",
         "cdt_tree": [ "1. Dimensiones y espacio disponible (Filtro numerico)", "2. Resistencia del material (Aglomerado estandar vs Tablero RH)", "3. Relacion precio-capacidad de almacenado" ],
-        "own_brand_weight": 24.9,
+        "own_brand_weight": 25.8,
         "traffic_score": 91,
         "crm_lead_score": 100,
         "crm_suggested_pitch": "Ofrecer portafolio MDP-RH y Melamina Anti-humedad para Cocina/Bano",
@@ -2421,9 +2541,9 @@
         "menu_hierarchy": [ "Muebles de Cocina Modular Novey", "Muebles de Bano RH Hidrofugos", "Escritorios RTA de Alta Resistencia" ],
         "cdt_focus": "Benefit/Price-Driven (Atributos Tecnicos & Funcionalidad)",
         "cdt_tree": [ "1. Dimensiones y espacio disponible (Filtro numerico)", "2. Resistencia del material (Aglomerado estandar vs Tablero RH)", "3. Relacion precio-capacidad de almacenado" ],
-        "own_brand_weight": 35.6,
-        "traffic_score": 73,
-        "crm_lead_score": 31,
+        "own_brand_weight": 36.4,
+        "traffic_score": 71,
+        "crm_lead_score": 30,
         "crm_suggested_pitch": "Presentar optimizacion de espesores MDP estandar para alto volumen",
         "crm_next_action": "Presentar propuesta de cotizacion preferencial en tableros de melamina estandar con espesores optimizados para grandes distribuidores que buscan liderar en precio.",
         "coastal_churn_risk": false,
@@ -2445,9 +2565,9 @@
         "menu_hierarchy": [ "Muebles de Bano Certificados RH", "Cocinas Modulares con Meson", "Organizadores y Alacenas", "Garantia Corona en Muebles", "Muebles de Lavanderia Funcionales" ],
         "cdt_focus": "Benefit/Price-Driven (Atributos Tecnicos & Funcionalidad)",
         "cdt_tree": [ "1. Dimensiones y espacio disponible (Filtro numerico)", "2. Resistencia del material (Aglomerado estandar vs Tablero RH)", "3. Relacion precio-capacidad de almacenado" ],
-        "own_brand_weight": 34.9,
-        "traffic_score": 88,
-        "crm_lead_score": 76,
+        "own_brand_weight": 35.2,
+        "traffic_score": 87,
+        "crm_lead_score": 75,
         "crm_suggested_pitch": "Promocionar sistemas Click de Ensamble Rapido sin tornillos",
         "crm_next_action": "Enviar muestras fisicas de los tableros con herraje Click de ensamble rapido y agendar una demo virtual de 15 minutos para demostrar el ahorro de tiempo al comprador digital joven.",
         "coastal_churn_risk": false,
@@ -4861,6 +4981,7 @@
 </script>
 </body>
 </html>
+
 
 
 
