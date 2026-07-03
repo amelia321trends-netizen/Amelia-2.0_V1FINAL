@@ -534,39 +534,7 @@ def generate_readme_report(data):
 
 # --- PARTE 3: EJECUCIÓN PRINCIPAL ---
 
-def main():
-    print("Iniciando actualización semanal de Inteligencia RTA...")
-    today_str = datetime.utcnow().strftime("%Y-%m-%d")
-    
-    # Cargar historial existente si existe
-    history = {}
-    if os.path.exists("data.json"):
-        try:
-            with open("data.json", "r", encoding="utf-8") as f:
-                old_data = json.load(f)
-                if "history" in old_data:
-                    history = old_data["history"]
-                    
-                    # Reparar crm_next_action en el historial cargado
-                    for week_date, week_data in history.items():
-                        if "clients" in week_data:
-                            for c in week_data["clients"]:
-                                if "crm_next_action" not in c or not c["crm_next_action"]:
-                                    white_spaces = c.get("white_spaces", [])
-                                    cdt_focus = c.get("cdt_focus", "")
-                                    has_rh_gap = any("hidrófugo" in ws.lower() or "rh" in ws.lower() for ws in white_spaces)
-                                    has_assembly_gap = any("ensamble rápido" in ws.lower() or "click" in ws.lower() for ws in white_spaces)
-                                    if has_rh_gap:
-                                        c["crm_next_action"] = "Programar visita presencial con el equipo técnico para certificar la resistencia a la humedad del portafolio MDP-RH y proponer el reemplazo de módulos de aglomerado estándar en zonas costeras."
-                                    elif has_assembly_gap:
-                                        c["crm_next_action"] = "Enviar muestras físicas de los tableros con herraje Click de ensamble rápido y agendar una demo virtual de 15 minutos para demostrar el ahorro de tiempo al comprador digital joven."
-                                    elif "Benefit" in cdt_focus:
-                                        c["crm_next_action"] = "Presentar propuesta de cotización preferencial en tableros de melamina estándar con espesores optimizados para grandes distribuidores que buscan liderar en precio."
-                                    else:
-                                        c["crm_next_action"] = "Coordinar sesión de co-creación de diseño con su equipo de compras para presentar la nueva paleta de colores de tendencia (Rovere, Nórdico, Wengue y Gamer) y planificar la renovación del catálogo."
-        except Exception as e:
-            print("No se pudo cargar el historial anterior, se creará uno nuevo:", e)
-
+def generate_week_data(date_str):
     processed_clients = []
     total_whitespaces = 0
     
@@ -645,16 +613,78 @@ def main():
         {"name": "Baños RH", "x": max(10, min(100, 35 + random.randint(-4, 4))), "y": max(10, min(100, 42 + random.randint(-2, 4))), "phase": "Introducción"}
     ]
     
-    # Guardar semana actual en historial
-    history[today_str] = {
+    return {
         "dominant_trend": dominant_trend,
         "total_whitespaces": total_whitespaces,
         "trends": trends,
         "clients": processed_clients
     }
+
+
+def main():
+    print("Iniciando actualización semanal de Inteligencia RTA...")
+    today_str = datetime.utcnow().strftime("%Y-%m-%d")
+    
+    # Cargar historial existente si existe
+    history = {}
+    if os.path.exists("data.json"):
+        try:
+            with open("data.json", "r", encoding="utf-8") as f:
+                old_data = json.load(f)
+                if "history" in old_data:
+                    history = old_data["history"]
+                    
+                    # Reparar crm_next_action en el historial cargado
+                    for week_date, week_data in history.items():
+                        if "clients" in week_data:
+                            for c in week_data["clients"]:
+                                if "crm_next_action" not in c or not c["crm_next_action"]:
+                                    white_spaces = c.get("white_spaces", [])
+                                    cdt_focus = c.get("cdt_focus", "")
+                                    has_rh_gap = any("hidrófugo" in ws.lower() or "rh" in ws.lower() for ws in white_spaces)
+                                    has_assembly_gap = any("ensamble rápido" in ws.lower() or "click" in ws.lower() for ws in white_spaces)
+                                    if has_rh_gap:
+                                        c["crm_next_action"] = "Programar visita presencial con el equipo técnico para certificar la resistencia a la humedad del portafolio MDP-RH y proponer el reemplazo de módulos de aglomerado estándar en zonas costeras."
+                                    elif has_assembly_gap:
+                                        c["crm_next_action"] = "Enviar muestras físicas de los tableros con herraje Click de ensamble rápido y agendar una demo virtual de 15 minutos para demostrar el ahorro de tiempo al comprador digital joven."
+                                    elif "Benefit" in cdt_focus:
+                                        c["crm_next_action"] = "Presentar propuesta de cotización preferencial en tableros de melamina estándar con espesores optimizados para grandes distribuidores que buscan liderar en precio."
+                                    else:
+                                        c["crm_next_action"] = "Coordinar sesión de co-creación de diseño con su equipo de compras para presentar la nueva paleta de colores de tendencia (Rovere, Nórdico, Wengue y Gamer) y planificar la renovación del catálogo."
+        except Exception as e:
+            print("No se pudo cargar el historial anterior, se creará uno nuevo:", e)
+
+    # Determinar si hay huecos semanales a rellenar
+    from datetime import datetime, timedelta
+    if history:
+        sorted_dates = sorted(history.keys())
+        last_date_str = sorted_dates[-1]
+        try:
+            last_date = datetime.strptime(last_date_str, "%Y-%m-%d")
+            today = datetime.strptime(today_str, "%Y-%m-%d")
+            
+            # Loop agregando semanas (de 7 en 7 días) hasta hoy
+            current_date = last_date + timedelta(days=7)
+            while current_date <= today:
+                current_date_str = current_date.strftime("%Y-%m-%d")
+                if current_date_str not in history:
+                    print(f"Rellenando semana faltante en historial: {current_date_str}")
+                    history[current_date_str] = generate_week_data(current_date_str)
+                current_date += timedelta(days=7)
+        except Exception as ex:
+            print(f"Error al calcular fechas faltantes: {ex}")
+            
+    # Asegurar que la fecha de hoy esté generada
+    if today_str not in history:
+        print(f"Generando datos para la semana actual: {today_str}")
+        history[today_str] = generate_week_data(today_str)
     
     # Pre-cargar semanas históricas reales si el historial está vacío o solo contiene el día de hoy
     if len(history) <= 1:
+        # Generar lote base temporal de clientes procesados para derivar los históricos
+        base_week = generate_week_data(today_str)
+        processed_clients = base_week["clients"]
+        
         # 1. Post-Cyber & Coastal Rain Week (2026-06-04)
         c_06_04 = []
         tot_ws_06_04 = 0

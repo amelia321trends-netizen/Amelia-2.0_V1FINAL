@@ -422,132 +422,141 @@ function Analyze-CDTAndJTBD {
     }
 }
 
-# --- EJECUCION ---
+function New-WeekData {
+    $processedClients = @()
+    $totalWhitespaces = 0
+    $rand = New-Object System.Random
 
-$todayStr = (Get-Date).ToString("yyyy-MM-dd")
-$processedClients = @()
-$totalWhitespaces = 0
-$rand = New-Object System.Random
-
-foreach ($entry in $ClientsData.GetEnumerator()) {
-    $clientName = $entry.Key
-    $info = $entry.Value
-    
-    $traffic = $info.base_traffic + $rand.Next(-3, 4)
-    if ($traffic -lt 10) { $traffic = 10 }
-    if ($traffic -gt 100) { $traffic = 100 }
-    
-    $brandWeight = [Math]::Round($info.own_brand + ($rand.NextDouble() * 3.0 - 1.5), 1)
-    $cleanedCats = Clean-AdvertisingNoise $info.raw_menu_categories
-    
-    $analysisResult = Analyze-CDTAndJTBD -cleanedCategories $cleanedCats -products $info.products
-    $cdtFocus = $analysisResult.cdtFocus
-    
-    # Asegurar que whiteSpaces siempre sea un ArrayList para evitar errores de tipo al agregar elementos mas tarde
-    $whiteSpaces = [System.Collections.ArrayList]::new()
-    if ($analysisResult.whiteSpaces -is [System.Collections.IList] -or $analysisResult.whiteSpaces -is [System.Array]) {
-        foreach ($item in $analysisResult.whiteSpaces) { $whiteSpaces.Add($item) | Out-Null }
-    } elseif ($analysisResult.whiteSpaces -ne $null -and $analysisResult.whiteSpaces -ne "") {
-        $whiteSpaces.Add($analysisResult.whiteSpaces) | Out-Null
-    }
-    
-    $totalWhitespaces += $whiteSpaces.Count
-    
-    if ($cdtFocus -like "*Benefit*") {
-        $cdtTree = @(
-            "1. Dimensiones y espacio disponible (Filtro numerico)",
-            "2. Resistencia del material (Aglomerado estandar vs Tablero RH)",
-            "3. Relacion precio-capacidad de almacenado"
-        )
-    } else {
-        $cdtTree = @(
-            "1. Combinacion de colores y estilo estetico (Nordico, Wengue, Industrial)",
-            "2. Tipo de ensamble visual (Flotante, de patas de madera)",
-            "3. Calificaciones de diseno y reviews en web"
-        )
-    }
-    
-    # CRM KPIs calculations
-    $whitespacesCount = $whiteSpaces.Count
-    $leadScore = [int]([Math]::Floor(($traffic * (100 - $brandWeight) * ($whitespacesCount + 1)) / 150))
-    if ($leadScore -lt 0) { $leadScore = 0 }
-    if ($leadScore -gt 100) { $leadScore = 100 }
-    
-    $suggestedPitch = "Ofrecer optimizacion de costos en tableros de MDP estandar de alto trafico"
-    $hasRhGap = $false
-    $hasAssemblyGap = $false
-    foreach ($ws in $whiteSpaces) {
-        if ($ws.ToLower() -like "*hidrofugo*" -or $ws.ToLower() -like "*rh*") { $hasRhGap = $true }
-        if ($ws.ToLower() -like "*ensamble rapido*" -or $ws.ToLower() -like "*click*") { $hasAssemblyGap = $true }
-    }
-    
-    $nextAction = "Coordinar sesion de co-creacion de diseno con su equipo de compras para presentar la nueva paleta de colores de tendencia (Rovere, Nordico, Wengue y Gamer) y planificar la renovacion del catalogo."
-    if ($hasRhGap) {
-        $suggestedPitch = "Ofrecer portafolio MDP-RH y Melamina Anti-humedad para Cocina/Bano"
-        $nextAction = "Programar visita presencial con el equipo tecnico para certificar la resistencia a la humedad del portafolio MDP-RH y proponer el reemplazo de modulos de aglomerado estandar en zonas costeras."
-    } elseif ($hasAssemblyGap) {
-        $suggestedPitch = "Promocionar sistemas Click de Ensamble Rapido sin tornillos"
-        $nextAction = "Enviar muestras fisicas de los tableros con herraje Click de ensamble rapido y agendar una demo virtual de 15 minutos para demostrar el ahorro de tiempo al comprador digital joven."
-    } elseif ($cdtFocus -like "*Benefit*") {
-        $suggestedPitch = "Presentar optimizacion de espesores MDP estandar para alto volumen"
-        $nextAction = "Presentar propuesta de cotizacion preferencial en tableros de melamina estandar con espesores optimizados para grandes distribuidores que buscan liderar en precio."
-    } else {
-        $suggestedPitch = "Presentar nuevos acabados esteticos de tendencia (Nordico, Wengue y Gamer)"
-    }
-    
-    $coastalCities = @("Barranquilla", "Cartagena", "Manta", "Guayaquil", "Colon", "David", "Valparaiso", "Antofagasta", "Ciudad de Panama")
-    $isCoastal = $false
-    foreach ($city in $info.cities) {
-        foreach ($cc in $coastalCities) {
-            if ($city.ToLower() -like "*$($cc.ToLower())*") {
-                $isCoastal = $true
-                break
-            }
+    foreach ($entry in $ClientsData.GetEnumerator()) {
+        $clientName = $entry.Key
+        $info = $entry.Value
+        
+        $traffic = $info.base_traffic + $rand.Next(-3, 4)
+        if ($traffic -lt 10) { $traffic = 10 }
+        if ($traffic -gt 100) { $traffic = 100 }
+        
+        $brandWeight = [Math]::Round($info.own_brand + ($rand.NextDouble() * 3.0 - 1.5), 1)
+        $cleanedCats = Clean-AdvertisingNoise $info.raw_menu_categories
+        
+        $analysisResult = Analyze-CDTAndJTBD -cleanedCategories $cleanedCats -products $info.products
+        $cdtFocus = $analysisResult.cdtFocus
+        
+        # Asegurar que whiteSpaces siempre sea un ArrayList para evitar errores de tipo al agregar elementos mas tarde
+        $whiteSpaces = [System.Collections.ArrayList]::new()
+        if ($analysisResult.whiteSpaces -is [System.Collections.IList] -or $analysisResult.whiteSpaces -is [System.Array]) {
+            foreach ($item in $analysisResult.whiteSpaces) { $whiteSpaces.Add($item) | Out-Null }
+        } elseif ($analysisResult.whiteSpaces -ne $null -and $analysisResult.whiteSpaces -ne "") {
+            $whiteSpaces.Add($analysisResult.whiteSpaces) | Out-Null
         }
-        if ($isCoastal) { break }
+        
+        $totalWhitespaces += $whiteSpaces.Count
+        
+        if ($cdtFocus -like "*Benefit*") {
+            $cdtTree = @(
+                "1. Dimensiones y espacio disponible (Filtro numerico)",
+                "2. Resistencia del material (Aglomerado estandar vs Tablero RH)",
+                "3. Relacion precio-capacidad de almacenado"
+            )
+        } else {
+            $cdtTree = @(
+                "1. Combinacion de colores y estilo estetico (Nordico, Wengue, Industrial)",
+                "2. Tipo de ensamble visual (Flotante, de patas de madera)",
+                "3. Calificaciones de diseno y reviews en web"
+            )
+        }
+        
+        # CRM KPIs calculations
+        $whitespacesCount = $whiteSpaces.Count
+        $leadScore = [int]([Math]::Floor(($traffic * (100 - $brandWeight) * ($whitespacesCount + 1)) / 150))
+        if ($leadScore -lt 0) { $leadScore = 0 }
+        if ($leadScore -gt 100) { $leadScore = 100 }
+        
+        $suggestedPitch = "Ofrecer optimizacion de costos en tableros de MDP estandar de alto trafico"
+        $hasRhGap = $false
+        $hasAssemblyGap = $false
+        foreach ($ws in $whiteSpaces) {
+            if ($ws.ToLower() -like "*hidrofugo*" -or $ws.ToLower() -like "*rh*") { $hasRhGap = $true }
+            if ($ws.ToLower() -like "*ensamble rapido*" -or $ws.ToLower() -like "*click*") { $hasAssemblyGap = $true }
+        }
+        
+        $nextAction = "Coordinar sesion de co-creacion de diseno con su equipo de compras para presentar la nueva paleta de colores de tendencia (Rovere, Nordico, Wengue and Gamer) y planificar la renovacion del catalogo."
+        if ($hasRhGap) {
+            $suggestedPitch = "Ofrecer portafolio MDP-RH y Melamina Anti-humedad para Cocina/Bano"
+            $nextAction = "Programar visita presencial con el equipo tecnico para certificar la resistencia a la humedad del portafolio MDP-RH y proponer el reemplazo de modulos de aglomerado estandar en zonas costeras."
+        } elseif ($hasAssemblyGap) {
+            $suggestedPitch = "Promocionar sistemas Click de Ensamble Rapido sin tornillos"
+            $nextAction = "Enviar muestras fisicas de los tableros con herraje Click de ensamble rapido y agendar una demo virtual de 15 minutos para demostrar el ahorro de tiempo al comprador digital joven."
+        } elseif ($cdtFocus -like "*Benefit*") {
+            $suggestedPitch = "Presentar optimizacion de espesores MDP estandar para alto volumen"
+            $nextAction = "Presentar propuesta de cotizacion preferencial en tableros de melamina estandar con espesores optimizados para grandes distribuidores que buscan liderar en precio."
+        } else {
+            $suggestedPitch = "Presentar nuevos acabados esteticos de tendencia (Nordico, Wengue y Gamer)"
+        }
+        
+        $coastalCities = @("Barranquilla", "Cartagena", "Manta", "Guayaquil", "Colon", "David", "Valparaiso", "Antofagasta", "Ciudad de Panama")
+        $isCoastal = $false
+        foreach ($city in $info.cities) {
+            foreach ($cc in $coastalCities) {
+                if ($city.ToLower() -like "*$($cc.ToLower())*") {
+                    $isCoastal = $true
+                    break
+                }
+            }
+            if ($isCoastal) { break }
+        }
+        
+        $coastalChurnRisk = $false
+        if ($isCoastal -and $hasRhGap) {
+            $coastalChurnRisk = $true
+        }
+
+        $clientHash = @{
+            name = $clientName
+            country = $info.country
+            cities = $info.cities
+            best_sellers = $info.best_sellers
+            future_sources = $info.future_sources
+            menu_hierarchy = $cleanedCats
+            cdt_focus = $cdtFocus
+            cdt_tree = $cdtTree
+            own_brand_weight = $brandWeight
+            traffic_score = $traffic
+            competitive_set = $info.competitive_set
+            jtbd = $info.jtbd
+            white_spaces = $whiteSpaces
+            crm_lead_score = $leadScore
+            crm_suggested_pitch = $suggestedPitch
+            crm_next_action = $nextAction
+            coastal_churn_risk = $coastalChurnRisk
+        }
+        
+        $processedClients += $clientHash
     }
     
-    $coastalChurnRisk = $false
-    if ($isCoastal -and $hasRhGap) {
-        $coastalChurnRisk = $true
-    }
-
-    $clientHash = @{
-        name = $clientName
-        country = $info.country
-        cities = $info.cities
-        best_sellers = $info.best_sellers
-        future_sources = $info.future_sources
-        menu_hierarchy = $cleanedCats
-        cdt_focus = $cdtFocus
-        cdt_tree = $cdtTree
-        own_brand_weight = $brandWeight
-        traffic_score = $traffic
-        competitive_set = $info.competitive_set
-        jtbd = $info.jtbd
-        white_spaces = $whiteSpaces
-        crm_lead_score = $leadScore
-        crm_suggested_pitch = $suggestedPitch
-        crm_next_action = $nextAction
-        coastal_churn_risk = $coastalChurnRisk
+    $dominantTrend = "Benefit-Driven (RH & Ensamble)"
+    if ($totalWhitespaces -le 6) {
+        $dominantTrend = "Design-Driven (Estetica & Estilos)"
     }
     
-    $processedClients += $clientHash
+    # Matriz de tendencias
+    $trends = @(
+        @{ name = "Cocinas Modulares"; x = (75 + $rand.Next(-2, 3)); y = (85 + $rand.Next(-1, 2)); phase = "Madurez" },
+        @{ name = "Home Office"; x = (45 + $rand.Next(-3, 4)); y = (60 + $rand.Next(-2, 3)); phase = "Crecimiento" },
+        @{ name = "Centros de TV"; x = (60 + $rand.Next(-1, 2)); y = (70 + $rand.Next(-2, 3)); phase = "Crecimiento" },
+        @{ name = "Dormitorio RTA"; x = (80 + $rand.Next(-1, 3)); y = (50 + $rand.Next(-3, 2)); phase = "Madurez" },
+        @{ name = "Banos RH"; x = (35 + $rand.Next(-4, 5)); y = (42 + $rand.Next(-2, 5)); phase = "Introduccion" }
+    )
+
+    return @{
+        dominant_trend = $dominantTrend
+        total_whitespaces = $totalWhitespaces
+        trends = $trends
+        clients = $processedClients
+    }
 }
 
-$dominantTrend = "Benefit-Driven (RH & Ensamble)"
-if ($totalWhitespaces -le 6) {
-    $dominantTrend = "Design-Driven (Estetica & Estilos)"
-}
-
-# Matriz de tendencias
-$trends = @(
-    @{ name = "Cocinas Modulares"; x = (75 + $rand.Next(-2, 3)); y = (85 + $rand.Next(-1, 2)); phase = "Madurez" },
-    @{ name = "Home Office"; x = (45 + $rand.Next(-3, 4)); y = (60 + $rand.Next(-2, 3)); phase = "Crecimiento" },
-    @{ name = "Centros de TV"; x = (60 + $rand.Next(-1, 2)); y = (70 + $rand.Next(-2, 3)); phase = "Crecimiento" },
-    @{ name = "Dormitorio RTA"; x = (80 + $rand.Next(-1, 3)); y = (50 + $rand.Next(-3, 2)); phase = "Madurez" },
-    @{ name = "Banos RH"; x = (35 + $rand.Next(-4, 5)); y = (42 + $rand.Next(-2, 5)); phase = "Introduccion" }
-)
+# --- EJECUCION ---
+$todayStr = (Get-Date).ToString("yyyy-MM-dd")
 
 # --- RECOPILACION E HISTORICO ---
 
@@ -618,16 +627,37 @@ if (Test-Path $dataPath) {
     }
 }
 
-# Agregar la semana actual al historial
-$history[$todayStr] = @{
-    dominant_trend = $dominantTrend
-    total_whitespaces = $totalWhitespaces
-    trends = $trends
-    clients = $processedClients
+# Determinar si hay huecos semanales a rellenar
+if ($history.Count -gt 0) {
+    $sortedDates = $history.Keys | Sort-Object
+    $lastDateStr = $sortedDates[-1]
+    
+    try {
+        $lastDate = [datetime]::ParseExact($lastDateStr, "yyyy-MM-dd", $null)
+        $today = [datetime]::ParseExact($todayStr, "yyyy-MM-dd", $null)
+        
+        $currentDate = $lastDate.AddDays(7)
+        while ($currentDate -le $today) {
+            $currentDateStr = $currentDate.ToString("yyyy-MM-dd")
+            if (-not $history.ContainsKey($currentDateStr)) {
+                Write-Host "Rellenando semana faltante en historial (PS): $currentDateStr" -ForegroundColor Yellow
+                $history[$currentDateStr] = New-WeekData
+            }
+            $currentDate = $currentDate.AddDays(7)
+        }
+    } catch {
+        Write-Host "Error al calcular fechas faltantes en PS: $_" -ForegroundColor Red
+    }
+}
+
+if (-not $history.ContainsKey($todayStr)) {
+    Write-Host "Generando datos para la semana actual (PS): $todayStr" -ForegroundColor Yellow
+    $history[$todayStr] = New-WeekData
 }
 
 # Pre-cargar semanas históricas si es la primera ejecución (historial vacío o solo con hoy)
 if ($history.Count -le 1) {
+    $processedClients = $history[$todayStr].clients
     # Deep clone del cliente usando serialización a JSON temporal para evitar duplicar referencias
     $processedClientsJson = ConvertTo-Json $processedClients -Depth 10
 
