@@ -424,40 +424,40 @@ def update_index_html(data):
     Inyecta la data JSON mediante una búsqueda y sustitución de subcadenas exacta
     basada en las etiquetas de apertura y cierre. Evita problemas de regex con PowerShell/Python.
     """
-    file_path = "index.html"
-    if not os.path.exists(file_path):
-        print(f"Error: No se encuentra el archivo {file_path}")
-        return False
+    files = ["index.html"]
+    for file_path in files:
+        if not os.path.exists(file_path):
+            continue
+            
+        with open(file_path, "r", encoding="utf-8") as f:
+            html_content = f.read()
+            
+        start_tag = '<script id="market-data" type="application/json">'
+        end_tag = '</script>'
         
-    with open(file_path, "r", encoding="utf-8") as f:
-        html_content = f.read()
+        start_idx = html_content.find(start_tag)
+        if start_idx == -1:
+            print(f"Error: No se encontró la etiqueta de inicio de datos en {file_path}.")
+            continue
+            
+        end_idx = html_content.find(end_tag, start_idx)
+        if end_idx == -1:
+            print(f"Error: No se encontró la etiqueta de cierre de datos en {file_path}.")
+            continue
+            
+        json_data_str = json.dumps(data, indent=2, ensure_ascii=False)
         
-    start_tag = '<script id="market-data" type="application/json">'
-    end_tag = '</script>'
-    
-    start_idx = html_content.find(start_tag)
-    if start_idx == -1:
-        print("Error: No se encontró la etiqueta de inicio de datos.")
-        return False
+        # Reemplazamos exactamente lo que hay entre las dos etiquetas
+        new_html_content = (
+            html_content[:start_idx + len(start_tag)] + 
+            "\n" + json_data_str + "\n" + 
+            html_content[end_idx:]
+        )
         
-    end_idx = html_content.find(end_tag, start_idx)
-    if end_idx == -1:
-        print("Error: No se encontró la etiqueta de cierre de datos.")
-        return False
-        
-    json_data_str = json.dumps(data, indent=2, ensure_ascii=False)
-    
-    # Reemplazamos exactamente lo que hay entre las dos etiquetas
-    new_html_content = (
-        html_content[:start_idx + len(start_tag)] + 
-        "\n" + json_data_str + "\n" + 
-        html_content[end_idx:]
-    )
-    
-    with open(file_path, "w", encoding="utf-8") as f:
-        f.write(new_html_content)
-        
-    print("Dashboard index.html actualizado exitosamente (método de subcadena seguro).")
+        with open(file_path, "w", encoding="utf-8") as f:
+            f.write(new_html_content)
+            
+        print(f"Dashboard {file_path} actualizado exitosamente (método de subcadena seguro).")
     return True
 
 

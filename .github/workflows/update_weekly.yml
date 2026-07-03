@@ -1,0 +1,36 @@
+name: Actualización Semanal Automática de Reportes RTA
+
+on:
+  schedule:
+    # Corre automáticamente todos los lunes a las 00:00 UTC (7:00 PM hora Colombia del domingo)
+    - cron: '0 0 * * 1'
+  workflow_dispatch: # Permite correr el actualizador manualmente desde un botón en GitHub
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v3
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Ejecutar script actualizador
+        run: python actualizador_rta.py
+
+      - name: Verificar cambios
+        id: git-check
+        run: |
+          git config --global user.name "Amelia RTA Bot"
+          git config --global user.email "amelia-bot@github.com"
+          git add index.html data.json README.md
+          git diff --quiet && git diff --staged --quiet || echo "changes=true" >> $GITHUB_OUTPUT
+
+      - name: Confirmar y subir cambios
+        if: steps.git-check.outputs.changes == 'true'
+        run: |
+          git commit -m "Actualización semanal automática de datos: $(date +'%Y-%m-%d')"
+          git push
