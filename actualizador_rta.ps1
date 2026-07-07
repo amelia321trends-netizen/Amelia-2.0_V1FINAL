@@ -864,34 +864,36 @@ function Convert-HistoryToJSON {
 $formattedJson = Convert-HistoryToJSON -currentDate $todayStr -historyObj $history
 
 # Guardar data.json
-$formattedJson | Out-File -FilePath "data.json" -Encoding utf8
+[System.IO.File]::WriteAllText("data.json", $formattedJson, (New-Object System.Text.UTF8Encoding($false)))
 
-# Inyectar en index.html usando reemplazo de subcadena exacto
-$htmlPath = "index.html"
-if (Test-Path $htmlPath) {
-    $htmlContent = Get-Content -Path $htmlPath -Raw -Encoding utf8
-    
-    $startTag = '<script id="market-data" type="application/json">'
-    $endTag = '</script>'
-    
-    $startIdx = $htmlContent.IndexOf($startTag)
-    if ($startIdx -ne -1) {
-        $endIdx = $htmlContent.IndexOf($endTag, $startIdx)
-        if ($endIdx -ne -1) {
-            $before = $htmlContent.Substring(0, $startIdx + $startTag.Length)
-            $after = $htmlContent.Substring($endIdx)
-            $newHtml = $before + "`n" + $formattedJson + "`n" + $after
-            
-            $newHtml | Out-File -FilePath $htmlPath -Encoding utf8
-            Write-Host "Inyectada nueva data JSON en index.html (metodo de subcadena seguro)" -ForegroundColor Green
+# Inyectar en archivos HTML usando reemplazo de subcadena exacto
+$htmlPaths = @("index.html")
+foreach ($htmlPath in $htmlPaths) {
+    if (Test-Path $htmlPath) {
+        $htmlContent = Get-Content -Path $htmlPath -Raw -Encoding utf8
+        
+        $startTag = '<script id="market-data" type="application/json">'
+        $endTag = '</script>'
+        
+        $startIdx = $htmlContent.IndexOf($startTag)
+        if ($startIdx -ne -1) {
+            $endIdx = $htmlContent.IndexOf($endTag, $startIdx)
+            if ($endIdx -ne -1) {
+                $before = $htmlContent.Substring(0, $startIdx + $startTag.Length)
+                $after = $htmlContent.Substring($endIdx)
+                $newHtml = $before + "`n" + $formattedJson + "`n" + $after
+                
+                [System.IO.File]::WriteAllText($htmlPath, $newHtml, (New-Object System.Text.UTF8Encoding($false)))
+                Write-Host "Inyectada nueva data JSON en $htmlPath (metodo de subcadena seguro)" -ForegroundColor Green
+            } else {
+                Write-Host "Error: No se encontro la etiqueta de cierre en $htmlPath" -ForegroundColor Red
+            }
         } else {
-            Write-Host "Error: No se encontro la etiqueta de cierre en index.html" -ForegroundColor Red
+            Write-Host "Error: No se encontro la etiqueta de inicio en $htmlPath" -ForegroundColor Red
         }
     } else {
-        Write-Host "Error: No se encontro la etiqueta de inicio en index.html" -ForegroundColor Red
+        Write-Host "Aviso: No se encuentra $htmlPath, omitiendo." -ForegroundColor Yellow
     }
-} else {
-    Write-Host "Error: No se encuentra index.html" -ForegroundColor Red
 }
 
 # Generar README.md (reporte estatico basado en la semana actual)

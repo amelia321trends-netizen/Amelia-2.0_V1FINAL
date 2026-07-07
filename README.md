@@ -1,6 +1,6 @@
 ﻿# Inteligencia de Canales Digitales de Muebles RTA
 
-Ultima actualizacion semanal: 2026-07-03 | Analista Principal: Amelia RTA
+Ultima actualizacion semanal: 2026-07-07 | Analista Principal: Amelia RTA
 
 Tendencia Dominante de Mercado: 
 Total Alertas de Oportunidad (Espacios en Blanco): 
