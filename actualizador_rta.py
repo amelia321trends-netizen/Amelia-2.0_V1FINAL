@@ -537,7 +537,7 @@ def generate_readme_report(data):
 import urllib.request
 import urllib.error
 
-def generate_week_data_with_gemini(date_str, api_key):
+def generate_week_data_with_gemini(date_str, base_findings, api_key):
     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
     
     system_instruction = """
@@ -553,7 +553,12 @@ Aplica el protocolo antirruido, aislando la estacionalidad del negocio estructur
 """
     
     prompt = f"""
-Genera los datos métricos y analíticos estructurales en formato JSON para la semana del '{date_str}'. 
+Genera los datos métricos y analíticos estructurales en formato JSON para la semana del '{date_str}'.
+
+Aquí tienes los hallazgos estructurales del shelf digital y del comportamiento e-commerce recolectados por nuestro robot para esta semana:
+{json.dumps(base_findings, indent=2, ensure_ascii=False)}
+
+Debes tomar esta información (que contiene el tráfico de canal, el peso de marca propia, las categorías del menú de navegación y las brechas técnicas detectadas por defecto), relacionarla con la fecha de auditoría de acuerdo con tu rol y reglas de AMELIA RTA, y generar el objeto JSON final del reporte.
 Deberás responder ÚNICAMENTE con un objeto JSON estructurado que siga el siguiente esquema, sin explicaciones ni markdown adicionales (solo texto JSON puro).
 
 Estructura requerida del JSON de salida:
@@ -649,17 +654,81 @@ Responde con texto JSON crudo únicamente.
     return None
 
 def generate_week_data(date_str):
+    # 1. GENERAR PRIMERO LOS HALLAZGOS Y DATOS BASE DEL SCRAPING E INGESTA (FILTRO 1)
+    base_findings = []
+    
+    # Determinar el tema y comportamiento según la fecha
+    theme = "Normal"
+    if date_str == "2026-05-21":
+        theme = "Pre-Cyber"
+    elif date_str == "2026-05-28":
+        theme = "CyberDay-Peak"
+    elif date_str == "2026-06-04":
+        theme = "Post-Cyber-Rain"
+    elif date_str in ["2026-06-11", "2026-06-12"]:
+        theme = "Supply-Disruption"
+    elif date_str == "2026-06-19":
+        theme = "Fathers-Day"
+    elif date_str == "2026-06-26":
+        theme = "Mid-Year-Audit"
+    elif date_str == "2026-07-03":
+        theme = "Logistics-Rush"
+    elif date_str == "2026-07-07":
+        theme = "Rainy-Season"
+
+    for client_name, info in CLIENTS_RAW_DATA.items():
+        # Ajustar tráfico base
+        traffic = info["base_traffic"]
+        if theme == "Pre-Cyber":
+            if client_name in ["INVERSIONES VIRTUAL MUEBLES S.A.S", "ALMACENES ÉXITO S.A.", "SODIMAC COLOMBIA S.A"]:
+                traffic += 3
+        elif theme == "CyberDay-Peak":
+            if client_name in ["INVERSIONES VIRTUAL MUEBLES S.A.S", "ALMACENES ÉXITO S.A.", "MOBBLY S.A.S", "CENCOSUD COLOMBIA SA"]:
+                traffic = 100
+            else:
+                traffic += 8
+        elif theme == "Post-Cyber-Rain":
+            traffic -= 5
+        elif theme == "Fathers-Day":
+            if client_name in ["INVERSIONES VIRTUAL MUEBLES S.A.S", "MOBBLY S.A.S", "CENCOSUD COLOMBIA SA"]:
+                traffic += 6
+        elif theme == "Rainy-Season":
+            if info["country"] == "Colombia":
+                traffic += 2
+        
+        traffic = max(10, min(100, traffic + random.randint(-1, 1)))
+        brand_weight = round(max(5.0, min(100.0, info["own_brand"] + random.uniform(-1.0, 1.0))), 1)
+        cleaned_cats = clean_advertising_noise(info["raw_menu_categories"])
+        
+        # Calcular foco CDT base y espacios
+        cdt_focus, base_white_spaces = analyze_cdt_and_jtbd(client_name, cleaned_cats, info["products"])
+        
+        base_findings.append({
+            "name": client_name,
+            "country": info["country"],
+            "cities": info["cities"],
+            "base_traffic_score": traffic,
+            "own_brand_weight": brand_weight,
+            "menu_hierarchy": cleaned_cats,
+            "cdt_focus": cdt_focus,
+            "default_detected_white_spaces": base_white_spaces,
+            "target_persona": info["jtbd"]["persona"],
+            "target_job": info["jtbd"]["job"]
+        })
+
+    # 2. SI HAY API KEY, ENVIAMOS ESTOS HALLAZGOS E-COMMERCE A GEMINI PARA QUE LOS ANALICE Y LOS RELACIONE (FILTRO 2)
     api_key = os.environ.get("GEMINI_API_KEY")
     if api_key:
         try:
             print(f"Detectada clave GEMINI_API_KEY. Intentando generar datos para {date_str} con el cerebro de Gemini...")
-            data = generate_week_data_with_gemini(date_str, api_key)
+            data = generate_week_data_with_gemini(date_str, base_findings, api_key)
             if data and "clients" in data and len(data["clients"]) > 0:
                 print(f"✅ Generación dinámica con la API de Gemini exitosa para la semana: {date_str}")
                 return data
         except Exception as e:
             print(f"⚠️ Error al conectar con la API de Gemini: {e}. Usando generador lógico local de respaldo.")
 
+    # 3. RESPALDO LOCAL: Lógica estática/dinámica basada en código Python local
     processed_clients = []
     total_whitespaces = 0
     
