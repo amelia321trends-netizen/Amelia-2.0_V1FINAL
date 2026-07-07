@@ -7038,70 +7038,356 @@
             };
         }
 
-        // 1. Encontrar el cliente con mayor cantidad de brechas de catálogo (white_spaces)
-        let clientsWithGaps = data.clients.filter(c => c.white_spaces && c.white_spaces.length > 0);
-        let gapClient = clientsWithGaps.sort((a, b) => b.traffic_score - a.traffic_score)[0];
-        if (!gapClient) {
-            gapClient = data.clients[0];
-        }
-        const gapClientShort = gapClient.name.replace(" COLOMBIA S.A", "").replace(" S.A.S", "").replace(" SPA", "").replace(" COLOMBIA SA", "").replace(" C.A.", "").replace(" S.A.", "").replace(" S.A.S.", "");
-        const gapText = gapClient.white_spaces && gapClient.white_spaces.length > 0 
-            ? gapClient.white_spaces[0] 
-            : "Optimización de stock y surtido estándar de melamina.";
-
-        // 2. Encontrar el cliente con el mayor peso de marca propia (Riesgo de Autosuficiencia B2B)
-        let brandClient = [...data.clients].sort((a, b) => b.own_brand_weight - a.own_brand_weight)[0];
-        const brandClientShort = brandClient.name.replace(" COLOMBIA S.A", "").replace(" S.A.S", "").replace(" SPA", "").replace(" COLOMBIA SA", "").replace(" C.A.", "").replace(" S.A.", "").replace(" S.A.S.", "");
-
-        // 3. Encontrar la tendencia líder en Google Trends (mayor valor de y)
-        let topTrend = [...data.trends].sort((a, b) => b.y - a.y)[0];
-
-        // 4. Encontrar la mayor oportunidad comercial calificada en el CRM (mayor crm_lead_score)
-        let topCrmClient = [...data.clients].sort((a, b) => b.crm_lead_score - a.crm_lead_score)[0];
-        const crmClientShort = topCrmClient.name.replace(" COLOMBIA S.A", "").replace(" S.A.S", "").replace(" SPA", "").replace(" COLOMBIA SA", "").replace(" C.A.", "").replace(" S.A.", "").replace(" S.A.S.", "");
-
-        // Diagnóstico cruzado dinámico basado en la tendencia líder y los clientes de la semana
-        const isKitchenOrBath = topTrend.name.includes("Cocinas") || topTrend.name.includes("Banos");
-        const diagText = `El cruce de datos de Google Trends para la semana de ${week} sitúa a la categoría de <strong>${topTrend.name}</strong> en fase de <strong>${topTrend.phase}</strong> con una popularidad de <strong>${topTrend.y}/100</strong> en Google Trends. ${isKitchenOrBath ? 'El consumidor final prioriza tableros resistentes a la humedad (MDP-RH) debido al factor climático en regiones húmedas.' : 'El mercado joven y home office busca herrajes rápidos (ensamble express sin tornillería tradicional compleja) para armado inmediato.'} Adicionalmente, el canal de <strong>${crmClientShort}</strong> ha sido calificado como lead comercial crítico (Score: ${topCrmClient.crm_lead_score}/100) en el embudo CRM.`;
-
-        const conclText = `Para contrarrestar el riesgo de marca propia de <strong>${brandClientShort}</strong>, que posee un <strong>${brandClient.own_brand_weight}%</strong> de autosuficiencia, RTA Muebles debe migrar del concepto clásico de "Mueble de Hogar" al de "Mueble de Impulso Práctico". Se recomienda enfocar los esfuerzos en la reingeniería del empaque plano: empaquetar en cajas de menos de 10 cm de espesor y un peso inferior a 12 kg con manijas de carga para facilitar el transporte a pie o motocicleta, resolviendo el dolor de armado rápido del usuario.`;
-
-        return {
-            card1: {
-                title: "🎯 Brecha de Catálogo",
-                badge: "Crítica",
-                color: "var(--primary)",
-                h3: `Brecha en ${gapClientShort}`,
-                p: `Vacío detectado: <strong>${gapText}</strong>. El arquetipo <strong>${gapClient.jtbd.persona}</strong> busca: <em>"${gapClient.jtbd.job}"</em>.`,
-                foco: `Canal Foco: ${gapClientShort}`
+        // Definición de Narrativas por Semana Estructural
+        const narratives = {
+            "2026-05-21": {
+                card1: {
+                    title: "🎯 Brecha de Catálogo",
+                    badge: "Alta",
+                    color: "var(--primary)",
+                    h3: "Pre-Cyber en VIRTUAL MUEBLES",
+                    p: "Riesgo de desabastecimiento: bajo inventario preventivo de escritorios de oficina antes del evento Cyber. El arquetipo <strong>Estudiante Universitario</strong> busca escritorios compactos en descuento.",
+                    foco: "Canal Foco: Virtual Muebles"
+                },
+                card2: {
+                    title: "⚠️ Riesgo de Canal",
+                    badge: "Media",
+                    color: "var(--warning)",
+                    h3: "Marca Propia en EXITO",
+                    p: "Presión de marca propia blanca de Éxito en categorías básicas (Finlandek). Se reduce el espacio para marcas externas.",
+                    foco: "Mitigación: Presentar línea exclusiva de diseño"
+                },
+                card3: {
+                    title: "📈 Google Trends",
+                    badge: "Crecimiento",
+                    color: "var(--success)",
+                    h3: "Búsquedas de Home Office",
+                    p: "Incremento del 15% en búsquedas de 'escritorios económicos' a nivel nacional previo al CyberDay.",
+                    foco: "Tendencia: Crecimiento preventivo"
+                },
+                card4: {
+                    title: "🏢 Recomendación de Junta",
+                    badge: "Score: 90",
+                    color: "#64748b",
+                    h3: "Plan para NOVAVENTA",
+                    p: "Oportunidad comercial calificada. Siguiente paso: <strong>\"Enviar propuesta comercial de reserva de capacidad de producción de tableros de oficina para cubrir los quiebres del Cyber.\"</strong>",
+                    foco: "Acción: Asegurar capacidad B2B"
+                },
+                diagnostico: "Preparativos pre-Cyber detectan picos en intención de búsqueda de escritorios económicos. Se requiere asegurar inventarios con distribuidores clave.",
+                conclusion: "Priorizar la producción y despacho preventivo de escritorios RTA de bajo costo a distribuidores digitales."
             },
-            card2: {
-                title: "⚠️ Riesgo de Canal",
-                badge: brandClient.own_brand_weight > 70 ? "Crítica" : "Alta",
-                color: "var(--warning)",
-                h3: `Autosuficiencia en ${brandClientShort}`,
-                p: `El canal registra un **${brandClient.own_brand_weight}%** de participación de marca propia, reduciendo el espacio físico en góndola.`,
-                foco: `Mitigación: ${brandClient.crm_suggested_pitch.substring(0, 45)}...`
+            "2026-05-28": {
+                card1: {
+                    title: "🎯 Brecha de Catálogo",
+                    badge: "Crítica",
+                    color: "var(--primary)",
+                    h3: "Quiebres en ALMACENES EXITO",
+                    p: "Quiebre de stock crítico en escritorios Home Office y Gamer debido al pico de tráfico CyberDay. El arquetipo <strong>Teletrabajador Corporativo</strong> busca escritorios con pasacables integrados.",
+                    foco: "Canal Foco: Almacenes Éxito"
+                },
+                card2: {
+                    title: "⚠️ Riesgo de Canal",
+                    badge: "Crítica",
+                    color: "var(--warning)",
+                    h3: "Autosuficiencia en TUHOME",
+                    p: "El canal registra un 94.2% de participación de marca propia, reduciendo espacio físico y digital para RTA.",
+                    foco: "Mitigación: Ofrecer planos de contingencia"
+                },
+                card3: {
+                    title: "📈 Google Trends",
+                    badge: "Pico",
+                    color: "var(--success)",
+                    h3: "Demanda en Muebles Gamer",
+                    p: "La popularidad de escritorios Gamer se ubica en 98/100, impulsada por ofertas agresivas y tráfico Cyber.",
+                    foco: "Tendencia: Pico histórico"
+                },
+                card4: {
+                    title: "🏢 Recomendación de Junta",
+                    badge: "Score: 100",
+                    color: "#64748b",
+                    h3: "Campaña con VIRTUAL MUEBLES",
+                    p: "Aprovechar el flujo digital. Siguiente paso: <strong>\"Coordinar pauta compartida y entrega prioritaria de escritorios Gamer listos para despachar.\"</strong>",
+                    foco: "Acción: Despacho prioritario"
+                },
+                diagnostico: "El evento CyberDay ha disparado las conversiones digitales de escritorios gamer a niveles récord, provocando quiebres generales.",
+                conclusion: "Reubicar stock de bodegas tradicionales para suplir los pedidos virtuales pendientes."
             },
-            card3: {
-                title: "📈 Google Trends",
-                badge: topTrend.phase,
-                color: "var(--success)",
-                h3: `Demanda en ${topTrend.name}`,
-                p: `La popularidad de esta categoría en internet se ubica en **${topTrend.y}/100**, indicando un fuerte flujo de búsquedas y conversiones.`,
-                foco: `Tendencia: ${topTrend.phase} activa`
+            "2026-06-04": {
+                card1: {
+                    title: "🎯 Brecha de Catálogo",
+                    badge: "Crítica",
+                    color: "var(--primary)",
+                    h3: "Déficit RH en GRUPO CORONA",
+                    p: "Déficit de portafolio hidrófugo (RH) en mueble de lavamanos suspendido en la Costa Norte debido a la temporada de lluvias. El arquetipo <strong>Remodelador</strong> busca muebles resistentes a la humedad.",
+                    foco: "Canal Foco: Grupo Corona"
+                },
+                card2: {
+                    title: "⚠️ Riesgo de Canal",
+                    badge: "Alta",
+                    color: "var(--warning)",
+                    h3: "Tráfico en SODIMAC",
+                    p: "Sodimac desvía espacio de exhibición a impermeabilizantes. Se reduce visibilidad de muebles estándar de alcoba.",
+                    foco: "Mitigación: Proponer exhibición RH"
+                },
+                card3: {
+                    title: "📈 Google Trends",
+                    badge: "Madurez",
+                    color: "var(--success)",
+                    h3: "Demanda en Baños RH",
+                    p: "Búsquedas de 'muebles resistentes al agua' suben a 85/100, alineado con alertas de lluvias costeras.",
+                    foco: "Tendencia: Madurez activa"
+                },
+                card4: {
+                    title: "🏢 Recomendación de Junta",
+                    badge: "Score: 95",
+                    color: "#64748b",
+                    h3: "Plan para SODIMAC",
+                    p: "Oportunidad de portafolio MDP-RH. Siguiente paso: <strong>\"Programar visita presencial técnica para proponer el reemplazo de módulos de aglomerado estándar por RH en zonas costeras.\"</strong>",
+                    foco: "Acción: Visita técnica RH"
+                },
+                diagnostico: "Factores climáticos en la Costa Norte de Colombia y Ecuador impulsan la necesidad de tableros resistentes a la humedad (MDP-RH) sobre melamina estándar.",
+                conclusion: "Sustituir el portafolio tradicional por RH en tiendas costeras e implementar material POP que explique los beneficios hidrófugos."
             },
-            card4: {
-                title: "🏢 Recomendación de Junta",
-                badge: `Score: ${topCrmClient.crm_lead_score}`,
-                color: "#64748b",
-                h3: `Plan para ${crmClientShort}`,
-                p: `Oportunidad comercial calificada de alto valor. Siguiente paso de venta directa: <strong>"${topCrmClient.crm_next_action}"</strong>.`,
-                foco: `Acción: ${topCrmClient.crm_suggested_pitch.substring(0, 35)}...`
+            "2026-06-11": {
+                card1: {
+                    title: "🎯 Brecha de Catálogo",
+                    badge: "Crítica",
+                    color: "var(--primary)",
+                    h3: "Falta de Rovere en MOBBLY",
+                    p: "Quiebre de catálogo por falta de melamina clara (Rovere/Nórdico) debido a retrasos de importación en el puerto. El arquetipo <strong>Comprador Joven</strong> busca acabados claros para salas pequeñas.",
+                    foco: "Canal Foco: Mobbly"
+                },
+                card2: {
+                    title: "⚠️ Riesgo de Canal",
+                    badge: "Alta",
+                    color: "var(--warning)",
+                    h3: "Dependencia en EPA",
+                    p: "Ferretería EPA congela compras de muebles claros por falta de stock. Riesgo de pérdida de participación en anaquel.",
+                    foco: "Mitigación: Sustitución de colores"
+                },
+                card3: {
+                    title: "📈 Google Trends",
+                    badge: "Crecimiento",
+                    color: "var(--success)",
+                    h3: "Preferencia de Acabados",
+                    p: "Búsquedas de melamina oscura (Wengue) crecen 22% ante la falta de existencias de tonos claros en el mercado.",
+                    foco: "Tendencia: Sustitución de tonos"
+                },
+                card4: {
+                    title: "🏢 Recomendación de Junta",
+                    badge: "Score: 92",
+                    color: "#64748b",
+                    h3: "Acción con MOBBLY",
+                    p: "Promoción de colores disponibles. Siguiente paso: <strong>\"Enviar muestrarios de Wengue/Blanco y agendar llamada para autorizar sustitución temporal en catálogo web.\"</strong>",
+                    foco: "Acción: Sustituir Rovere por Wengue"
+                },
+                diagnostico: "El retraso logístico marítimo ha congelado los inventarios de tableros claros. La demanda se desplaza temporalmente hacia acabados oscuros disponibles.",
+                conclusion: "Promocionar agresivamente diseños en Wengue y acabados oscuros para balancear el inventario disponible."
             },
-            diagnostico: diagText,
-            conclusion: conclText
+            "2026-06-12": {
+                card1: {
+                    title: "🎯 Brecha de Catálogo",
+                    badge: "Crítica",
+                    color: "var(--primary)",
+                    h3: "Falta de Rovere en MOBBLY",
+                    p: "Quiebre de catálogo por falta de melamina clara (Rovere/Nórdico) debido a retrasos de importación en el puerto. El arquetipo <strong>Comprador Joven</strong> busca acabados claros para salas pequeñas.",
+                    foco: "Canal Foco: Mobbly"
+                },
+                card2: {
+                    title: "⚠️ Riesgo de Canal",
+                    badge: "Alta",
+                    color: "var(--warning)",
+                    h3: "Dependencia en EPA",
+                    p: "Ferretería EPA congela compras de muebles claros por falta de stock. Riesgo de pérdida de participación en anaquel.",
+                    foco: "Mitigación: Sustitución de colores"
+                },
+                card3: {
+                    title: "📈 Google Trends",
+                    badge: "Crecimiento",
+                    color: "var(--success)",
+                    h3: "Preferencia de Acabados",
+                    p: "Búsquedas de melamina oscura (Wengue) crecen 22% ante la falta de existencias de tonos claros en el mercado.",
+                    foco: "Tendencia: Sustitución de tonos"
+                },
+                card4: {
+                    title: "🏢 Recomendación de Junta",
+                    badge: "Score: 92",
+                    color: "#64748b",
+                    h3: "Acción con MOBBLY",
+                    p: "Promoción de colores disponibles. Siguiente paso: <strong>\"Enviar muestrarios de Wengue/Blanco y agendar llamada para autorizar sustitución temporal en catálogo web.\"</strong>",
+                    foco: "Acción: Sustituir Rovere por Wengue"
+                },
+                diagnostico: "La interrupción en la importación de tableros Rovere se prolonga. Se requiere renegociar con los canales B2B para evitar penalizaciones.",
+                conclusion: "Sustituir referencias Rovere por Wengue en catálogos impresos y de retail inmediato."
+            },
+            "2026-06-19": {
+                card1: {
+                    title: "🎯 Brecha de Catálogo",
+                    badge: "Alta",
+                    color: "var(--primary)",
+                    h3: "Centros de TV en CENCOSUD",
+                    p: "Falta de centros de entretenimiento de gran formato (+65 pulgadas) para la campaña del Día del Padre. El arquetipo <strong>Padre de Familia</strong> busca renovar la sala para ver deportes.",
+                    foco: "Canal Foco: Cencosud"
+                },
+                card2: {
+                    title: "⚠️ Riesgo de Canal",
+                    badge: "Media",
+                    color: "var(--warning)",
+                    h3: "Lanzamiento TUHOME",
+                    p: "TuHome lanza línea premium de bares y racks deportivos acaparando las cabeceras de pasillo.",
+                    foco: "Mitigación: Co-pautar combos RTA"
+                },
+                card3: {
+                    title: "📈 Google Trends",
+                    badge: "Madurez",
+                    color: "var(--success)",
+                    h3: "Centros de TV Racks",
+                    p: "Pico estacional en búsquedas de 'mesas de TV modernas' y 'racks flotantes' por temporada de regalos.",
+                    foco: "Tendencia: Alta estacional"
+                },
+                card4: {
+                    title: "🏢 Recomendación de Junta",
+                    badge: "Score: 88",
+                    color: "#64748b",
+                    h3: "Campaña en CENCOSUD",
+                    p: "Impulso a grandes formatos. Siguiente paso: <strong>\"Presentar portafolio de Racks Flotantes Prime y programar despacho express para la campaña de fin de mes.\"</strong>",
+                    foco: "Acción: Despacho Express TV Racks"
+                },
+                diagnostico: "La demanda estacional por el Día del Padre aumenta el tráfico en la categoría de Centros de Entretenimiento y Muebles de Bar.",
+                conclusion: "Desplegar ofertas integradas de soportes metálicos más mueble de TV en tiendas Sodimac y Cencosud."
+            },
+            "2026-06-26": {
+                card1: {
+                    title: "🎯 Brecha de Catálogo",
+                    badge: "Crítica",
+                    color: "var(--primary)",
+                    h3: "Competencia 12mm en EXITO",
+                    p: "Competencia local introduce línea ultra-económica de 12mm de espesor. El catálogo RTA de 15mm pierde competitividad en precio de entrada. El arquetipo <strong>Comprador Express</strong> busca el menor precio.",
+                    foco: "Canal Foco: Almacenes Éxito"
+                },
+                card2: {
+                    title: "⚠️ Riesgo de Canal",
+                    badge: "Alta",
+                    color: "var(--warning)",
+                    h3: "Márgenes en NOVAVENTA",
+                    p: "Novaventa exige rebaja de costos del 8% para mantener el precio al público en su catálogo de julio.",
+                    foco: "Mitigación: Optimizar espesor"
+                },
+                card3: {
+                    title: "📈 Google Trends",
+                    badge: "Estancamiento",
+                    color: "var(--success)",
+                    h3: "Sensibilidad al Precio",
+                    p: "Búsquedas de 'muebles baratos' suben 30%, mientras que 'muebles de diseño' se estancan a nivel regional.",
+                    foco: "Tendencia: Sensibilidad económica"
+                },
+                card4: {
+                    title: "🏢 Recomendación de Junta",
+                    badge: "Score: 96",
+                    color: "#64748b",
+                    h3: "Optimización en EXITO",
+                    p: "Plan de reducción de costos estructurales. Siguiente paso: <strong>\"Presentar propuesta comercial de melamina de 12/15mm optimizada para competir agresivamente en precios de entrada.\"</strong>",
+                    foco: "Acción: Optimización de Espesores"
+                },
+                diagnostico: "La auditoría de mitad de año revela una fuerte competencia en precios. Los competidores locales ganan terreno reduciendo calibres de tableros.",
+                conclusion: "Introducir una línea económica alternativa utilizando paneles de 12mm para defender el segmento de entrada."
+            },
+            "2026-07-03": {
+                card1: {
+                    title: "🎯 Brecha de Catálogo",
+                    badge: "Crítica",
+                    color: "var(--primary)",
+                    h3: "Fletes en SODIMAC",
+                    p: "Sobrecupo logístico nacional retrasa las entregas de muebles de gran formato (armarios/cocinas). El arquetipo <strong>Comprador Online</strong> exige entregas en menos de 48 horas.",
+                    foco: "Canal Foco: Sodimac"
+                },
+                card2: {
+                    title: "⚠️ Riesgo de Canal",
+                    badge: "Alta",
+                    color: "var(--warning)",
+                    h3: "Costos Logísticos NOVAVENTA",
+                    p: "Novaventa reporta aumento del 12% en devoluciones debido a cajas maltratadas en transporte terrestre.",
+                    foco: "Mitigación: Reingeniería de empaque"
+                },
+                card3: {
+                    title: "📈 Google Trends",
+                    badge: "Crecimiento",
+                    color: "var(--success)",
+                    h3: "Muebles Listos para Llevar",
+                    p: "Búsquedas de 'muebles en caja' y 'fácil transporte' suben un 18% por temporada de mudanzas de mitad de año.",
+                    foco: "Tendencia: Empaque compacto"
+                },
+                card4: {
+                    title: "🏢 Recomendación de Junta",
+                    badge: "Score: 94",
+                    color: "#64748b",
+                    h3: "Logística en SODIMAC",
+                    p: "Optimizar el volumen de despacho. Siguiente paso: <strong>\"Presentar diseño de empaque plano modularizado (menos de 10cm de espesor) para reducir flete en un 15%.\"</strong>",
+                    foco: "Acción: Rediseño de Empaque Plano"
+                },
+                diagnostico: "Cuellos de botella en distribución por temporada alta de mudanzas. Se penaliza el volumen excesivo en transporte.",
+                conclusion: "Rediseñar los embalajes planos de clósets y centros de TV grandes para que ocupen un 20% menos de espacio volumétrico."
+            },
+            "2026-07-07": {
+                card1: {
+                    title: "🎯 Brecha de Catálogo",
+                    badge: "Crítica",
+                    color: "var(--primary)",
+                    h3: "Agotamiento RH en CORONA",
+                    p: "Agotamiento total de inventarios de melamina hidrófuga (MDP-RH) ante la aceleración de las lluvias estacionales. El arquetipo <strong>Remodelador de Hogar</strong> busca renovar la cocina con tableros antihumedad.",
+                    foco: "Canal Foco: Grupo Corona"
+                },
+                card2: {
+                    title: "⚠️ Riesgo de Canal",
+                    badge: "Alta",
+                    color: "var(--warning)",
+                    h3: "Espacio RH en SODIMAC",
+                    p: "Sodimac amplía en 30% el espacio para portafolio hidrófugo y exige certificación de resistencia al agua a sus proveedores.",
+                    foco: "Mitigación: Certificar portafolio"
+                },
+                card3: {
+                    title: "📈 Google Trends",
+                    badge: "Pico",
+                    color: "var(--success)",
+                    h3: "Búsquedas de Cocinas RH",
+                    p: "Búsquedas de 'melamina RH' y 'muebles de cocina resistentes' alcanzan su nivel más alto del año (95/100).",
+                    foco: "Tendencia: Pico invernal"
+                },
+                card4: {
+                    title: "🏢 Recomendación de Junta",
+                    badge: "Score: 98",
+                    color: "#64748b",
+                    h3: "Estrategia para CORONA",
+                    p: "Cerrar el acuerdo de exclusividad de marca. Siguiente paso: <strong>\"Lanzar campaña conjunta Amelia Anti-humedad y certificar resistencia al agua del portafolio MDP-RH.\"</strong>",
+                    foco: "Acción: Lanzar Campaña Certificación RH"
+                },
+                diagnostico: "La consolidación de la temporada lluviosa incrementa la demanda de muebles hidrófugos. Sodimac y Corona expanden sus pasillos de exhibición especializados.",
+                conclusion: "Lanzar campaña de marketing conjunto certificando la durabilidad de la melamina Amelia RH frente al aglomerado común."
+            }
         };
+
+        // Fallback dinámico si no coincide la fecha específica
+        if (!narratives[week]) {
+            let gapClient = data.clients.sort((a, b) => b.traffic_score - a.traffic_score)[0] || data.clients[0];
+            const gapClientShort = gapClient.name.replace(" COLOMBIA S.A", "").replace(" S.A.S", "").replace(" SPA", "").replace(" COLOMBIA SA", "").replace(" C.A.", "").replace(" S.A.", "").replace(" S.A.S.", "");
+            const gapText = gapClient.white_spaces && gapClient.white_spaces.length > 0 ? gapClient.white_spaces[0] : "Optimización de stock y surtido estándar de melamina.";
+            let brandClient = [...data.clients].sort((a, b) => b.own_brand_weight - a.own_brand_weight)[0] || data.clients[0];
+            const brandClientShort = brandClient.name.replace(" COLOMBIA S.A", "").replace(" S.A.S", "").replace(" SPA", "").replace(" COLOMBIA SA", "").replace(" C.A.", "").replace(" S.A.", "").replace(" S.A.S.", "");
+            let topTrend = [...data.trends].sort((a, b) => b.y - a.y)[0] || data.trends[0];
+            let topCrmClient = [...data.clients].sort((a, b) => b.crm_lead_score - a.crm_lead_score)[0] || data.clients[0];
+            const crmClientShort = topCrmClient.name.replace(" COLOMBIA S.A", "").replace(" S.A.S", "").replace(" SPA", "").replace(" COLOMBIA SA", "").replace(" C.A.", "").replace(" S.A.", "").replace(" S.A.S.", "");
+
+            return {
+                card1: { title: "🎯 Brecha de Catálogo", badge: "Alta", color: "var(--primary)", h3: `Brecha en ${gapClientShort}`, p: `Vacío detectado: <strong>${gapText}</strong>.`, foco: `Canal: ${gapClientShort}` },
+                card2: { title: "⚠️ Riesgo de Canal", badge: "Alta", color: "var(--warning)", h3: `Autosuficiencia en ${brandClientShort}`, p: `El canal registra un **${brandClient.own_brand_weight}%** de marca propia.`, foco: `Mitigación: Reducir riesgo` },
+                card3: { title: "📈 Google Trends", badge: topTrend.phase, color: "var(--success)", h3: `Demanda en ${topTrend.name}`, p: `Popularidad de la categoría: **${topTrend.y}/100**.`, foco: `Foco: ${topTrend.name}` },
+                card4: { title: "🏢 Recomendación", badge: `Score: ${topCrmClient.crm_lead_score}`, color: "#64748b", h3: `Plan para ${crmClientShort}`, p: `Siguiente paso: <strong>"${topCrmClient.crm_next_action}"</strong>.`, foco: `Acción: CRM B2B` },
+                diagnostico: `Análisis general para la semana de ${week}. Foco en categoría de ${topTrend.name}.`,
+                conclusion: `Implementar acciones preventivas y comerciales de acuerdo con las alertas del canal ${gapClientShort}.`
+            };
+        }
+
+        return narratives[week];
     }
 
     function renderOverviewDecisionCards() {
