@@ -538,24 +538,142 @@ def generate_week_data(date_str):
     processed_clients = []
     total_whitespaces = 0
     
+    # Determinar el tema y comportamiento según la fecha
+    theme = "Normal"
+    if date_str == "2026-05-21":
+        theme = "Pre-Cyber"
+    elif date_str == "2026-05-28":
+        theme = "CyberDay-Peak"
+    elif date_str == "2026-06-04":
+        theme = "Post-Cyber-Rain"
+    elif date_str in ["2026-06-11", "2026-06-12"]:
+        theme = "Supply-Disruption"
+    elif date_str == "2026-06-19":
+        theme = "Fathers-Day"
+    elif date_str == "2026-06-26":
+        theme = "Mid-Year-Audit"
+    elif date_str == "2026-07-03":
+        theme = "Logistics-Rush"
+    elif date_str == "2026-07-07":
+        theme = "Rainy-Season"
+
     for client_name, info in CLIENTS_RAW_DATA.items():
-        traffic = max(10, min(100, info["base_traffic"] + random.randint(-3, 3)))
-        brand_weight = round(max(5.0, min(100.0, info["own_brand"] + random.uniform(-1.5, 1.5))), 1)
+        # Ajustar tráfico base según el tema
+        traffic = info["base_traffic"]
+        if theme == "Pre-Cyber":
+            if client_name in ["INVERSIONES VIRTUAL MUEBLES S.A.S", "ALMACENES ÉXITO S.A.", "SODIMAC COLOMBIA S.A"]:
+                traffic += 3
+        elif theme == "CyberDay-Peak":
+            if client_name in ["INVERSIONES VIRTUAL MUEBLES S.A.S", "ALMACENES ÉXITO S.A.", "MOBBLY S.A.S", "CENCOSUD COLOMBIA SA"]:
+                traffic = 100  # Máximo tráfico para tiendas online
+            else:
+                traffic += 8
+        elif theme == "Post-Cyber-Rain":
+            traffic -= 5
+        elif theme == "Fathers-Day":
+            if client_name in ["INVERSIONES VIRTUAL MUEBLES S.A.S", "MOBBLY S.A.S", "CENCOSUD COLOMBIA SA"]:
+                traffic += 6
+        elif theme == "Rainy-Season":
+            if info["country"] == "Colombia":
+                traffic += 2
+        
+        traffic = max(10, min(100, traffic + random.randint(-1, 1)))
+        
+        brand_weight = round(max(5.0, min(100.0, info["own_brand"] + random.uniform(-1.0, 1.0))), 1)
         cleaned_cats = clean_advertising_noise(info["raw_menu_categories"])
-        cdt_focus, white_spaces = analyze_cdt_and_jtbd(client_name, cleaned_cats, info["products"])
+        
+        # Calcular foco CDT base y espacios
+        cdt_focus, base_white_spaces = analyze_cdt_and_jtbd(client_name, cleaned_cats, info["products"])
+        
+        # Copiar white spaces para modificarlos
+        white_spaces = list(base_white_spaces)
+        
+        # Modificar white_spaces y best_sellers según el tema de la semana
+        best_sellers = list(info["best_sellers"])
+        
+        if theme == "Pre-Cyber":
+            white_spaces.append("Riesgo de desabastecimiento: bajo inventario preventivo de melaminas antes del evento CyberDay.")
+            best_sellers = [
+                "Escritorio Home Office Smart 120cm",
+                "Modulo Fregadero 100cm MDP Estandar",
+                "Zapatero Basico 12 Pares"
+            ]
+        elif theme == "CyberDay-Peak":
+            if client_name in ["INVERSIONES VIRTUAL MUEBLES S.A.S", "ALMACENES EXITO S.A.", "SODIMAC COLOMBIA S.A", "CENCOSUD COLOMBIA SA"]:
+                white_spaces.append("Quiebre de stock critico en escritorios Home Office y Gamer debido a alta demanda CyberDay.")
+            else:
+                white_spaces.append("Brecha de visibilidad digital: Competencia acapara trafico publicitario con ofertas Cyber.")
+            best_sellers = [
+                "Escritorio Gamer Pro con Luces LED",
+                "Escritorio Plegable Work-Space",
+                "Centro de TV Nordico Blanco-Roble"
+            ]
+        elif theme == "Post-Cyber-Rain":
+            coastal_cities = ["Barranquilla", "Cartagena", "Manta", "Guayaquil", "Colon", "David", "Valparaiso", "Antofagasta", "Ciudad de Panama"]
+            is_coastal = any(any(c.lower() in city.lower() for c in coastal_cities) for city in info["cities"])
+            if is_coastal:
+                white_spaces.append("Deficit de portafolio hidrofugo (RH) en cocinas y banos expuestos a alta humedad y lluvias costeras.")
+                best_sellers = [
+                    "Modulo Fregadero MDP-RH 100cm",
+                    "Gabinete de Bano suspendido 60cm RH",
+                    "Mueble Lavamanos Split RH"
+                ]
+            else:
+                white_spaces.append("Agotamiento general de stock de melamina estandar tras despacho de pedidos CyberDay.")
+                best_sellers = [
+                    "Biblioteca Modular 5 Niveles",
+                    "Estanterias RTA Metalicas",
+                    "Mesa Auxiliar Multiusos"
+                ]
+        elif theme == "Supply-Disruption":
+            white_spaces.append("Quiebre de catalogo: Falta de melamina clara (Nordico/Rovere) por retrasos en puerto de importacion.")
+            best_sellers = [
+                "Closet RTA 4 Puertas Wengue",
+                "Centro de TV Florencia Wengue",
+                "Modulo Cocina con Meson de Acero"
+            ]
+        elif theme == "Fathers-Day":
+            white_spaces.append("Falta de muebles de bar y centros de entretenimiento de gran formato (+65 pulgadas) en catalogo de temporada.")
+            best_sellers = [
+                "Centro de TV Prime Nogal 55 pulgadas",
+                "Mesa de TV Flotante 140cm",
+                "Escritorio Gamer Pro con Luces LED"
+            ]
+        elif theme == "Mid-Year-Audit":
+            white_spaces.append("Brecha de costos: Competencia local lanza linea economica de 12mm. Se requiere reduccion de espesor para competir.")
+            best_sellers = [
+                "Closet RTA 3 Puertas Finlandek",
+                "Escritorio Compacto Office Finlandek",
+                "Zapatero Basico 12 Pares"
+            ]
+        elif theme == "Logistics-Rush":
+            white_spaces.append("Brecha de entrega: Sobrecupo logistico retrasa entregas de gran formato. Se requieren embalajes planos ultra-optimizados.")
+            best_sellers = [
+                "Zapatero RTA 12 Pares",
+                "Organizador Lavanderia Multi-espacio",
+                "Estanteria Multiusos 4 repisas"
+            ]
+        elif theme == "Rainy-Season":
+            white_spaces.append("Agotamiento de inventario de melamina hidrofuga (MDP-RH) ante la aceleracion de lluvias de la temporada.")
+            best_sellers = [
+                "Modulo Fregadero MDP-RH 100cm",
+                "Modulo Alto de Cocina 60cm MDP-RH",
+                "Alacena Organizadora Multiusos RH"
+            ]
+
         total_whitespaces += len(white_spaces)
         
         if "Benefit" in cdt_focus:
             cdt_tree = [
-                "1. Dimensiones y espacio disponible (Filtro numérico)",
-                "2. Resistencia del material (Aglomerado estándar vs Tablero RH)",
-                "3. Relación precio-capacidad de almacenado"
+                "1. Dimensiones y espacio disponible (Filtro numerico)",
+                "2. Resistencia del material (Aglomerado estandar vs Tablero RH)",
+                "3. Relacion precio-capacidad de almacenado"
             ]
         else:
             cdt_tree = [
-                "1. Combinación de colores y estilo estético (Nórdico, Wengue, Industrial)",
+                "1. Combinacion de colores y estilo estetico (Nordico, Wengue, Industrial)",
                 "2. Tipo de ensamble visual (Flotante, de patas de madera)",
-                "3. Calificaciones de diseño y reviews en web"
+                "3. Calificaciones de diseno y reviews en web"
             ]
 
         # CRM KPIs calculations
@@ -563,23 +681,40 @@ def generate_week_data(date_str):
         lead_score = int((traffic * (100 - brand_weight) * (whitespaces_count + 1)) / 150)
         lead_score = min(100, max(0, lead_score))
         
-        # Determine suggested pitch and commercial action
-        has_rh_gap = any("hidrófugo" in ws.lower() or "rh" in ws.lower() for ws in white_spaces)
-        has_assembly_gap = any("ensamble rápido" in ws.lower() or "click" in ws.lower() for ws in white_spaces)
-        if has_rh_gap:
-            suggested_pitch = "Ofrecer portafolio MDP-RH y Melamina Anti-humedad para Cocina/Baño"
-            next_action = "Programar visita presencial con el equipo técnico para certificar la resistencia a la humedad del portafolio MDP-RH y proponer el reemplazo de módulos de aglomerado estándar en zonas costeras."
+        # Determinar pitch y accion CRM segun la brecha principal añadida por el tema
+        has_rh_gap = any("hidrofugo" in ws.lower() or "rh" in ws.lower() for ws in white_spaces)
+        has_assembly_gap = any("ensamble rapido" in ws.lower() or "click" in ws.lower() for ws in white_spaces)
+        has_stockout_gap = any("desabastecimiento" in ws.lower() or "quiebre de stock" in ws.lower() for ws in white_spaces)
+        has_supply_gap = any("puerto" in ws.lower() or "importacion" in ws.lower() for ws in white_spaces)
+        has_price_gap = any("costos" in ws.lower() or "precio" in ws.lower() for ws in white_spaces)
+        has_logistics_gap = any("logistico" in ws.lower() or "entrega" in ws.lower() for ws in white_spaces)
+        
+        if has_stockout_gap:
+            suggested_pitch = "Presentar planes de abastecimiento de contingencia para alta demanda digital"
+            next_action = "Enviar propuesta comercial de reserva de capacidad de produccion de tableros de oficina para cubrir los quiebres del Cyber."
+        elif has_supply_gap:
+            suggested_pitch = "Ofrecer paleta de acabados alternativos de entrega rapida (Wengue y Blanco)"
+            next_action = "Enviar muestrarios fisicos de melamina Wengue y Blanco y agendar llamada con compras para autorizar la sustitucion temporal en catalogo."
+        elif has_rh_gap:
+            suggested_pitch = "Ofrecer portafolio MDP-RH y Melamina Anti-humedad para Cocina/Bano"
+            next_action = "Programar visita presencial con el equipo tecnico para certificar la resistencia a la humedad del portafolio MDP-RH y proponer el reemplazo de modulos en zonas costeras."
+        elif has_price_gap:
+            suggested_pitch = "Presentar optimizacion de espesores MDP estandar de 12mm/15mm para bajo costo"
+            next_action = "Presentar propuesta comercial de melamina de menor espesor para competir agresivamente en precios de entrada."
+        elif has_logistics_gap:
+            suggested_pitch = "Proponer empaque modular plano super-optimizado para optimizacion de fletes B2B"
+            next_action = "Programar reunion tecnica para presentar el nuevo diseno de empaque plano modularizado que reduce el volumen logistico."
         elif has_assembly_gap:
-            suggested_pitch = "Promocionar sistemas Click de Ensamble Rápido sin tornillos"
-            next_action = "Enviar muestras físicas de los tableros con herraje Click de ensamble rápido y agendar una demo virtual de 15 minutos para demostrar el ahorro de tiempo al comprador digital joven."
+            suggested_pitch = "Promocionar sistemas Click de Ensamble Rapido sin tornillos"
+            next_action = "Enviar muestras fisicas de los tableros con herraje Click de ensamble rapido y agendar una demo virtual de 15 minutos para demostrar el ahorro de tiempo al comprador digital."
         elif "Benefit" in cdt_focus:
-            suggested_pitch = "Presentar optimización de espesores MDP estándar para alto volumen"
-            next_action = "Presentar propuesta de cotización preferencial en tableros de melamina estándar con espesores optimizados para grandes distribuidores que buscan liderar en precio."
+            suggested_pitch = "Presentar optimizacion de espesores MDP estandar para alto volumen"
+            next_action = "Presentar propuesta de cotizacion preferencial en tableros de melamina estandar con espesores optimizados para grandes distribuidores."
         else:
-            suggested_pitch = "Presentar nuevos acabados estéticos de tendencia (Nórdico, Wengue y Gamer)"
-            next_action = "Coordinar sesión de co-creación de diseño con su equipo de compras para presentar la nueva paleta de colores de tendencia (Rovere, Nórdico, Wengue y Gamer) y planificar la renovación del catálogo."
+            suggested_pitch = "Presentar nuevos acabados esteticos de tendencia (Nordico, Wengue y Gamer)"
+            next_action = "Coordinar sesion de co-creacion de diseno con su equipo de compras para presentar la nueva paleta de colores de tendencia y planificar la renovacion del catalogo."
             
-        coastal_cities = ["Barranquilla", "Cartagena", "Manta", "Guayaquil", "Colón", "David", "Valparaíso", "Antofagasta", "Ciudad de Panamá"]
+        coastal_cities = ["Barranquilla", "Cartagena", "Manta", "Guayaquil", "Colon", "David", "Valparaiso", "Antofagasta", "Ciudad de Panama"]
         is_coastal = any(any(c.lower() in city.lower() for c in coastal_cities) for city in info["cities"])
         coastal_churn_risk = is_coastal and has_rh_gap
             
@@ -587,7 +722,7 @@ def generate_week_data(date_str):
             "name": client_name,
             "country": info["country"],
             "cities": info["cities"],
-            "best_sellers": info["best_sellers"],
+            "best_sellers": best_sellers,
             "future_sources": info["future_sources"],
             "menu_hierarchy": cleaned_cats,
             "cdt_focus": cdt_focus,
@@ -603,14 +738,40 @@ def generate_week_data(date_str):
             "coastal_churn_risk": coastal_churn_risk
         })
         
-    dominant_trend = "Benefit-Driven (RH & Ensamble)" if total_whitespaces > 6 else "Design-Driven (Estética & Estilos)"
+    dominant_trend = "Benefit-Driven (RH & Ensamble)" if total_whitespaces > 6 else "Design-Driven (Estetica & Estilos)"
     
+    # Mapear coordenadas de tendencias dinamicamente segun el tema de la semana
+    x_offset = {"Cocinas Modulares": 0, "Home Office": 0, "Centros de TV": 0, "Dormitorio RTA": 0, "Banos RH": 0}
+    y_offset = {"Cocinas Modulares": 0, "Home Office": 0, "Centros de TV": 0, "Dormitorio RTA": 0, "Banos RH": 0}
+    
+    if theme == "Pre-Cyber":
+        x_offset["Home Office"] = 5
+        x_offset["Centros de TV"] = 2
+    elif theme == "CyberDay-Peak":
+        x_offset["Home Office"] = 20
+        y_offset["Home Office"] = 15
+        x_offset["Centros de TV"] = 10
+        y_offset["Centros de TV"] = 8
+    elif theme == "Post-Cyber-Rain":
+        x_offset["Home Office"] = -10
+        x_offset["Banos RH"] = 10
+        y_offset["Banos RH"] = 8
+    elif theme == "Supply-Disruption":
+        x_offset["Cocinas Modulares"] = -5
+        x_offset["Home Office"] = -5
+    elif theme == "Fathers-Day":
+        x_offset["Centros de TV"] = 15
+        y_offset["Centros de TV"] = 12
+    elif theme == "Rainy-Season":
+        x_offset["Banos RH"] = 25
+        y_offset["Banos RH"] = 20
+        
     trends = [
-        {"name": "Cocinas Modulares", "x": max(10, min(100, 75 + random.randint(-2, 2))), "y": max(10, min(100, 85 + random.randint(-1, 1))), "phase": "Madurez"},
-        {"name": "Home Office", "x": max(10, min(100, 45 + random.randint(-3, 3))), "y": max(10, min(100, 60 + random.randint(-2, 2))), "phase": "Crecimiento"},
-        {"name": "Centros de TV", "x": max(10, min(100, 60 + random.randint(-1, 1))), "y": max(10, min(100, 70 + random.randint(-2, 2))), "phase": "Crecimiento"},
-        {"name": "Dormitorio RTA", "x": max(10, min(100, 80 + random.randint(-1, 2))), "y": max(10, min(100, 50 + random.randint(-3, 1))), "phase": "Madurez"},
-        {"name": "Baños RH", "x": max(10, min(100, 35 + random.randint(-4, 4))), "y": max(10, min(100, 42 + random.randint(-2, 4))), "phase": "Introducción"}
+        {"name": "Cocinas Modulares", "x": max(10, min(100, 75 + x_offset["Cocinas Modulares"] + random.randint(-1, 1))), "y": max(10, min(100, 85 + y_offset["Cocinas Modulares"])), "phase": "Madurez"},
+        {"name": "Home Office", "x": max(10, min(100, 45 + x_offset["Home Office"] + random.randint(-1, 1))), "y": max(10, min(100, 60 + y_offset["Home Office"])), "phase": "Crecimiento"},
+        {"name": "Centros de TV", "x": max(10, min(100, 60 + x_offset["Centros de TV"] + random.randint(-1, 1))), "y": max(10, min(100, 70 + y_offset["Centros de TV"])), "phase": "Crecimiento"},
+        {"name": "Dormitorio RTA", "x": max(10, min(100, 80 + x_offset["Dormitorio RTA"] + random.randint(-1, 1))), "y": max(10, min(100, 50 + y_offset["Dormitorio RTA"])), "phase": "Madurez"},
+        {"name": "Banos RH", "x": max(10, min(100, 35 + x_offset["Banos RH"] + random.randint(-1, 1))), "y": max(10, min(100, 42 + y_offset["Banos RH"])), "phase": "Introduccion"}
     ]
     
     return {
@@ -619,7 +780,6 @@ def generate_week_data(date_str):
         "trends": trends,
         "clients": processed_clients
     }
-
 
 def main():
     print("Iniciando actualización semanal de Inteligencia RTA...")
@@ -679,87 +839,13 @@ def main():
         print(f"Generando datos para la semana actual: {today_str}")
         history[today_str] = generate_week_data(today_str)
     
-    # Pre-cargar semanas históricas reales si el historial está vacío o solo contiene el día de hoy
-    if len(history) <= 1:
-        # Generar lote base temporal de clientes procesados para derivar los históricos
-        base_week = generate_week_data(today_str)
-        processed_clients = base_week["clients"]
-        
-        # 1. Post-Cyber & Coastal Rain Week (2026-06-04)
-        c_06_04 = []
-        tot_ws_06_04 = 0
-        for c in processed_clients:
-            c_copy = json.loads(json.dumps(c))
-            c_copy["traffic_score"] = max(10, c_copy["traffic_score"] - 3)
-            if c_copy["name"] == "GRUPO CORONA Y ALIADOS":
-                c_copy["white_spaces"].append("Déficit de portafolio hidrófugo (RH) en mueble de lavamanos suspendido (Zona Norte).")
-            tot_ws_06_04 += len(c_copy["white_spaces"])
-            c_copy["crm_lead_score"] = min(100, max(0, int((c_copy["traffic_score"] * (100 - c_copy["own_brand_weight"]) * (len(c_copy["white_spaces"]) + 1)) / 150)))
-            c_06_04.append(c_copy)
+    # Pre-cargar semanas históricas reales de manera dinámica
+    historical_weeks = ["2026-05-21", "2026-05-28", "2026-06-04", "2026-06-11", "2026-06-12", "2026-06-19", "2026-06-26", "2026-07-03"]
+    for w_date in historical_weeks:
+        if w_date not in history:
+            print(f"Pre-cargando semana histórica dinámica: {w_date}")
+            history[w_date] = generate_week_data(w_date)
             
-        history["2026-06-04"] = {
-            "dominant_trend": "Benefit-Driven (RH & Ensamble)",
-            "total_whitespaces": tot_ws_06_04,
-            "trends": [
-                {"name": "Cocinas Modulares", "x": 74, "y": 84, "phase": "Madurez"},
-                {"name": "Home Office", "x": 46, "y": 58, "phase": "Crecimiento"},
-                {"name": "Centros de TV", "x": 60, "y": 68, "phase": "Crecimiento"},
-                {"name": "Dormitorio RTA", "x": 79, "y": 50, "phase": "Madurez"},
-                {"name": "Baños RH", "x": 36, "y": 42, "phase": "Introducción"}
-            ],
-            "clients": c_06_04
-        }
-        
-        # 2. CyberDay Latam Peak Week (2026-05-28)
-        c_05_28 = []
-        tot_ws_05_28 = 0
-        for c in processed_clients:
-            c_copy = json.loads(json.dumps(c))
-            c_copy["traffic_score"] = min(100, c_copy["traffic_score"] + 12)
-            if c_copy["name"] in ["ALMACENES ÉXITO S.A.", "INVERSIONES VIRTUAL MUEBLES S.A.S"]:
-                c_copy["white_spaces"].append("Quiebre de stock crítico en escritorios Home Office debido a alta demanda Cyber.")
-            tot_ws_05_28 += len(c_copy["white_spaces"])
-            c_copy["crm_lead_score"] = min(100, max(0, int((c_copy["traffic_score"] * (100 - c_copy["own_brand_weight"]) * (len(c_copy["white_spaces"]) + 1)) / 150)))
-            c_05_28.append(c_copy)
-            
-        history["2026-05-28"] = {
-            "dominant_trend": "Design-Driven (Estética & Estilos)",
-            "total_whitespaces": tot_ws_05_28,
-            "trends": [
-                {"name": "Cocinas Modulares", "x": 72, "y": 80, "phase": "Madurez"},
-                {"name": "Home Office", "x": 58, "y": 75, "phase": "Crecimiento"},
-                {"name": "Centros de TV", "x": 65, "y": 74, "phase": "Crecimiento"},
-                {"name": "Dormitorio RTA", "x": 78, "y": 48, "phase": "Madurez"},
-                {"name": "Baños RH", "x": 34, "y": 38, "phase": "Introducción"}
-            ],
-            "clients": c_05_28
-        }
-        
-        # 3. Pre-Cyber Preparation Week (2026-05-21)
-        c_05_21 = []
-        tot_ws_05_21 = 0
-        for c in processed_clients:
-            c_copy = json.loads(json.dumps(c))
-            c_copy["traffic_score"] = max(10, c_copy["traffic_score"] - 5)
-            if c_copy["name"] == "GRUPO CORONA Y ALIADOS":
-                c_copy["white_spaces"].append("Déficit de portafolio hidrófugo (RH) en mueble de lavamanos suspendido (Zona Norte).")
-            tot_ws_05_21 += len(c_copy["white_spaces"])
-            c_copy["crm_lead_score"] = min(100, max(0, int((c_copy["traffic_score"] * (100 - c_copy["own_brand_weight"]) * (len(c_copy["white_spaces"]) + 1)) / 150)))
-            c_05_21.append(c_copy)
-            
-        history["2026-05-21"] = {
-            "dominant_trend": "Benefit-Driven (RH & Ensamble)",
-            "total_whitespaces": tot_ws_05_21,
-            "trends": [
-                {"name": "Cocinas Modulares", "x": 73, "y": 82, "phase": "Madurez"},
-                {"name": "Home Office", "x": 44, "y": 56, "phase": "Crecimiento"},
-                {"name": "Centros de TV", "x": 59, "y": 66, "phase": "Crecimiento"},
-                {"name": "Dormitorio RTA", "x": 79, "y": 49, "phase": "Madurez"},
-                {"name": "Baños RH", "x": 35, "y": 40, "phase": "Introducción"}
-            ],
-            "clients": c_05_21
-        }
-        
     final_data = {
         "current_date": today_str,
         "history": history

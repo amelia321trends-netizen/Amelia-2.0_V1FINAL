@@ -423,25 +423,59 @@ function Analyze-CDTAndJTBD {
 }
 
 function New-WeekData {
+    param([string]$dateStr)
     $processedClients = @()
     $totalWhitespaces = 0
     $rand = New-Object System.Random
+
+    # Determinar el tema y comportamiento según la fecha
+    $theme = "Normal"
+    if ($dateStr -eq "2026-05-21") { $theme = "Pre-Cyber" }
+    elseif ($dateStr -eq "2026-05-28") { $theme = "CyberDay-Peak" }
+    elseif ($dateStr -eq "2026-06-04") { $theme = "Post-Cyber-Rain" }
+    elseif ($dateStr -eq "2026-06-11" -or $dateStr -eq "2026-06-12") { $theme = "Supply-Disruption" }
+    elseif ($dateStr -eq "2026-06-19") { $theme = "Fathers-Day" }
+    elseif ($dateStr -eq "2026-06-26") { $theme = "Mid-Year-Audit" }
+    elseif ($dateStr -eq "2026-07-03") { $theme = "Logistics-Rush" }
+    elseif ($dateStr -eq "2026-07-07") { $theme = "Rainy-Season" }
 
     foreach ($entry in $ClientsData.GetEnumerator()) {
         $clientName = $entry.Key
         $info = $entry.Value
         
-        $traffic = $info.base_traffic + $rand.Next(-3, 4)
+        $traffic = $info.base_traffic
+        if ($theme -eq "Pre-Cyber") {
+            if ($clientName -in "INVERSIONES VIRTUAL MUEBLES S.A.S", "ALMACENES EXITO S.A.", "SODIMAC COLOMBIA S.A") {
+                $traffic += 3
+            }
+        } elseif ($theme -eq "CyberDay-Peak") {
+            if ($clientName -in "INVERSIONES VIRTUAL MUEBLES S.A.S", "ALMACENES EXITO S.A.", "MOBBLY S.A.S", "CENCOSUD COLOMBIA SA") {
+                $traffic = 100
+            } else {
+                $traffic += 8
+            }
+        } elseif ($theme -eq "Post-Cyber-Rain") {
+            $traffic -= 5
+        } elseif ($theme -eq "Fathers-Day") {
+            if ($clientName -in "INVERSIONES VIRTUAL MUEBLES S.A.S", "MOBBLY S.A.S", "CENCOSUD COLOMBIA SA") {
+                $traffic += 6
+            }
+        } elseif ($theme -eq "Rainy-Season") {
+            if ($info.country -eq "Colombia") {
+                $traffic += 2
+            }
+        }
+
+        $traffic = $traffic + $rand.Next(-1, 2)
         if ($traffic -lt 10) { $traffic = 10 }
         if ($traffic -gt 100) { $traffic = 100 }
         
-        $brandWeight = [Math]::Round($info.own_brand + ($rand.NextDouble() * 3.0 - 1.5), 1)
+        $brandWeight = [Math]::Round($info.own_brand + ($rand.NextDouble() * 2.0 - 1.0), 1)
         $cleanedCats = Clean-AdvertisingNoise $info.raw_menu_categories
         
         $analysisResult = Analyze-CDTAndJTBD -cleanedCategories $cleanedCats -products $info.products
         $cdtFocus = $analysisResult.cdtFocus
         
-        # Asegurar que whiteSpaces siempre sea un ArrayList para evitar errores de tipo al agregar elementos mas tarde
         $whiteSpaces = [System.Collections.ArrayList]::new()
         if ($analysisResult.whiteSpaces -is [System.Collections.IList] -or $analysisResult.whiteSpaces -is [System.Array]) {
             foreach ($item in $analysisResult.whiteSpaces) { $whiteSpaces.Add($item) | Out-Null }
@@ -449,6 +483,80 @@ function New-WeekData {
             $whiteSpaces.Add($analysisResult.whiteSpaces) | Out-Null
         }
         
+        # Modificar white_spaces y best_sellers según el tema
+        $bestSellers = [System.Collections.ArrayList]::new()
+        foreach ($item in $info.best_sellers) { $bestSellers.Add($item) | Out-Null }
+
+        if ($theme -eq "Pre-Cyber") {
+            $whiteSpaces.Add("Riesgo de desabastecimiento: bajo inventario preventivo de melaminas antes del evento CyberDay.") | Out-Null
+            $bestSellers.Clear()
+            $bestSellers.Add("Escritorio Home Office Smart 120cm") | Out-Null
+            $bestSellers.Add("Modulo Fregadero 100cm MDP Estandar") | Out-Null
+            $bestSellers.Add("Zapatero Basico 12 Pares") | Out-Null
+        } elseif ($theme -eq "CyberDay-Peak") {
+            if ($clientName -in "INVERSIONES VIRTUAL MUEBLES S.A.S", "ALMACENES EXITO S.A.", "SODIMAC COLOMBIA S.A", "CENCOSUD COLOMBIA SA") {
+                $whiteSpaces.Add("Quiebre de stock critico en escritorios Home Office y Gamer debido a alta demanda CyberDay.") | Out-Null
+            } else {
+                $whiteSpaces.Add("Brecha de visibilidad digital: Competencia acapara trafico publicitario con ofertas Cyber.") | Out-Null
+            }
+            $bestSellers.Clear()
+            $bestSellers.Add("Escritorio Gamer Pro con Luces LED") | Out-Null
+            $bestSellers.Add("Escritorio Plegable Work-Space") | Out-Null
+            $bestSellers.Add("Centro de TV Nordico Blanco-Roble") | Out-Null
+        } elseif ($theme -eq "Post-Cyber-Rain") {
+            $coastalCities = @("Barranquilla", "Cartagena", "Manta", "Guayaquil", "Colon", "David", "Valparaiso", "Antofagasta", "Ciudad de Panama")
+            $isCoastal = $false
+            foreach ($city in $info.cities) {
+                foreach ($cc in $coastalCities) {
+                    if ($city.ToLower() -like "*$($cc.ToLower())*") { $isCoastal = $true; break }
+                }
+                if ($isCoastal) { break }
+            }
+            if ($isCoastal) {
+                $whiteSpaces.Add("Deficit de portafolio hidrofugo (RH) en cocinas y banos expuestos a alta humedad y lluvias costeras.") | Out-Null
+                $bestSellers.Clear()
+                $bestSellers.Add("Modulo Fregadero MDP-RH 100cm") | Out-Null
+                $bestSellers.Add("Gabinete de Bano suspendido 60cm RH") | Out-Null
+                $bestSellers.Add("Mueble Lavamanos Split RH") | Out-Null
+            } else {
+                $whiteSpaces.Add("Agotamiento general de stock de melamina estandar tras despacho de pedidos CyberDay.") | Out-Null
+                $bestSellers.Clear()
+                $bestSellers.Add("Biblioteca Modular 5 Niveles") | Out-Null
+                $bestSellers.Add("Estanterias RTA Metalicas") | Out-Null
+                $bestSellers.Add("Mesa Auxiliar Multiusos") | Out-Null
+            }
+        } elseif ($theme -eq "Supply-Disruption") {
+            $whiteSpaces.Add("Quiebre de catalogo: Falta de melamina clara (Nordico/Rovere) por retrasos en puerto de importacion.") | Out-Null
+            $bestSellers.Clear()
+            $bestSellers.Add("Closet RTA 4 Puertas Wengue") | Out-Null
+            $bestSellers.Add("Centro de TV Florencia Wengue") | Out-Null
+            $bestSellers.Add("Modulo Cocina con Meson de Acero") | Out-Null
+        } elseif ($theme -eq "Fathers-Day") {
+            $whiteSpaces.Add("Falta de muebles de bar y centros de entretenimiento de gran formato (+65 pulgadas) en catalogo de temporada.") | Out-Null
+            $bestSellers.Clear()
+            $bestSellers.Add("Centro de TV Prime Nogal 55 pulgadas") | Out-Null
+            $bestSellers.Add("Mesa de TV Flotante 140cm") | Out-Null
+            $bestSellers.Add("Escritorio Gamer Pro con Luces LED") | Out-Null
+        } elseif ($theme -eq "Mid-Year-Audit") {
+            $whiteSpaces.Add("Brecha de costos: Competencia local lanza linea economica de 12mm. Se requiere reduccion de espesor para competir.") | Out-Null
+            $bestSellers.Clear()
+            $bestSellers.Add("Closet RTA 3 Puertas Finlandek") | Out-Null
+            $bestSellers.Add("Escritorio Compacto Office Finlandek") | Out-Null
+            $bestSellers.Add("Zapatero Basico 12 Pares") | Out-Null
+        } elseif ($theme -eq "Logistics-Rush") {
+            $whiteSpaces.Add("Brecha de entrega: Sobrecupo logistico retrasa entregas de gran formato. Se requieren embalajes planos ultra-optimizados.") | Out-Null
+            $bestSellers.Clear()
+            $bestSellers.Add("Zapatero RTA 12 Pares") | Out-Null
+            $bestSellers.Add("Organizador Lavanderia Multi-espacio") | Out-Null
+            $bestSellers.Add("Estanteria Multiusos 4 repisas") | Out-Null
+        } elseif ($theme -eq "Rainy-Season") {
+            $whiteSpaces.Add("Agotamiento de inventario de melamina hidrofuga (MDP-RH) ante la aceleracion de lluvias de la temporada.") | Out-Null
+            $bestSellers.Clear()
+            $bestSellers.Add("Modulo Fregadero MDP-RH 100cm") | Out-Null
+            $bestSellers.Add("Modulo Alto de Cocina 60cm MDP-RH") | Out-Null
+            $bestSellers.Add("Alacena Organizadora Multiusos RH") | Out-Null
+        }
+
         $totalWhitespaces += $whiteSpaces.Count
         
         if ($cdtFocus -like "*Benefit*") {
@@ -471,50 +579,66 @@ function New-WeekData {
         if ($leadScore -lt 0) { $leadScore = 0 }
         if ($leadScore -gt 100) { $leadScore = 100 }
         
-        $suggestedPitch = "Ofrecer optimizacion de costos en tableros de MDP estandar de alto trafico"
+        # Determinar pitch y accion CRM segun las brechas
         $hasRhGap = $false
         $hasAssemblyGap = $false
+        $hasStockoutGap = $false
+        $hasSupplyGap = $false
+        $hasPriceGap = $false
+        $hasLogisticsGap = $false
+        
         foreach ($ws in $whiteSpaces) {
             if ($ws.ToLower() -like "*hidrofugo*" -or $ws.ToLower() -like "*rh*") { $hasRhGap = $true }
             if ($ws.ToLower() -like "*ensamble rapido*" -or $ws.ToLower() -like "*click*") { $hasAssemblyGap = $true }
+            if ($ws.ToLower() -like "*desabastecimiento*" -or $ws.ToLower() -like "*quiebre de stock*") { $hasStockoutGap = $true }
+            if ($ws.ToLower() -like "*puerto*" -or $ws.ToLower() -like "*importacion*") { $hasSupplyGap = $true }
+            if ($ws.ToLower() -like "*costos*" -or $ws.ToLower() -like "*precio*") { $hasPriceGap = $true }
+            if ($ws.ToLower() -like "*logistico*" -or $ws.ToLower() -like "*entrega*") { $hasLogisticsGap = $true }
         }
         
-        $nextAction = "Coordinar sesion de co-creacion de diseno con su equipo de compras para presentar la nueva paleta de colores de tendencia (Rovere, Nordico, Wengue and Gamer) y planificar la renovacion del catalogo."
-        if ($hasRhGap) {
+        $suggestedPitch = "Ofrecer optimizacion de costos en tableros de MDP estandar de alto trafico"
+        $nextAction = "Coordinar sesion de co-creacion de diseno con su equipo de compras para presentar la nueva paleta de colores de tendencia y planificar la renovacion del catalogo."
+        
+        if ($hasStockoutGap) {
+            $suggestedPitch = "Presentar planes de abastecimiento de contingencia para alta demanda digital"
+            $nextAction = "Enviar propuesta comercial de reserva de capacidad de produccion de tableros de oficina para cubrir los quiebres del Cyber."
+        } elseif ($hasSupplyGap) {
+            $suggestedPitch = "Ofrecer paleta de acabados alternativos de entrega rapida (Wengue y Blanco)"
+            $nextAction = "Enviar muestrarios fisicos de melamina Wengue y Blanco y agendar llamada con compras para autorizar la sustitucion temporal en catalogo."
+        } elseif ($hasRhGap) {
             $suggestedPitch = "Ofrecer portafolio MDP-RH y Melamina Anti-humedad para Cocina/Bano"
-            $nextAction = "Programar visita presencial con el equipo tecnico para certificar la resistencia a la humedad del portafolio MDP-RH y proponer el reemplazo de modulos de aglomerado estandar en zonas costeras."
+            $nextAction = "Programar visita presencial con el equipo tecnico para certificar la resistencia a la humedad del portafolio MDP-RH y proponer el reemplazo de modulos en zonas costeras."
+        } elseif ($hasPriceGap) {
+            $suggestedPitch = "Presentar optimizacion de espesores MDP estandar de 12mm/15mm para bajo costo"
+            $nextAction = "Presentar propuesta comercial de melamina de menor espesor para competir agresivamente en precios de entrada."
+        } elseif ($hasLogisticsGap) {
+            $suggestedPitch = "Proponer empaque modular plano super-optimizado para optimizacion de fletes B2B"
+            $nextAction = "Programar reunion tecnica para presentar el nuevo diseno de empaque plano modularizado que reduce el volumen logistico."
         } elseif ($hasAssemblyGap) {
             $suggestedPitch = "Promocionar sistemas Click de Ensamble Rapido sin tornillos"
-            $nextAction = "Enviar muestras fisicas de los tableros con herraje Click de ensamble rapido y agendar una demo virtual de 15 minutos para demostrar el ahorro de tiempo al comprador digital joven."
+            $nextAction = "Enviar muestras fisicas de los tableros con herraje Click de ensamble rapido y agendar una demo virtual de 15 minutos para demostrar el ahorro de tiempo al comprador digital."
         } elseif ($cdtFocus -like "*Benefit*") {
             $suggestedPitch = "Presentar optimizacion de espesores MDP estandar para alto volumen"
-            $nextAction = "Presentar propuesta de cotizacion preferencial en tableros de melamina estandar con espesores optimizados para grandes distribuidores que buscan liderar en precio."
-        } else {
-            $suggestedPitch = "Presentar nuevos acabados esteticos de tendencia (Nordico, Wengue y Gamer)"
+            $nextAction = "Presentar propuesta de cotizacion preferencial en tableros de melamina estandar con espesores optimizados para grandes distribuidores."
         }
         
         $coastalCities = @("Barranquilla", "Cartagena", "Manta", "Guayaquil", "Colon", "David", "Valparaiso", "Antofagasta", "Ciudad de Panama")
         $isCoastal = $false
         foreach ($city in $info.cities) {
             foreach ($cc in $coastalCities) {
-                if ($city.ToLower() -like "*$($cc.ToLower())*") {
-                    $isCoastal = $true
-                    break
-                }
+                if ($city.ToLower() -like "*$($cc.ToLower())*") { $isCoastal = $true; break }
             }
             if ($isCoastal) { break }
         }
         
         $coastalChurnRisk = $false
-        if ($isCoastal -and $hasRhGap) {
-            $coastalChurnRisk = $true
-        }
+        if ($isCoastal -and $hasRhGap) { $coastalChurnRisk = $true }
 
         $clientHash = @{
             name = $clientName
             country = $info.country
             cities = $info.cities
-            best_sellers = $info.best_sellers
+            best_sellers = @($bestSellers)
             future_sources = $info.future_sources
             menu_hierarchy = $cleanedCats
             cdt_focus = $cdtFocus
@@ -523,7 +647,7 @@ function New-WeekData {
             traffic_score = $traffic
             competitive_set = $info.competitive_set
             jtbd = $info.jtbd
-            white_spaces = $whiteSpaces
+            white_spaces = @($whiteSpaces)
             crm_lead_score = $leadScore
             crm_suggested_pitch = $suggestedPitch
             crm_next_action = $nextAction
@@ -538,13 +662,39 @@ function New-WeekData {
         $dominantTrend = "Design-Driven (Estetica & Estilos)"
     }
     
-    # Matriz de tendencias
+    # Coordenadas dinamicas de tendencias en PS
+    $x_off = @{"Cocinas Modulares"=0; "Home Office"=0; "Centros de TV"=0; "Dormitorio RTA"=0; "Banos RH"=0}
+    $y_off = @{"Cocinas Modulares"=0; "Home Office"=0; "Centros de TV"=0; "Dormitorio RTA"=0; "Banos RH"=0}
+    
+    if ($theme -eq "Pre-Cyber") {
+        $x_off["Home Office"] = 5
+        $x_off["Centros de TV"] = 2
+    } elseif ($theme -eq "CyberDay-Peak") {
+        $x_off["Home Office"] = 20
+        $y_off["Home Office"] = 15
+        $x_off["Centros de TV"] = 10
+        $y_off["Centros de TV"] = 8
+    } elseif ($theme -eq "Post-Cyber-Rain") {
+        $x_off["Home Office"] = -10
+        $x_off["Banos RH"] = 10
+        $y_off["Banos RH"] = 8
+    } elseif ($theme -eq "Supply-Disruption") {
+        $x_off["Cocinas Modulares"] = -5
+        $x_off["Home Office"] = -5
+    } elseif ($theme -eq "Fathers-Day") {
+        $x_off["Centros de TV"] = 15
+        $y_off["Centros de TV"] = 12
+    } elseif ($theme -eq "Rainy-Season") {
+        $x_off["Banos RH"] = 25
+        $y_off["Banos RH"] = 20
+    }
+    
     $trends = @(
-        @{ name = "Cocinas Modulares"; x = (75 + $rand.Next(-2, 3)); y = (85 + $rand.Next(-1, 2)); phase = "Madurez" },
-        @{ name = "Home Office"; x = (45 + $rand.Next(-3, 4)); y = (60 + $rand.Next(-2, 3)); phase = "Crecimiento" },
-        @{ name = "Centros de TV"; x = (60 + $rand.Next(-1, 2)); y = (70 + $rand.Next(-2, 3)); phase = "Crecimiento" },
-        @{ name = "Dormitorio RTA"; x = (80 + $rand.Next(-1, 3)); y = (50 + $rand.Next(-3, 2)); phase = "Madurez" },
-        @{ name = "Banos RH"; x = (35 + $rand.Next(-4, 5)); y = (42 + $rand.Next(-2, 5)); phase = "Introduccion" }
+        @{ name = "Cocinas Modulares"; x = [Math]::Max(10, [Math]::Min(100, (75 + $x_off["Cocinas Modulares"] + $rand.Next(-1, 2)))); y = [Math]::Max(10, [Math]::Min(100, (85 + $y_off["Cocinas Modulares"]))); phase = "Madurez" },
+        @{ name = "Home Office"; x = [Math]::Max(10, [Math]::Min(100, (45 + $x_off["Home Office"] + $rand.Next(-1, 2)))); y = [Math]::Max(10, [Math]::Min(100, (60 + $y_off["Home Office"]))); phase = "Crecimiento" },
+        @{ name = "Centros de TV"; x = [Math]::Max(10, [Math]::Min(100, (60 + $x_off["Centros de TV"] + $rand.Next(-1, 2)))); y = [Math]::Max(10, [Math]::Min(100, (70 + $y_off["Centros de TV"]))); phase = "Crecimiento" },
+        @{ name = "Dormitorio RTA"; x = [Math]::Max(10, [Math]::Min(100, (80 + $x_off["Dormitorio RTA"] + $rand.Next(-1, 2)))); y = [Math]::Max(10, [Math]::Min(100, (50 + $y_off["Dormitorio RTA"]))); phase = "Madurez" },
+        @{ name = "Banos RH"; x = [Math]::Max(10, [Math]::Min(100, (35 + $x_off["Banos RH"] + $rand.Next(-1, 2)))); y = [Math]::Max(10, [Math]::Min(100, (42 + $y_off["Banos RH"]))); phase = "Introduccion" }
     )
 
     return @{
@@ -641,7 +791,7 @@ if ($history.Count -gt 0) {
             $currentDateStr = $currentDate.ToString("yyyy-MM-dd")
             if (-not $history.ContainsKey($currentDateStr)) {
                 Write-Host "Rellenando semana faltante en historial (PS): $currentDateStr" -ForegroundColor Yellow
-                $history[$currentDateStr] = New-WeekData
+                $history[$currentDateStr] = New-WeekData -dateStr $currentDateStr
             }
             $currentDate = $currentDate.AddDays(7)
         }
@@ -652,106 +802,15 @@ if ($history.Count -gt 0) {
 
 if (-not $history.ContainsKey($todayStr)) {
     Write-Host "Generando datos para la semana actual (PS): $todayStr" -ForegroundColor Yellow
-    $history[$todayStr] = New-WeekData
+    $history[$todayStr] = New-WeekData -dateStr $todayStr
 }
 
-# Pre-cargar semanas históricas si es la primera ejecución (historial vacío o solo con hoy)
-if ($history.Count -le 1) {
-    $processedClients = $history[$todayStr].clients
-    # Deep clone del cliente usando serialización a JSON temporal para evitar duplicar referencias
-    $processedClientsJson = ConvertTo-Json $processedClients -Depth 10
-
-    # --- 1. Post-Cyber & Coastal Rain Week (2026-06-04) ---
-    $c_06_04 = Convert-PSCustomObjectToHashtable -InputObject (ConvertFrom-Json $processedClientsJson)
-    $tot_ws_06_04 = 0
-    foreach ($c in $c_06_04) {
-        $newTraffic = $c.traffic_score - 3
-        if ($newTraffic -lt 10) { $newTraffic = 10 }
-        $c.traffic_score = $newTraffic
-        
-        if ($c.name -eq "GRUPO CORONA Y ALIADOS") {
-            $c.white_spaces.Add("Deficit de portafolio hidrofugo (RH) en mueble de lavamanos suspendido (Zona Norte).") | Out-Null
-        }
-        $tot_ws_06_04 += $c.white_spaces.Count
-        
-        $leadScore = [int]([Math]::Floor(($c.traffic_score * (100 - $c.own_brand_weight) * ($c.white_spaces.Count + 1)) / 150))
-        if ($leadScore -lt 0) { $leadScore = 0 }
-        if ($leadScore -gt 100) { $leadScore = 100 }
-        $c.crm_lead_score = $leadScore
-    }
-    $history["2026-06-04"] = @{
-        dominant_trend = "Benefit-Driven (RH & Ensamble)"
-        total_whitespaces = $tot_ws_06_04
-        trends = @(
-            @{ name = "Cocinas Modulares"; x = 74; y = 84; phase = "Madurez" },
-            @{ name = "Home Office"; x = 46; y = 58; phase = "Crecimiento" },
-            @{ name = "Centros de TV"; x = 60; y = 68; phase = "Crecimiento" },
-            @{ name = "Dormitorio RTA"; x = 79; y = 50; phase = "Madurez" },
-            @{ name = "Banos RH"; x = 36; y = 42; phase = "Introduccion" }
-        )
-        clients = $c_06_04
-    }
-
-    # --- 2. CyberDay Peak Week (2026-05-28) ---
-    $c_05_28 = Convert-PSCustomObjectToHashtable -InputObject (ConvertFrom-Json $processedClientsJson)
-    $tot_ws_05_28 = 0
-    foreach ($c in $c_05_28) {
-        $newTraffic = $c.traffic_score + 12
-        if ($newTraffic -gt 100) { $newTraffic = 100 }
-        $c.traffic_score = $newTraffic
-        
-        if ($c.name -eq "ALMACENES EXITO S.A." -or $c.name -eq "INVERSIONES VIRTUAL MUEBLES S.A.S") {
-            $c.white_spaces.Add("Quiebre de stock critico en escritorios Home Office debido a alta demanda Cyber.") | Out-Null
-        }
-        $tot_ws_05_28 += $c.white_spaces.Count
-        
-        $leadScore = [int]([Math]::Floor(($c.traffic_score * (100 - $c.own_brand_weight) * ($c.white_spaces.Count + 1)) / 150))
-        if ($leadScore -lt 0) { $leadScore = 0 }
-        if ($leadScore -gt 100) { $leadScore = 100 }
-        $c.crm_lead_score = $leadScore
-    }
-    $history["2026-05-28"] = @{
-        dominant_trend = "Design-Driven (Estetica & Estilos)"
-        total_whitespaces = $tot_ws_05_28
-        trends = @(
-            @{ name = "Cocinas Modulares"; x = 72; y = 80; phase = "Madurez" },
-            @{ name = "Home Office"; x = 58; y = 75; phase = "Crecimiento" },
-            @{ name = "Centros de TV"; x = 65; y = 74; phase = "Crecimiento" },
-            @{ name = "Dormitorio RTA"; x = 78; y = 48; phase = "Madurez" },
-            @{ name = "Banos RH"; x = 34; y = 38; phase = "Introduccion" }
-        )
-        clients = $c_05_28
-    }
-
-    # --- 3. Pre-Cyber Week (2026-05-21) ---
-    $c_05_21 = Convert-PSCustomObjectToHashtable -InputObject (ConvertFrom-Json $processedClientsJson)
-    $tot_ws_05_21 = 0
-    foreach ($c in $c_05_21) {
-        $newTraffic = $c.traffic_score - 5
-        if ($newTraffic -lt 10) { $newTraffic = 10 }
-        $c.traffic_score = $newTraffic
-        
-        if ($c.name -eq "GRUPO CORONA Y ALIADOS") {
-            $c.white_spaces.Add("Deficit de portafolio hidrofugo (RH) en mueble de lavamanos suspendido (Zona Norte).") | Out-Null
-        }
-        $tot_ws_05_21 += $c.white_spaces.Count
-        
-        $leadScore = [int]([Math]::Floor(($c.traffic_score * (100 - $c.own_brand_weight) * ($c.white_spaces.Count + 1)) / 150))
-        if ($leadScore -lt 0) { $leadScore = 0 }
-        if ($leadScore -gt 100) { $leadScore = 100 }
-        $c.crm_lead_score = $leadScore
-    }
-    $history["2026-05-21"] = @{
-        dominant_trend = "Benefit-Driven (RH & Ensamble)"
-        total_whitespaces = $tot_ws_05_21
-        trends = @(
-            @{ name = "Cocinas Modulares"; x = 73; y = 82; phase = "Madurez" },
-            @{ name = "Home Office"; x = 44; y = 56; phase = "Crecimiento" },
-            @{ name = "Centros de TV"; x = 59; y = 66; phase = "Crecimiento" },
-            @{ name = "Dormitorio RTA"; x = 79; y = 49; phase = "Madurez" },
-            @{ name = "Banos RH"; x = 35; y = 40; phase = "Introduccion" }
-        )
-        clients = $c_05_21
+# Pre-cargar semanas históricas reales de manera dinámica
+$historicalWeeks = @("2026-05-21", "2026-05-28", "2026-06-04", "2026-06-11", "2026-06-12", "2026-06-19", "2026-06-26", "2026-07-03")
+foreach ($w_date in $historicalWeeks) {
+    if (-not $history.ContainsKey($w_date)) {
+        Write-Host "Pre-cargando semana historica dinamica: $w_date" -ForegroundColor Yellow
+        $history[$w_date] = New-WeekData -dateStr $w_date
     }
 }
 
