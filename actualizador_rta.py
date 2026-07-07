@@ -534,7 +534,132 @@ def generate_readme_report(data):
 
 # --- PARTE 3: EJECUCIÓN PRINCIPAL ---
 
+import urllib.request
+import urllib.error
+
+def generate_week_data_with_gemini(date_str, api_key):
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
+    
+    system_instruction = """
+Actúa como AMELIA RTA, una Analista de Investigación de Mercado, Experta en Tendencias de Consumo y Especialista Senior en Auditoría de Canales Digitales y Category Management. Tu objetivo estratégico único es procesar datos de mercado, flujos de navegación e-commerce y estructuras de surtido para identificar patrones emergentes y brechas comerciales ("White Spaces") donde la empresa RTA MUEBLES pueda entrar y capturar mercado con un producto ganador de empaque plano (Ready-to-Assemble).
+
+Tu universo de análisis se concentra de manera obligatoria en:
+1. CANALES ESPECIALIZADOS: SODIMAC COLOMBIA S.A, FERRETERÍA EPA S.A., CENCOSUD COLOMBIA SA, GEO F NOVEY S A.
+2. CANALES ESPECIALISTAS: INVERSIONES VIRTUAL MUEBLES S.A.S, TUHOME SPA / TUHOME PERÚ SAC, MOBBLY S.A.S.
+3. CANALES INDUSTRIALES: COMPAÑÍA COLOMBIANA DE CERÁMICA SAS (Grupo Corona y aliados).
+4. CANALES GRAN CONSUMO Y CATÁLOGO: ALMACENES ÉXITO S.A., NOVAVENTA S.A.S., CORPORACIÓN FAVORITA C.A.
+
+Aplica el protocolo antirruido, aislando la estacionalidad del negocio estructural real de tableros y soluciones RTA. Usa JTBD y el ciclo de vida.
+"""
+    
+    prompt = f"""
+Genera los datos métricos y analíticos estructurales en formato JSON para la semana del '{date_str}'. 
+Deberás responder ÚNICAMENTE con un objeto JSON estructurado que siga el siguiente esquema, sin explicaciones ni markdown adicionales (solo texto JSON puro).
+
+Estructura requerida del JSON de salida:
+{{
+  "dominant_trend": "Benefit-Driven (RH & Ensamble)" o "Design-Driven (Estetica & Estilos)" según la fecha,
+  "total_whitespaces": número de brechas encontradas en total en todos los clientes,
+  "trends": [
+    {{"name": "Cocinas Modulares", "x": número 10-100, "y": número 10-100, "phase": "Madurez"}},
+    {{"name": "Home Office", "x": número 10-100, "y": número 10-100, "phase": "Crecimiento"}},
+    {{"name": "Centros de TV", "x": número 10-100, "y": número 10-100, "phase": "Crecimiento"}},
+    {{"name": "Dormitorio RTA", "x": número 10-100, "y": número 10-100, "phase": "Madurez"}},
+    {{"name": "Banos RH", "x": número 10-100, "y": número 10-100, "phase": "Introduccion"}}
+  ],
+  "clients": [
+    {{
+      "name": "Nombre exacto del cliente (ej. SODIMAC COLOMBIA S.A, ALMACENES ÉXITO S.A., NOVAVENTA S.A.S., etc.)",
+      "country": "País (ej. Colombia, Panama, Ecuador, Chile, Peru)",
+      "cities": ["Lista de ciudades"],
+      "best_sellers": ["3 productos líderes de esta semana específicos al tema de la fecha"],
+      "future_sources": ["Fuentes de telemetría específicas a este canal"],
+      "menu_hierarchy": ["Categorías limpias sin ruido"],
+      "cdt_focus": "Brand-Driven o Benefit/Price/Space-Driven",
+      "cdt_tree": ["Jerarquía del árbol de decisión (1, 2, 3)"],
+      "own_brand_weight": número flotante del porcentaje de marca propia (ej. 15.5),
+      "traffic_score": número entero de tráfico 10-100 para la semana,
+      "competitive_set": ["Competidores directos e indirectos"],
+      "jtbd": {{
+        "persona": "Arquetipo que compra en este canal",
+        "job": "El trabajo funcional/emocional del mueble",
+        "pain_points": "Puntos de dolor principales",
+        "triggers": "Triggers que detonan la compra"
+      }},
+      "white_spaces": ["Brechas comerciales críticas específicas a la fecha"],
+      "crm_lead_score": número entero de prioridad comercial 0-100,
+      "crm_suggested_pitch": "Propuesta comercial o pitch de ventas para este cliente",
+      "crm_next_action": "Siguiente paso de ventas recomendado en el pipeline",
+      "coastal_churn_risk": true o false (si es costero y tiene brecha de portafolio hidrófugo)
+    }}
+  ]
+}}
+
+Nota sobre la semana del '{date_str}':
+Deberás adaptar la información (best_sellers, white_spaces, crm_next_action, traffic_score, etc.) de todos los clientes para que refleje el tema de mercado correspondiente a esta fecha:
+- Si es 2026-05-21: Preparativos pre-Cyber (demanda de Home Office, stock preventivo).
+- Si es 2026-05-28: Pico CyberDay (demanda extrema gamer/oficina, quiebres de stock).
+- Si es 2026-06-04: Lluvias costeras en la Costa Caribe/Pacífico (demanda de tableros RH y muebles hidrófugos suspendidos de baño/cocina, déficit de stock RH).
+- Si es 2026-06-11 o 2026-06-12: Crisis de fletes/puerto (retraso de melaminas claras, impulso a melamina oscura Wengue/Blanco).
+- Si es 2026-06-19: Campaña del Día del Padre (enfoque en centros de TV de gran formato y muebles de bar).
+- Si es 2026-06-26: Auditoría de costos de mitad de año (competencia con melamina económica de 12mm, optimización de calibres).
+- Si es 2026-07-03: Sobrecupo de entregas logísticas (retraso en cajas pesadas, reingeniería hacia empaque plano modular de <10cm de espesor).
+- Si es 2026-07-07: Temporada de lluvias (pico de melamina hidrófuga RH, certificación de materiales).
+- Si es otra fecha: Comportamiento normal según perfil base del cliente.
+
+Responde con texto JSON crudo únicamente.
+"""
+
+    payload = {
+        "contents": [
+            {
+                "parts": [
+                    {"text": prompt}
+                ]
+            }
+        ],
+        "systemInstruction": {
+            "parts": [
+                {"text": system_instruction}
+            ]
+        },
+        "generationConfig": {
+            "responseMimeType": "application/json",
+            "temperature": 0.2
+        }
+    }
+    
+    headers = {
+        "Content-Type": "application/json"
+    }
+    
+    req = urllib.request.Request(
+        url,
+        data=json.dumps(payload).encode("utf-8"),
+        headers=headers,
+        method="POST"
+    )
+    
+    with urllib.request.urlopen(req, timeout=35) as response:
+        res_data = json.loads(response.read().decode("utf-8"))
+        candidates = res_data.get("candidates", [])
+        if candidates:
+            text = candidates[0].get("content", {}).get("parts", [])[0].get("text", "")
+            return json.loads(text.strip())
+    return None
+
 def generate_week_data(date_str):
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if api_key:
+        try:
+            print(f"Detectada clave GEMINI_API_KEY. Intentando generar datos para {date_str} con el cerebro de Gemini...")
+            data = generate_week_data_with_gemini(date_str, api_key)
+            if data and "clients" in data and len(data["clients"]) > 0:
+                print(f"✅ Generación dinámica con la API de Gemini exitosa para la semana: {date_str}")
+                return data
+        except Exception as e:
+            print(f"⚠️ Error al conectar con la API de Gemini: {e}. Usando generador lógico local de respaldo.")
+
     processed_clients = []
     total_whitespaces = 0
     
