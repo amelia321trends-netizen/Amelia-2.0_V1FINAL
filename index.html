@@ -5699,8 +5699,8 @@
         if (targetContent) targetContent.classList.add('active');
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-        console.log("Evento DOMContentLoaded disparado");
+    function initApp() {
+        console.log("Inicializando aplicación RTA...");
         loadData();
         setupBaseInfo();
         setupClientTabs();
@@ -5709,7 +5709,13 @@
         selectFicheClient(0);
         renderStrategyTab();
         console.log("Carga inicial completada.");
-    });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+        initApp();
+    }
 
     function getDummyLabels(client) {
         let trafficLabel = "";
