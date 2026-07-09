@@ -2370,122 +2370,7 @@
             </div>
         </div>
 
-        <!-- Toast container -->
-    <div id="crm-toast-notif" class="crm-toast">
-        <span style="font-size: 18px;">🚀</span>
-        <div id="crm-toast-text">Acción comercial registrada exitosamente en CRM.</div>
-    </div>
 
-    <!-- B2B Opportunity Modal -->
-    <div id="crm-opportunity-modal" class="crm-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15,23,42,0.75); z-index:2000000; align-items:center; justify-content:center; padding:16px;">
-        <div class="crm-modal-content" style="background:var(--bg-card); width:100%; max-width:650px; border-radius:var(--radius-lg); border:1px solid var(--border); box-shadow:var(--shadow-lg); overflow:hidden; display:flex; flex-direction:column; animation:modalFadeIn 0.25s ease-out; max-height: 90vh;">
-            <!-- Modal Header -->
-            <div class="crm-modal-header" style="padding:20px 24px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; background:#f8fafc;">
-                <div style="display:flex; align-items:center; gap:10px; text-align:left;">
-                    <span style="font-size:24px;">🏢</span>
-                    <div>
-                        <h3 id="crm-modal-client-name" style="font-family:'Outfit',sans-serif; font-size:18px; font-weight:700; color:var(--text-primary); margin:0;">Nombre Cliente</h3>
-                        <p id="crm-modal-client-meta" style="font-size:12px; color:var(--text-secondary); margin:2px 0 0 0;">País | Prioridad</p>
-                    </div>
-                </div>
-                <button onclick="closeCrmModal()" style="background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-secondary); line-height:1; padding:0 8px;">&times;</button>
-            </div>
-            
-            <!-- Modal Body -->
-            <div class="crm-modal-body" style="padding:24px; overflow-y:auto; display:flex; flex-direction:column; gap:20px; text-align:left;">
-                <!-- KPIs Grid -->
-                <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px;">
-                    <div style="background:#eff6ff; border:1px solid rgba(37,99,235,0.1); padding:12px; border-radius:var(--radius-sm); text-align:center;">
-                        <span style="font-size:9.5px; font-weight:700; color:var(--primary); text-transform:uppercase; letter-spacing:0.5px; display:block;">Tráfico Digital</span>
-                        <div id="crm-modal-kpi-traffic" style="font-size:16px; font-weight:800; color:var(--primary); margin-top:4px;">--</div>
-                    </div>
-                    <div style="background:#ecfdf5; border:1px solid rgba(16,185,129,0.1); padding:12px; border-radius:var(--radius-sm); text-align:center;">
-                        <span style="font-size:9.5px; font-weight:700; color:var(--success); text-transform:uppercase; letter-spacing:0.5px; display:block;">Marca Propia</span>
-                        <div id="crm-modal-kpi-brand" style="font-size:16px; font-weight:800; color:var(--success); margin-top:4px;">--</div>
-                    </div>
-                    <div style="background:#fffbeb; border:1px solid rgba(245,158,11,0.1); padding:12px; border-radius:var(--radius-sm); text-align:center;">
-                        <span style="font-size:9.5px; font-weight:700; color:#b45309; text-transform:uppercase; letter-spacing:0.5px; display:block;">Brechas Catálogo</span>
-                        <div id="crm-modal-kpi-gaps" style="font-size:16px; font-weight:800; color:#b45309; margin-top:4px;">--</div>
-                    </div>
-                </div>
-                
-                <!-- Recommended Pitch & Next Action -->
-                <div style="display:flex; flex-direction:column; gap:16px;">
-                    <div style="border-left:4px solid var(--primary); padding-left:14px;">
-                        <h4 style="font-size:12px; text-transform:uppercase; color:var(--text-secondary); font-weight:700; margin:0;">Discurso de Ventas Sugerido</h4>
-                        <p id="crm-modal-pitch" style="font-size:13.5px; font-weight:600; color:var(--text-primary); margin:6px 0 0 0; line-height:1.45;"></p>
-                    </div>
-                    <div style="border-left:4px solid #10b981; padding-left:14px;">
-                        <h4 style="font-size:12px; text-transform:uppercase; color:var(--text-secondary); font-weight:700; margin:0;">Acción Comercial a Realizar (Siguiente Paso)</h4>
-                        <p id="crm-modal-next-action" style="font-size:13px; font-weight:550; color:var(--text-primary); margin:6px 0 0 0; line-height:1.45;"></p>
-                    </div>
-                </div>
-                
-                <!-- Detailed Insights (Gaps) -->
-                <div>
-                    <h4 style="font-size:12px; text-transform:uppercase; color:var(--text-secondary); font-weight:700; margin:0 0 10px 0;">Oportunidades de Surtido Detectadas</h4>
-                    <div id="crm-modal-gaps-details" style="display:flex; flex-direction:column; gap:12px;">
-                        <!-- dynamic details cards -->
-                    </div>
-                </div>
-                
-                <!-- Detailed Sales Proposal Document -->
-                <div style="background:#f1f5f9; border:1px solid #cbd5e1; border-radius:var(--radius-md); padding:16px;">
-                    <h4 style="font-size:11.5px; text-transform:uppercase; color:var(--text-secondary); font-weight:700; display:flex; align-items:center; gap:6px; margin:0 0 10px 0;">
-                        📋 Propuesta Comercial & Diagnóstico RTA
-                    </h4>
-                    <p id="crm-modal-detailed-proposal" style="font-size:12.5px; color:var(--text-primary); line-height:1.5; margin:0; text-align:left;"></p>
-                </div>
-                
-                <!-- Buyer Persona (JTBD) -->
-                <div style="background:#f8fafc; border:1px solid var(--border); border-radius:var(--radius-md); padding:16px; display:flex; flex-direction:column; gap:8px;">
-                    <h4 style="font-size:11.5px; text-transform:uppercase; color:var(--text-secondary); font-weight:700; display:flex; align-items:center; gap:6px; margin:0;">
-                        👤 Perfil de Cliente de este Canal
-                    </h4>
-                    <div id="crm-modal-jtbd-persona" style="font-weight:700; font-size:13px; color:var(--primary);"></div>
-                    <p id="crm-modal-jtbd-job" style="font-size:12px; color:var(--text-secondary); line-height:1.45; margin:0;"></p>
-                </div>
-            </div>
-            
-            <!-- Modal Footer -->
-            <div class="crm-modal-footer" style="padding:16px 24px; border-top:1px solid var(--border); display:flex; justify-content:flex-end; background:#f8fafc;">
-                <button onclick="closeCrmModal()" style="padding:10px 20px; background:var(--primary); color:white; border:none; border-radius:var(--radius-sm); font-weight:600; cursor:pointer; font-size:13px; transition: var(--transition);">Entendido</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Executive Report Printable Modal -->
-    <div id="executive-report-modal" class="crm-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15,23,42,0.75); z-index:2000000; align-items:center; justify-content:center; padding:16px;">
-        <div class="crm-modal-content" style="background:var(--bg-card); width:100%; max-width:800px; border-radius:var(--radius-lg); border:1px solid var(--border); box-shadow:var(--shadow-lg); overflow:hidden; display:flex; flex-direction:column; animation:modalFadeIn 0.25s ease-out; max-height: 90vh;">
-            <!-- Modal Header -->
-            <div class="crm-modal-header" style="padding:20px 24px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; background:#f8fafc;">
-                <div style="display:flex; align-items:center; gap:10px; text-align:left;">
-                    <span style="font-size:24px;">📄</span>
-                    <div>
-                        <h3 style="font-family:'Outfit',sans-serif; font-size:18px; font-weight:700; color:var(--text-primary); margin:0;">Informe Ejecutivo Consolidado RTA</h3>
-                        <p style="font-size:12px; color:var(--text-secondary); margin:2px 0 0 0;">Generado por Amelia RTA | Junta Directiva</p>
-                    </div>
-                </div>
-                <button onclick="closeExecutiveReport()" style="background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-secondary); line-height:1; padding:0 8px;">&times;</button>
-            </div>
-            <!-- Modal Body -->
-            <div class="crm-modal-body" id="print-report-area" style="padding:24px; overflow-y:auto; display:flex; flex-direction:column; gap:20px; text-align:left; line-height:1.6; font-size:13.5px; color:var(--text-primary);">
-                <!-- Dynamic Content Injected here -->
-            </div>
-            <!-- Modal Footer -->
-            <div class="crm-modal-footer" style="padding:16px 24px; border-top:1px solid var(--border); display:flex; justify-content:flex-end; gap:12px; background:#f8fafc;">
-                <button onclick="window.print()" style="padding:10px 20px; background:#10b981; color:white; border:none; border-radius:var(--radius-sm); font-weight:600; cursor:pointer; font-size:13px; transition: var(--transition);">🖨️ Imprimir Reporte</button>
-                <button onclick="closeExecutiveReport()" style="padding:10px 20px; background:var(--primary); color:white; border:none; border-radius:var(--radius-sm); font-weight:600; cursor:pointer; font-size:13px; transition: var(--transition);">Cerrar</button>
-            </div>
-        </div>
-    </div>
-    
-    <style>
-        @keyframes modalFadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
 
 </div>
 
@@ -2737,6 +2622,123 @@
     </div>
 
 </div>
+
+    <!-- Toast container -->
+    <div id="crm-toast-notif" class="crm-toast">
+        <span style="font-size: 18px;">🚀</span>
+        <div id="crm-toast-text">Acción comercial registrada exitosamente en CRM.</div>
+    </div>
+
+    <!-- B2B Opportunity Modal -->
+    <div id="crm-opportunity-modal" class="crm-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15,23,42,0.75); z-index:2000000; align-items:center; justify-content:center; padding:16px;">
+        <div class="crm-modal-content" style="background:var(--bg-card); width:100%; max-width:650px; border-radius:var(--radius-lg); border:1px solid var(--border); box-shadow:var(--shadow-lg); overflow:hidden; display:flex; flex-direction:column; animation:modalFadeIn 0.25s ease-out; max-height: 90vh;">
+            <!-- Modal Header -->
+            <div class="crm-modal-header" style="padding:20px 24px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; background:#f8fafc;">
+                <div style="display:flex; align-items:center; gap:10px; text-align:left;">
+                    <span style="font-size:24px;">🏢</span>
+                    <div>
+                        <h3 id="crm-modal-client-name" style="font-family:'Outfit',sans-serif; font-size:18px; font-weight:700; color:var(--text-primary); margin:0;">Nombre Cliente</h3>
+                        <p id="crm-modal-client-meta" style="font-size:12px; color:var(--text-secondary); margin:2px 0 0 0;">País | Prioridad</p>
+                    </div>
+                </div>
+                <button onclick="closeCrmModal()" style="background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-secondary); line-height:1; padding:0 8px;">&times;</button>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="crm-modal-body" style="padding:24px; overflow-y:auto; display:flex; flex-direction:column; gap:20px; text-align:left;">
+                <!-- KPIs Grid -->
+                <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px;">
+                    <div style="background:#eff6ff; border:1px solid rgba(37,99,235,0.1); padding:12px; border-radius:var(--radius-sm); text-align:center;">
+                        <span style="font-size:9.5px; font-weight:700; color:var(--primary); text-transform:uppercase; letter-spacing:0.5px; display:block;">Tráfico Digital</span>
+                        <div id="crm-modal-kpi-traffic" style="font-size:16px; font-weight:800; color:var(--primary); margin-top:4px;">--</div>
+                    </div>
+                    <div style="background:#ecfdf5; border:1px solid rgba(16,185,129,0.1); padding:12px; border-radius:var(--radius-sm); text-align:center;">
+                        <span style="font-size:9.5px; font-weight:700; color:var(--success); text-transform:uppercase; letter-spacing:0.5px; display:block;">Marca Propia</span>
+                        <div id="crm-modal-kpi-brand" style="font-size:16px; font-weight:800; color:var(--success); margin-top:4px;">--</div>
+                    </div>
+                    <div style="background:#fffbeb; border:1px solid rgba(245,158,11,0.1); padding:12px; border-radius:var(--radius-sm); text-align:center;">
+                        <span style="font-size:9.5px; font-weight:700; color:#b45309; text-transform:uppercase; letter-spacing:0.5px; display:block;">Brechas Catálogo</span>
+                        <div id="crm-modal-kpi-gaps" style="font-size:16px; font-weight:800; color:#b45309; margin-top:4px;">--</div>
+                    </div>
+                </div>
+                
+                <!-- Recommended Pitch & Next Action -->
+                <div style="display:flex; flex-direction:column; gap:16px;">
+                    <div style="border-left:4px solid var(--primary); padding-left:14px;">
+                        <h4 style="font-size:12px; text-transform:uppercase; color:var(--text-secondary); font-weight:700; margin:0;">Discurso de Ventas Sugerido</h4>
+                        <p id="crm-modal-pitch" style="font-size:13.5px; font-weight:600; color:var(--text-primary); margin:6px 0 0 0; line-height:1.45;"></p>
+                    </div>
+                    <div style="border-left:4px solid #10b981; padding-left:14px;">
+                        <h4 style="font-size:12px; text-transform:uppercase; color:var(--text-secondary); font-weight:700; margin:0;">Acción Comercial a Realizar (Siguiente Paso)</h4>
+                        <p id="crm-modal-next-action" style="font-size:13px; font-weight:550; color:var(--text-primary); margin:6px 0 0 0; line-height:1.45;"></p>
+                    </div>
+                </div>
+                
+                <!-- Detailed Insights (Gaps) -->
+                <div>
+                    <h4 style="font-size:12px; text-transform:uppercase; color:var(--text-secondary); font-weight:700; margin:0 0 10px 0;">Oportunidades de Surtido Detectadas</h4>
+                    <div id="crm-modal-gaps-details" style="display:flex; flex-direction:column; gap:12px;">
+                        <!-- dynamic details cards -->
+                    </div>
+                </div>
+                
+                <!-- Detailed Sales Proposal Document -->
+                <div style="background:#f1f5f9; border:1px solid #cbd5e1; border-radius:var(--radius-md); padding:16px;">
+                    <h4 style="font-size:11.5px; text-transform:uppercase; color:var(--text-secondary); font-weight:700; display:flex; align-items:center; gap:6px; margin:0 0 10px 0;">
+                        📋 Propuesta Comercial & Diagnóstico RTA
+                    </h4>
+                    <p id="crm-modal-detailed-proposal" style="font-size:12.5px; color:var(--text-primary); line-height:1.5; margin:0; text-align:left;"></p>
+                </div>
+                
+                <!-- Buyer Persona (JTBD) -->
+                <div style="background:#f8fafc; border:1px solid var(--border); border-radius:var(--radius-md); padding:16px; display:flex; flex-direction:column; gap:8px;">
+                    <h4 style="font-size:11.5px; text-transform:uppercase; color:var(--text-secondary); font-weight:700; display:flex; align-items:center; gap:6px; margin:0;">
+                        👤 Perfil de Cliente de este Canal
+                    </h4>
+                    <div id="crm-modal-jtbd-persona" style="font-weight:700; font-size:13px; color:var(--primary);"></div>
+                    <p id="crm-modal-jtbd-job" style="font-size:12px; color:var(--text-secondary); line-height:1.45; margin:0;"></p>
+                </div>
+            </div>
+            
+            <!-- Modal Footer -->
+            <div class="crm-modal-footer" style="padding:16px 24px; border-top:1px solid var(--border); display:flex; justify-content:flex-end; background:#f8fafc;">
+                <button onclick="closeCrmModal()" style="padding:10px 20px; background:var(--primary); color:white; border:none; border-radius:var(--radius-sm); font-weight:600; cursor:pointer; font-size:13px; transition: var(--transition);">Entendido</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Executive Report Printable Modal -->
+    <div id="executive-report-modal" class="crm-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15,23,42,0.75); z-index:2000000; align-items:center; justify-content:center; padding:16px;">
+        <div class="crm-modal-content" style="background:var(--bg-card); width:100%; max-width:800px; border-radius:var(--radius-lg); border:1px solid var(--border); box-shadow:var(--shadow-lg); overflow:hidden; display:flex; flex-direction:column; animation:modalFadeIn 0.25s ease-out; max-height: 90vh;">
+            <!-- Modal Header -->
+            <div class="crm-modal-header" style="padding:20px 24px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; background:#f8fafc;">
+                <div style="display:flex; align-items:center; gap:10px; text-align:left;">
+                    <span style="font-size:24px;">📄</span>
+                    <div>
+                        <h3 style="font-family:'Outfit',sans-serif; font-size:18px; font-weight:700; color:var(--text-primary); margin:0;">Informe Ejecutivo Consolidado RTA</h3>
+                        <p style="font-size:12px; color:var(--text-secondary); margin:2px 0 0 0;">Generado por Amelia RTA | Junta Directiva</p>
+                    </div>
+                </div>
+                <button onclick="closeExecutiveReport()" style="background:none; border:none; font-size:24px; cursor:pointer; color:var(--text-secondary); line-height:1; padding:0 8px;">&times;</button>
+            </div>
+            <!-- Modal Body -->
+            <div class="crm-modal-body" id="print-report-area" style="padding:24px; overflow-y:auto; display:flex; flex-direction:column; gap:20px; text-align:left; line-height:1.6; font-size:13.5px; color:var(--text-primary);">
+                <!-- Dynamic Content Injected here -->
+            </div>
+            <!-- Modal Footer -->
+            <div class="crm-modal-footer" style="padding:16px 24px; border-top:1px solid var(--border); display:flex; justify-content:flex-end; gap:12px; background:#f8fafc;">
+                <button onclick="window.print()" style="padding:10px 20px; background:#10b981; color:white; border:none; border-radius:var(--radius-sm); font-weight:600; cursor:pointer; font-size:13px; transition: var(--transition);">🖨️ Imprimir Reporte</button>
+                <button onclick="closeExecutiveReport()" style="padding:10px 20px; background:var(--primary); color:white; border:none; border-radius:var(--radius-sm); font-weight:600; cursor:pointer; font-size:13px; transition: var(--transition);">Cerrar</button>
+            </div>
+        </div>
+    </div>
+    
+    <style>
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 
 <!-- DATA CONTAINER (INJECTED BY PYTHON/POWERSHELL SCRIPT) -->
 <script id="market-data" type="application/json">
