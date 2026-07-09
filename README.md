@@ -1,4 +1,4 @@
-﻿# Inteligencia de Canales Digitales de Muebles RTA
+# Inteligencia de Canales Digitales de Muebles RTA
 
 Ultima actualizacion semanal: 2026-07-09 | Analista Principal: Amelia RTA
 
@@ -27,3 +27,5 @@ graph TD
     E --> G[Reescritura de README.md]
     F & G --> H[Git Commit & Auto Push]
 ```
+
+<!-- Rebuild Trigger: 2026-07-09T08:30:00 -->
