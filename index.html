@@ -2629,6 +2629,12 @@
         <div id="crm-toast-text">Acción comercial registrada exitosamente en CRM.</div>
     </div>
 
+    <!-- Toast container -->
+    <div id="crm-toast-notif" class="crm-toast">
+        <span style="font-size: 18px;">🚀</span>
+        <div id="crm-toast-text">Acción comercial registrada exitosamente en CRM.</div>
+    </div>
+
     <!-- B2B Opportunity Modal -->
     <div id="crm-opportunity-modal" class="crm-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15,23,42,0.75); z-index:2000000; align-items:center; justify-content:center; padding:16px;">
         <div class="crm-modal-content" style="background:var(--bg-card); width:100%; max-width:650px; border-radius:var(--radius-lg); border:1px solid var(--border); box-shadow:var(--shadow-lg); overflow:hidden; display:flex; flex-direction:column; animation:modalFadeIn 0.25s ease-out; max-height: 90vh;">
@@ -6276,7 +6282,7 @@
         const tableBody = document.getElementById('crm-table-body');
         tableBody.innerHTML = '';
         
-        sortedClients.forEach((client) => {
+        sortedClients.forEach((client, idx) => {
             const score = client.crm_lead_score !== undefined ? client.crm_lead_score : 0;
             totalOpportunity += score;
             
@@ -6320,10 +6326,23 @@
                 <td style="color:var(--text-secondary); font-size:12px; max-width:260px; white-space:normal; line-height:1.4;">${client.crm_next_action || 'N/A'}</td>
                 <td><span class="risk-badge ${riskClass}">${client.coastal_churn_risk ? '🌧️ ' : '✅ '}${riskText}</span></td>
                 <td>
-                    <button class="crm-action-btn" onclick="triggerCRMAction('${client.name.replace(/'/g, "\\'")}')">Ver Oportunidad</button>
+                    <button class="crm-action-btn" id="crm-btn-${idx}" onclick="toggleCRMDetail(${idx}, '${client.name.replace(/'/g, "\\'")}')">Ver Oportunidad</button>
                 </td>
             `;
             tableBody.appendChild(tr);
+
+            const detailTr = document.createElement('tr');
+            detailTr.id = `crm-detail-row-${idx}`;
+            detailTr.style.display = 'none';
+            detailTr.style.backgroundColor = '#f8fafc';
+            detailTr.innerHTML = `
+                <td colspan="7" style="padding: 16px; border-bottom: 2px solid var(--primary); background: #f8fafc;">
+                    <div class="crm-accordion-container" style="display: flex; flex-direction: column; gap: 16px; text-align: left;">
+                        <!-- Populate dynamically -->
+                    </div>
+                </td>
+            `;
+            tableBody.appendChild(detailTr);
         });
         
         document.getElementById('crm-kpi-hot-leads').textContent = hotLeadsCount;
@@ -6341,80 +6360,91 @@
         }
     }
 
-    function triggerCRMAction(clientName) {
+    function toggleCRMDetail(idx, clientName) {
         try {
-            console.log("Visualizando Oportunidad B2B para:", clientName);
-            const client = appData.clients.find(c => c.name === clientName);
-            if (!client) {
-                console.error("No se encontró el cliente en appData:", clientName);
-                return;
-            }
+            const detailRow = document.getElementById(`crm-detail-row-${idx}`);
+            const btn = document.getElementById(`crm-btn-${idx}`);
             
-            let shortName = (client.name || "").replace(" COLOMBIA S.A", "").replace(" S.A.S", "").replace(" SPA", "").replace(" COLOMBIA SA", "").replace(" C.A.", "").replace(" S.A.", "").replace(" S.A.S.", "");
-            
-            // Populate Modal Fields
-            document.getElementById('crm-modal-client-name').textContent = shortName;
-            document.getElementById('crm-modal-client-meta').textContent = `${client.country || 'N/A'} | Prioridad: ${client.crm_lead_score || 0}/100`;
-            
-            const labels = getDummyLabels(client);
-            document.getElementById('crm-modal-kpi-traffic').textContent = labels.trafficShort || '--';
-            document.getElementById('crm-modal-kpi-brand').textContent = labels.brandShort || '--';
-            document.getElementById('crm-modal-kpi-gaps').textContent = client.white_spaces ? client.white_spaces.length : 0;
-            
-            document.getElementById('crm-modal-pitch').innerHTML = `"${client.crm_suggested_pitch || 'Sin pitch sugerido'}"`;
-            document.getElementById('crm-modal-next-action').textContent = client.crm_next_action || 'Sin acción comercial recomendada';
-            
-            // Gaps Details Cards
-            const gapsContainer = document.getElementById('crm-modal-gaps-details');
-            gapsContainer.innerHTML = '';
-            if (client.white_spaces && client.white_spaces.length > 0) {
-                client.white_spaces.forEach(ws => {
-                    const details = getExpandedAlertDetails(ws, client);
-                    const gapCard = document.createElement('div');
-                    gapCard.style.border = `1px solid ${details.alertColor}`;
-                    gapCard.style.background = details.alertBg;
-                    gapCard.style.padding = '14px';
-                    gapCard.style.borderRadius = '8px';
-                    gapCard.style.textAlign = 'left';
-                    gapCard.innerHTML = `
-                        <div style="font-weight:700; font-size:13px; color:var(--text-primary); margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;">
-                            <span>${details.title}</span>
-                            <span class="${details.severityClass}" style="font-size:10px; padding:2px 6px; border-radius:4px; font-weight:700;">${details.severity}</span>
-                        </div>
-                        <p style="font-size:12px; color:var(--text-secondary); line-height:1.45; margin-bottom:4px; margin-top:0;"><strong>Diagnóstico:</strong> ${details.diagnostic}</p>
-                        <p style="font-size:12px; color:var(--text-secondary); line-height:1.45; margin:0;"><strong>Recomendación:</strong> ${details.decision}</p>
-                    `;
-                    gapsContainer.appendChild(gapCard);
-                });
+            if (detailRow.style.display === 'table-row') {
+                detailRow.style.display = 'none';
+                btn.textContent = 'Ver Oportunidad';
+                btn.style.backgroundColor = '';
             } else {
-                gapsContainer.innerHTML = `
-                    <div style="background:var(--success-light); border:1px solid rgba(16,185,129,0.2); color:var(--success); padding:14px; border-radius:8px; font-size:12.5px; font-weight:600; text-align:center;">
-                        ✅ Cobertura Total de Catálogo. No se detectan brechas comerciales en la semana activa.
+                // Collapse all details first
+                document.querySelectorAll('[id^="crm-detail-row-"]').forEach(row => {
+                    row.style.display = 'none';
+                });
+                document.querySelectorAll('[id^="crm-btn-"]').forEach(button => {
+                    button.textContent = 'Ver Oportunidad';
+                    button.style.backgroundColor = '';
+                });
+                
+                const client = appData.clients.find(c => c.name === clientName);
+                if (!client) return;
+                
+                const container = detailRow.querySelector('.crm-accordion-container');
+                const proposalHtml = generateDetailedProposal(client);
+                const labels = getDummyLabels(client);
+                
+                // Build the accordion content
+                container.innerHTML = `
+                    <div style="display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 24px; width: 100%;">
+                        <!-- Left: Detailed Proposal & Diagnostico -->
+                        <div style="display:flex; flex-direction:column; gap:12px;">
+                            <div style="background:#ffffff; border:1px solid var(--border); border-radius:var(--radius-md); padding:16px; box-shadow:var(--shadow-sm); flex:1; display:flex; flex-direction:column; gap:10px;">
+                                <div style="font-size:11px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; margin-bottom:4px; letter-spacing:0.5px; border-bottom:1px solid var(--border); padding-bottom:6px; display:flex; justify-content:space-between; align-items:center;">
+                                    <span>📋 Diagnóstico B2B & Propuesta RTA</span>
+                                    <span style="font-size:10px; color:var(--text-muted); font-weight:normal;">Semana Activa</span>
+                                </div>
+                                <div style="font-size:12.5px; color:var(--text-primary); line-height:1.55; overflow-y:auto; max-height:260px; padding-right:6px; text-align:left;">
+                                    ${proposalHtml}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right: Metrics, Suggestions & JTBD -->
+                        <div style="display:flex; flex-direction:column; gap:12px;">
+                            <div style="display:flex; gap:8px;">
+                                <div style="flex:1; background:#ffffff; border:1px solid var(--border); border-radius:var(--radius-md); padding:12px; text-align:center; box-shadow:var(--shadow-sm);">
+                                    <div style="font-size:9px; text-transform:uppercase; color:var(--text-muted); font-weight:700; letter-spacing:0.5px;">Tráfico B2B</div>
+                                    <div style="font-size:14px; font-weight:800; color:var(--primary); margin-top:4px;">${labels.trafficShort || '--'}</div>
+                                </div>
+                                <div style="flex:1; background:#ffffff; border:1px solid var(--border); border-radius:var(--radius-md); padding:12px; text-align:center; box-shadow:var(--shadow-sm);">
+                                    <div style="font-size:9px; text-transform:uppercase; color:var(--text-muted); font-weight:700; letter-spacing:0.5px;">Marca Propia</div>
+                                    <div style="font-size:14px; font-weight:800; color:var(--success); margin-top:4px;">${labels.brandShort || '--'}</div>
+                                </div>
+                                <div style="flex:1; background:#ffffff; border:1px solid var(--border); border-radius:var(--radius-md); padding:12px; text-align:center; box-shadow:var(--shadow-sm);">
+                                    <div style="font-size:9px; text-transform:uppercase; color:var(--text-muted); font-weight:700; letter-spacing:0.5px;">Brechas Catálogo</div>
+                                    <div style="font-size:14px; font-weight:800; color:#b45309; margin-top:4px;">${client.white_spaces ? client.white_spaces.length : 0}</div>
+                                </div>
+                            </div>
+
+                            <div style="background:#ffffff; border:1px solid var(--border); border-radius:var(--radius-md); padding:14px; box-shadow:var(--shadow-sm);">
+                                <div style="font-size:10px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; margin-bottom:6px; letter-spacing:0.5px; border-bottom:1px solid var(--border); padding-bottom:4px;">🗣️ Discurso de Ventas Sugerido (Pitch)</div>
+                                <p style="font-size:12px; font-style:italic; color:var(--text-primary); margin:0; line-height:1.45;">"${client.crm_suggested_pitch || 'Sin pitch sugerido'}"</p>
+                            </div>
+
+                            <div style="background:#ffffff; border:1px solid var(--border); border-radius:var(--radius-md); padding:14px; box-shadow:var(--shadow-sm);">
+                                <div style="font-size:10px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; margin-bottom:6px; letter-spacing:0.5px; border-bottom:1px solid var(--border); padding-bottom:4px;">🎯 Acción Inmediata (Siguiente Paso B2B)</div>
+                                <p style="font-size:12px; font-weight:600; color:var(--primary); margin:0; line-height:1.45;">${client.crm_next_action || 'Sin recomendación registrada'}</p>
+                            </div>
+                            
+                            <!-- JTBD Details -->
+                            <div style="background:#f1f5f9; border-radius:var(--radius-md); padding:12px; font-size:11px; color:var(--text-secondary); line-height:1.45; border-left: 3px solid var(--primary); text-align:left;">
+                                👤 <strong>Arquetipo:</strong> ${client.jtbd ? client.jtbd.persona : 'Comprador B2B Específico'}<br>
+                                🎯 <strong>Job to be Done:</strong> ${client.jtbd ? client.jtbd.job : 'N/A'}
+                            </div>
+                        </div>
                     </div>
                 `;
+                
+                detailRow.style.display = 'table-row';
+                btn.textContent = 'Ocultar Detalle';
+                btn.style.backgroundColor = 'var(--text-secondary)';
             }
-            
-            // JTBD Persona & Job
-            if (client.jtbd) {
-                document.getElementById('crm-modal-jtbd-persona').textContent = `Arquetipo: ${client.jtbd.persona || 'Arquetipo Comercial General'}`;
-                document.getElementById('crm-modal-jtbd-job').innerHTML = `<strong>Trabajo del Cliente (Job):</strong> ${client.jtbd.job || 'N/A'}<br><br><strong>Puntos de Dolor:</strong> ${client.jtbd.pain_points || 'N/A'}`;
-            } else {
-                document.getElementById('crm-modal-jtbd-persona').textContent = 'Arquetipo Comercial General';
-                document.getElementById('crm-modal-jtbd-job').textContent = 'Optimización del portafolio comercial de melamina.';
-            }
-            
-            // Show Modal
-            document.getElementById('crm-modal-detailed-proposal').innerHTML = generateDetailedProposal(client);
-            const modal = document.getElementById('crm-opportunity-modal');
-            modal.style.display = 'flex';
         } catch (error) {
-            console.error("Error en triggerCRMAction:", error);
-            alert("No se pudo abrir el modal de oportunidad comercial: " + error.message);
+            console.error("Error en toggleCRMDetail:", error);
         }
-    }
-    
-    function closeCrmModal() {
-        document.getElementById('crm-opportunity-modal').style.display = 'none';
     }
 
     function generateDetailedProposal(client) {
