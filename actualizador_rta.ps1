@@ -4,33 +4,36 @@
 
 Write-Host "Iniciando actualizacion de Inteligencia RTA desde PowerShell local..." -ForegroundColor Cyan
 
-# # --- DATOS DE CLIENTES ---
+# --- DATOS DE CLIENTES ---
 $ClientsData = @{
     "SODIMAC COLOMBIA S.A" = @{
         short_name = "Sodimac"
-        url_menu = "https://www.sodimac.com.co/sodimac-co/categoria/muebles"
+        url_menu = "https://www.homecenter.com.co/homecenter-co/category/cat10034/Muebles"
+        urls_ingesta = @("https://www.homecenter.com.co/homecenter-co/category/cat10034/Muebles", "https://www.homecenter.com.co/homecenter-co/category/cat10002/Muebles-de-Cocina")
         base_traffic = 92
         own_brand = 45.5
         country = "Colombia"
-        cities = @("Bogota", "Medellin", "Cali", "Barranquilla")
+        cities = @(
+            @{ ciudad = "Bogota"; es_costera = $false; humedad_relativa_promedio = 65 },
+            @{ ciudad = "Medellin"; es_costera = $false; humedad_relativa_promedio = 68 },
+            @{ ciudad = "Cali"; es_costera = $false; humedad_relativa_promedio = 70 },
+            @{ ciudad = "Barranquilla"; es_costera = $true; humedad_relativa_promedio = 80 },
+            @{ ciudad = "Cartagena"; es_costera = $true; humedad_relativa_promedio = 81 }
+        )
         best_sellers = @("Modulo Fregadero MDP-RH 100cm", "Escritorio Home Office Smart 120cm", "Estanterias RTA Metalicas")
         future_sources = @("MercadoLibre Colombia (Tendencias de Busqueda)", "Homecenter Chile (Benchmark de Clones de Diseno)", "Google Analytics RTA (Tasa de rebote en categoria de cocinas modulares y descargas de instructivos de armado)")
-        competitive_set = @("Cencosud", "Almacenes Exito", "Corona")
+        competitive_set = @("Cencosud", "Madecentro")
         jtbd = @{
-            persona = "Remodelador Practico"
-            job = "Optimizar el espacio de la cocina y zona de ropas de forma rapida y sin herramientas complejas."
+            persona = "Remodelador Practico JtBD"
+            job = "Optimizar el espacio de la cocina y zona de ropas de forma rÃ¡pida y sin herramientas complejas."
             pain_points = "Aglomerados que se inflan con humedad, herrajes faltantes y manuales de ensamble confusos."
             triggers = "Renovacion de arriendo o mudanza a departamento nuevo de interes social (VIS)."
         }
         raw_menu_categories = @(
             "Muebles de Cocina - Modulares",
-            "Ofertas Imperdibles de Cocinas",
-            "Escritorios Home Office de Descuento",
             "Muebles de TV y Centros de Entretenimiento",
             "Estanterias y Closets RTA",
-            "Descuentos de Cyber en Banos",
-            "Muebles de Bano RH Resistentes a Humedad",
-            "Combos Dormitorio con Ofertas Especiales"
+            "Muebles de Bano RH Resistentes a Humedad"
         )
         products = @(
             @{ name = "Modulo Fregadero 100cm MDP Estandar"; rh = $false; assembly = "estandar"; desc = "Estructura aglomerada 15mm" },
@@ -41,27 +44,28 @@ $ClientsData = @{
     }
     "INVERSIONES VIRTUAL MUEBLES S.A.S" = @{
         short_name = "Virtual Muebles"
-        url_menu = "https://www.virtualmuebles.com/muebles-rta"
+        url_menu = "https://www.virtualmuebles.com"
+        urls_ingesta = @("https://www.virtualmuebles.com", "https://www.virtualmuebles.com/muebles-rta")
         base_traffic = 78
         own_brand = 90.0
         country = "Colombia"
-        cities = @("Medellin", "Bogota", "Envigado")
+        cities = @(
+            @{ ciudad = "Medellin"; es_costera = $false; humedad_relativa_promedio = 68 },
+            @{ ciudad = "Bogota"; es_costera = $false; humedad_relativa_promedio = 65 },
+            @{ ciudad = "Envigado"; es_costera = $false; humedad_relativa_promedio = 66 }
+        )
         best_sellers = @("Centro de TV Nordico Blanco-Roble", "Escritorio Gamer Pro", "Escritorio Plegable Work-Space")
         future_sources = @("Amazon Global (Tendencias de Diseno Industrial)", "Instagram Shopping (Engagement de Muebles RTA)", "Google Analytics RTA (Embudo de conversion de la linea Gamer y rebote en landings de escritorio flexible)")
-        competitive_set = @("TuHome", "Mobbly", "Novaventa")
+        competitive_set = @("TuHome", "Wayfair")
         jtbd = @{
-            persona = "Comprador Digital Joven"
+            persona = "Comprador Digital Joven JtBD"
             job = "Amoblar su primer apartamento con disenos atractivos que se puedan comprar 100% en linea y recibir rapido."
             pain_points = "Dificultad de envio, falta de soporte para piezas danadas en transporte, desconfianza en fotos web."
             triggers = "Primer empleo profesional, independencia de casa de los padres."
         }
         raw_menu_categories = @(
-            "Novedades y Lanzamientos Esteticos",
             "Salas y Centros de TV Design",
-            "Blackfriday Muebles de Dormitorio",
             "Escritorios Flexibles Modernos",
-            "Cocinas Modulares Low Cost",
-            "Ofertas de Lanzamiento Muebles Bano",
             "Zapateros y Armarios Multifuncion"
         )
         products = @(
@@ -73,14 +77,20 @@ $ClientsData = @{
     }
     "GRUPO CORONA Y ALIADOS" = @{
         short_name = "Corona"
-        url_menu = "https://www.corona.co/muebles"
+        url_menu = "https://www.corona.co/productos/muebles"
+        urls_ingesta = @("https://www.corona.co/productos/muebles", "https://www.corona.co/productos/muebles/banos")
         base_traffic = 85
         own_brand = 35.0
         country = "Colombia"
-        cities = @("Bogota", "Medellin", "Barranquilla", "Cartagena")
+        cities = @(
+            @{ ciudad = "Bogota"; es_costera = $false; humedad_relativa_promedio = 65 },
+            @{ ciudad = "Medellin"; es_costera = $false; humedad_relativa_promedio = 68 },
+            @{ ciudad = "Cali"; es_costera = $false; humedad_relativa_promedio = 70 },
+            @{ ciudad = "Barranquilla"; es_costera = $true; humedad_relativa_promedio = 80 }
+        )
         best_sellers = @("Gabinete de Bano suspendido 60cm RH", "Alacena Organizadora Multiusos RH", "Modulo Cocina con Meson de Acero")
         future_sources = @("Sodimac Constructor Portal (Precios de Contratistas)", "Corona Retail Analytics (Ventas de Banos y Cocinas)", "Google Analytics RTA (Comportamiento de busquedas de lavamanos hidrofugos y descargas de fichas de garantia)")
-        competitive_set = @("Sodimac", "Cencosud", "Ferreteria EPA")
+        competitive_set = @("Sodimac", "Cencosud")
         jtbd = @{
             persona = "Maestro Especialista / Instalador"
             job = "Instalar gabinetes de alta durabilidad en zonas expuestas a humedad, garantizando calidad al cliente final."
@@ -89,11 +99,8 @@ $ClientsData = @{
         }
         raw_menu_categories = @(
             "Muebles de Bano Certificados RH",
-            "Cyber Muebles Sanitarios",
             "Cocinas Modulares con Meson",
-            "Oferta Especial de Lavaplatos RTA",
             "Organizadores y Alacenas",
-            "Garantia Corona en Muebles",
             "Muebles de Lavanderia Funcionales"
         )
         products = @(
@@ -103,16 +110,55 @@ $ClientsData = @{
             @{ name = "Mesa de Centro Estetica Corona"; rh = $false; assembly = "estandar"; desc = "Melamina texturizada" }
         )
     }
+    "CENCOSUD COLOMBIA SA" = @{
+        short_name = "Cencosud"
+        url_menu = "https://www.easy.com.co/dormitorio-y-muebles"
+        urls_ingesta = @("https://www.easy.com.co/dormitorio-y-muebles", "https://www.easy.com.co/muebles-de-cocina")
+        base_traffic = 88
+        own_brand = 30.0
+        country = "Colombia"
+        cities = @(
+            @{ ciudad = "Bogota"; es_costera = $false; humedad_relativa_promedio = 65 },
+            @{ ciudad = "Medellin"; es_costera = $false; humedad_relativa_promedio = 68 },
+            @{ ciudad = "Cali"; es_costera = $false; humedad_relativa_promedio = 70 }
+        )
+        best_sellers = @("Centro de TV Florencia Wengue", "Escritorio L-Shape Industrial Easy", "Modulo Cocina AÃ©reo Easy 100cm")
+        future_sources = @("Easy Argentina/Chile (Surtido de Muebles RTA Krea)", "MercadoLibre Colombia (Precios de Centros de TV)", "Google Analytics RTA (Busqueda interna de centros de TV and tasa de abandono en carritos de muebles de sala)")
+        competitive_set = @("Sodimac", "Madecentro")
+        jtbd = @{
+            persona = "Comprador de Hogar de Clase Media"
+            job = "Encontrar un mueble de sala o estudio de buena apariencia que encaje exactamente en la sala de su apartamento sin gastar una fortuna."
+            pain_points = "Falta de informacion clara sobre dimensiones en la web, retrasos en el despacho a domicilio."
+            triggers = "Remodelacion de la sala para recibir visitas de fin de ano."
+        }
+        raw_menu_categories = @(
+            "Centros de TV y Entretenimiento Easy",
+            "Escritorios y Sillas de Oficina",
+            "Muebles de Cocina y Comedor RTA"
+        )
+        products = @(
+            @{ name = "Centro de TV Florencia Wengue"; rh = $false; assembly = "estandar"; desc = "Estilo moderno melaminico" },
+            @{ name = "Escritorio L-Shape Industrial Easy"; rh = $false; assembly = "estandar"; desc = "Estructura metalica and MDP" },
+            @{ name = "Modulo Cocina AÃ©reo Easy 100cm"; rh = $false; assembly = "estandar"; desc = "MDP estandar" },
+            @{ name = "Mesa de Noche Krea 2 cajones"; rh = $false; assembly = "estandar"; desc = "Aglomerado basico" }
+        )
+    }
     "TUHOME SPA" = @{
         short_name = "TuHome"
-        url_menu = "https://www.tuhome.cl/productos"
+        url_menu = "https://www.tuhome.cl"
+        urls_ingesta = @("https://www.tuhome.cl", "https://www.tuhome.cl/productos")
         base_traffic = 80
         own_brand = 95.0
         country = "Chile"
-        cities = @("Santiago", "Concepcion", "Valparaiso", "Antofagasta")
+        cities = @(
+            @{ ciudad = "Santiago"; es_costera = $false; humedad_relativa_promedio = 60 },
+            @{ ciudad = "Concepcion"; es_costera = $false; humedad_relativa_promedio = 75 },
+            @{ ciudad = "Valparaiso"; es_costera = $true; humedad_relativa_promedio = 78 },
+            @{ ciudad = "Antofagasta"; es_costera = $true; humedad_relativa_promedio = 72 }
+        )
         best_sellers = @("Escritorio Home Office Z-60 Nogal", "Mueble Lavamanos Split RH", "Closet RTA 4 Puertas Wengue")
-        future_sources = @("Falabella.com Chile (Surtido y Quiebres de Stock)", "MercadoLibre Chile (Palabras clave de Muebles)", "Google Analytics RTA (Porcentaje de abandono del checkout B2B y telemetria de visualizacion de closets)")
-        competitive_set = @("Virtual Muebles", "Mobbly", "Cencosud")
+        future_sources = @("Falabella.com Chile (Surtido and Quiebres de Stock)", "MercadoLibre Chile (Palabras clave de Muebles)", "Google Analytics RTA (Porcentaje de abandono del checkout B2B and telemetria de visualizacion de closets)")
+        competitive_set = @("Virtual Muebles", "Sodimac Chile")
         jtbd = @{
             persona = "Hogares en Crecimiento"
             job = "Adaptar el mobiliario del hogar segun el crecimiento de los hijos con soluciones modulares y escalables."
@@ -121,11 +167,9 @@ $ClientsData = @{
         }
         raw_menu_categories = @(
             "Coleccion Cocina y Despensa Modulares",
-            "Descuentos Exclusivos Dormitorio",
             "Centros de Entretenimiento Modernos",
             "Linea Oficina y Escritorios RTA",
             "Muebles Auxiliares de Bano",
-            "Cyber Ofertas Muebles de Jardin",
             "Novedades Diseno Industrial RTA"
         )
         products = @(
@@ -135,217 +179,215 @@ $ClientsData = @{
             @{ name = "Closet RTA 4 Puertas Wengue"; rh = $false; assembly = "estandar"; desc = "Estructura aglomerada de gran capacidad" }
         )
     }
-    "FERRETERIA EPA" = @{
-        short_name = "EPA"
-        url_menu = "https://www.epa.com.ve/muebles-rta"
-        base_traffic = 70
+    "SODIMAC CHILE" = @{
+        short_name = "Sodimac Chile"
+        url_menu = "https://sodimac.falabella.com/sodimac-cl/category/cat3200008/Muebles"
+        urls_ingesta = @("https://sodimac.falabella.com/sodimac-cl/category/cat3200008/Muebles", "https://sodimac.falabella.com/sodimac-cl/category/cat20088/Muebles-de-Cocina")
+        base_traffic = 85
+        own_brand = 40.0
+        country = "Chile"
+        cities = @(
+            @{ ciudad = "Santiago"; es_costera = $false; humedad_relativa_promedio = 60 },
+            @{ ciudad = "Concepcion"; es_costera = $false; humedad_relativa_promedio = 75 },
+            @{ ciudad = "Valparaiso"; es_costera = $true; humedad_relativa_promedio = 78 },
+            @{ ciudad = "Antofagasta"; es_costera = $true; humedad_relativa_promedio = 72 }
+        )
+        best_sellers = @("Modulo Cocina Modular 120cm", "Closet RTA Expandible", "Escritorio Compacto Madera")
+        future_sources = @("Falabella.com Chile (Surtido and Quiebres de Stock)", "Google Analytics RTA (Porcentaje de abandono del checkout B2B and telemetria de visualizacion de closets)")
+        competitive_set = @("TuHome", "Easy Chile")
+        jtbd = @{
+            persona = "Hogares en Crecimiento"
+            job = "Adaptar el mobiliario del hogar segun el crecimiento de los hijos con soluciones modulares y escalables."
+            pain_points = "Muebles pesados dificiles de mover, poca variedad en tonos de madera real, ensamble que requiere 2 personas."
+            triggers = "Llegada de un nuevo hijo o reorganizacion de dormitorios."
+        }
+        raw_menu_categories = @(
+            "Coleccion Cocina y Despensa Modulares",
+            "Centros de Entretenimiento Modernos",
+            "Linea Oficina y Escritorios RTA",
+            "Muebles Auxiliares de Bano",
+            "Novedades Diseno Industrial RTA"
+        )
+        products = @(
+            @{ name = "Modulo Cocina Modular 120cm"; rh = $false; assembly = "minifix"; desc = "Ensamble rapido con minifix" },
+            @{ name = "Closet RTA Expandible"; rh = $false; assembly = "estandar"; desc = "Tablero estandar MDP" },
+            @{ name = "Escritorio Compacto Madera"; rh = $false; assembly = "minifix"; desc = "Escritorio estudiantil simple" }
+        )
+    }
+    "PROMART HOMECENTER" = @{
+        short_name = "Promart"
+        url_menu = "https://www.promart.pe/muebles-y-organizadores"
+        urls_ingesta = @("https://www.promart.pe/muebles-y-organizadores", "https://www.promart.pe/muebles-de-cocina")
+        base_traffic = 83
+        own_brand = 40.0
+        country = "PerÃº"
+        cities = @(
+            @{ ciudad = "Lima"; es_costera = $true; humedad_relativa_promedio = 85 },
+            @{ ciudad = "Arequipa"; es_costera = $false; humedad_relativa_promedio = 45 },
+            @{ ciudad = "Trujillo"; es_costera = $true; humedad_relativa_promedio = 80 },
+            @{ ciudad = "Chiclayo"; es_costera = $true; humedad_relativa_promedio = 82 }
+        )
+        best_sellers = @("Centro de TV MÃ¡ncora Roble", "Escritorio Gamer Pro", "Alacena RTA MultifunciÃ³n")
+        future_sources = @("MercadoLibre PerÃº (Tendencias de BÃºsqueda)", "Promart Analytics (Ventas RTA)", "Google Analytics RTA (Tasa de rebote en cocinas modulares y descargas de instructivos)")
+        competitive_set = @("Sodimac PerÃº", "Ripley")
+        jtbd = @{
+            persona = "Comprador Urbano LimeÃ±o"
+            job = "Optimizar el espacio en departamentos de metrajes reducidos en Lima Metropolitana de forma prÃ¡ctica."
+            pain_points = "Humedad severa de la costa de Lima que infla los tableros aglomerados de baja densidad y herrajes deficientes."
+            triggers = "RenovaciÃ³n de departamento de alquiler o mudanza a proyecto de vivienda VIS."
+        }
+        raw_menu_categories = @(
+            "Muebles de Cocina - Modulares",
+            "Escritorios y Oficina RTA",
+            "Centros de TV y Entretenimiento",
+            "Roperos y ClÃ³sets en Descuento",
+            "Muebles de BaÃ±o RH Resistentes a Humedad"
+        )
+        products = @(
+            @{ name = "Centro de TV MÃ¡ncora Roble"; rh = $false; assembly = "minifix"; desc = "MÃ³dulo de TV en melamina Rovere" },
+            @{ name = "Escritorio Gamer Pro"; rh = $false; assembly = "minifix"; desc = "Estructura gamer reforzada" },
+            @{ name = "Alacena RTA MultifunciÃ³n"; rh = $false; assembly = "estandar"; desc = "Organizador modular estÃ¡ndar" },
+            @{ name = "Mueble Lavamanos Suspendido RH"; rh = $true; assembly = "minifix"; desc = "Melamina RH resistente a humedad" }
+        )
+    }
+    "THE HOME DEPOT MÃ‰XICO" = @{
+        short_name = "Home Depot MX"
+        url_menu = "https://www.homedepot.com.mx/muebles"
+        urls_ingesta = @("https://www.homedepot.com.mx/muebles", "https://www.homedepot.com.mx/muebles-de-cocina")
+        base_traffic = 90
         own_brand = 30.0
-        country = "Venezuela"
-        cities = @("Caracas", "Valencia", "Maracaibo", "Barquisimeto")
-        best_sellers = @("Gabinete Auxiliar de Planchado MDP", "Escritorio Estudiante Basic Gris", "Modulo Cocina Fregadero 120cm")
-        future_sources = @("MercadoLibre Venezuela (Demanda de Muebles RTA de Bajo Costo)", "EPA Costa Rica/El Salvador (Benchmarking de Precios RTA)", "Google Analytics RTA (Tasa de conversion en el configurador de muebles modulares de cocina)")
-        competitive_set = @("Sodimac", "Novey", "Cencosud")
+        country = "MÃ©xico"
+        cities = @(
+            @{ ciudad = "Ciudad de MÃ©xico"; es_costera = $false; humedad_relativa_promedio = 55 },
+            @{ ciudad = "Monterrey"; es_costera = $false; humedad_relativa_promedio = 50 },
+            @{ ciudad = "Guadalajara"; es_costera = $false; humedad_relativa_promedio = 58 },
+            @{ ciudad = "Veracruz"; es_costera = $true; humedad_relativa_promedio = 78 },
+            @{ ciudad = "MÃ©rida"; es_costera = $true; humedad_relativa_promedio = 75 }
+        )
+        best_sellers = @("Gabinete de Cocina Modular CafÃ©", "Gabinete de BaÃ±o Suspendido RH", "Escritorio Home Office CafÃ© Oscuro")
+        future_sources = @("Amazon MÃ©xico (Tendencias de BÃºsqueda)", "Home Depot Analytics (Ventas de Muebles de BaÃ±o y Cocinas)", "Google Analytics RTA (Tasa de conversiÃ³n en el configurador de muebles modulares)")
+        competitive_set = @("Sodimac MÃ©xico", "IKEA MÃ©xico")
         jtbd = @{
-            persona = "Auto-constructor RTA"
-            job = "Hacer mejoras funcionales en el hogar los fines de semana de forma economica."
-            pain_points = "Falta de herramientas de ensamble en casa, tornilleria incompleta en el empaque original."
-            triggers = "Proyecto DIY (Hagalo usted mismo) de fin de semana."
+            persona = "Contratista / DueÃ±o de Casa DIY"
+            job = "Instalar de manera rÃ¡pida y econÃ³mica organizadores en cocheras, cocinas y baÃ±os de alta durabilidad."
+            pain_points = "Falta de herrajes en el empaque original, manuales de armado confusos e inestabilidad estructural."
+            triggers = "RemodelaciÃ³n antes de la temporada de lluvias o mejoras previas a las fiestas patrias."
         }
         raw_menu_categories = @(
-            "Muebles Modulares para Cocina",
-            "Armarios and Alacenas en Promocion",
-            "Escritorios RTA Practicos",
-            "Cyberlunes Muebles de Sala",
-            "Linea de Organizadores Economicos",
-            "Muebles de Bano Basicos"
+            "Gabinetes de Cocina en Oferta",
+            "Muebles de Oficina RTA",
+            "Organizadores para Garaje y ClÃ³sets",
+            "Centros de TV Modernos"
         )
         products = @(
-            @{ name = "Gabinete Auxiliar de Planchado MDP"; rh = $false; assembly = "estandar"; desc = "Tablero aglomerado estandar" },
-            @{ name = "Escritorio Estudiante Basic Gris"; rh = $false; assembly = "estandar"; desc = "Estructura metalica y MDP" },
-            @{ name = "Modulo Cocina Fregadero 120cm"; rh = $false; assembly = "estandar"; desc = "No resistente a humedad" },
-            @{ name = "Gabinete Aereo Bano con Espejo"; rh = $false; assembly = "estandar"; desc = "MDP estandar" }
+            @{ name = "Gabinete de Cocina Modular CafÃ©"; rh = $false; assembly = "estandar"; desc = "Estructura aglomerada estÃ¡ndar" },
+            @{ name = "Gabinete de BaÃ±o Suspendido RH"; rh = $true; assembly = "minifix"; desc = "Tablero hidrÃ³fugo resistente a la humedad" },
+            @{ name = "Escritorio Home Office CafÃ© Oscuro"; rh = $false; assembly = "minifix"; desc = "Ensamble rÃ¡pido con tornillos minifix" },
+            @{ name = "EstanterÃ­a Garaje MetÃ¡lica RTA"; rh = $false; assembly = "estandar"; desc = "EstanterÃ­a para herramientas" }
         )
     }
-    "MOBBLY S.A.S" = @{
-        short_name = "Mobbly"
-        url_menu = "https://www.mobbly.com.co/rta-trends"
-        base_traffic = 65
-        own_brand = 80.0
-        country = "Colombia"
-        cities = @("Bogota", "Medellin", "Cali")
-        best_sellers = @("Escritorio Gamer Pro con Luces LED", "Mesa de TV Flotante 140cm", "Biblioteca Modular 5 Niveles")
-        future_sources = @("Pinterest Latam (Busquedas de Muebles Juveniles)", "TikTok Shopping (Conversion RTA en Audiencia Joven)", "Google Analytics RTA (Engagement en paginas de producto con visualizacion interactiva de centros de TV)")
-        competitive_set = @("Virtual Muebles", "TuHome", "Novaventa")
-        jtbd = @{
-            persona = "Estudiante o Joven Profesional"
-            job = "Montar un espacio de estudio o trabajo estetico y ergonomico con un presupuesto muy ajustado."
-            pain_points = "Escritorios inestables, acabados que se rayan con facilidad, falta de espacio para cables."
-            triggers = "Inicio de semestre universitario o transicion a trabajo remoto."
-        }
-        raw_menu_categories = @(
-            "Escritorios Gamer y Home Office RTA",
-            "Descuento en Linea Gamer Mobbly",
-            "Estanterias Modulares Libres de Ruido",
-            "Mesas de TV y Centros de Diseno",
-            "Cyber Muebles Dormitorio Moderno"
-        )
-        products = @(
-            @{ name = "Escritorio Gamer Pro con Luces LED"; rh = $false; assembly = "minifix"; desc = "Diseno ergonomico juvenil" },
-            @{ name = "Mesa de TV Flotante 140cm"; rh = $false; assembly = "minifix"; desc = "Sistema de anclaje de pared" },
-            @{ name = "Biblioteca Modular 5 Niveles"; rh = $false; assembly = "estandar"; desc = "Estructura MDP texturizado" },
-            @{ name = "Comoda 4 Cajones Compacta"; rh = $false; assembly = "estandar"; desc = "Melamina color roble" }
-        )
-    }
-    "ALMACENES EXITO S.A." = @{
-        short_name = "Exito"
-        url_menu = "https://www.exito.com/muebles"
-        base_traffic = 94
-        own_brand = 25.0
-        country = "Colombia"
-        cities = @("Medellin", "Bogota", "Cali", "Barranquilla")
-        best_sellers = @("Closet RTA 3 Puertas Finlandek", "Escritorio Compacto Office Finlandek", "Gabinete Cocina Auxiliar con Ruedas")
-        future_sources = @("Grupo Exito Marketplace (Conversion de Canje de Puntos)", "Carrefour Brasil (Modelos RTA de Alta Frecuencia)", "Google Analytics RTA (Trafico derivado a la categoria de dormitorio infantil y tasa de descarga de planos RTA)")
-        competitive_set = @("Cencosud", "Sodimac", "Novaventa")
-        jtbd = @{
-            persona = "Madre de Familia / Administradora del Hogar"
-            job = "Comprar muebles para organizar los cuartos de los ninos aprovechando puntos de lealtad y promociones de supermercado."
-            pain_points = "Dificultad para coordinar la entrega con el mercado semanal, calidad inconsistente en productos importados."
-            triggers = "Ofertas de fin de mes o acumulacion de puntos de fidelidad."
-        }
-        raw_menu_categories = @(
-            "Muebles de Dormitorio y Closets RTA",
-            "Descuentos Blackfriday Muebles",
-            "Escritorios Finlandia Finlandek",
-            "Cyber Ofertas Cocinas Listas",
-            "Centros de Entretenimiento en Promocion",
-            "Muebles Auxiliares de Cocina y Bano"
-        )
-        products = @(
-            @{ name = "Closet RTA 3 Puertas Finlandek"; rh = $false; assembly = "estandar"; desc = "Madera aglomerada estandar" },
-            @{ name = "Escritorio Compacto Office Finlandek"; rh = $false; assembly = "estandar"; desc = "Diseno simple estudiantil" },
-            @{ name = "Gabinete Cocina Auxiliar con Ruedas"; rh = $false; assembly = "estandar"; desc = "MDP melaminico" },
-            @{ name = "Mesa Auxiliar Multiusos 1 Cajon"; rh = $false; assembly = "estandar"; desc = "Finlandek RTA" }
-        )
-    }
-    "NOVAVENTA S.A.S" = @{
-        short_name = "Novaventa"
-        url_menu = "https://www.novaventa.com.co/muebles-catalogo"
-        base_traffic = 75
+    "WAYFAIR USA" = @{
+        short_name = "Wayfair"
+        url_menu = "https://www.wayfair.com/furniture"
+        urls_ingesta = @("https://www.wayfair.com/furniture", "https://www.wayfair.com/furniture/office")
+        base_traffic = 95
         own_brand = 15.0
-        country = "Colombia"
-        cities = @("Medellin", "Bogota", "Bucaramanga", "Cali")
-        best_sellers = @("Mueble Zapatero RTA 12 Pares", "Escritorio Plegable Practico", "Organizador Microondas con Canastillas")
-        future_sources = @("Novaventa App (Encuestas Directas a Mamas Empresarias)", "Leonisa/Catalogo Hogar (Analisis de Surtido Competidor)", "Google Analytics RTA (Interacciones en catalogo interactivo y clics de pedido rapido de zapateros)")
-        competitive_set = @("Almacenes Exito", "Virtual Muebles", "Mobbly")
+        country = "USA"
+        cities = @(
+            @{ ciudad = "Miami"; es_costera = $true; humedad_relativa_promedio = 75 },
+            @{ ciudad = "Los Ãngeles"; es_costera = $true; humedad_relativa_promedio = 65 },
+            @{ ciudad = "Nueva York"; es_costera = $true; humedad_relativa_promedio = 68 }
+        )
+        best_sellers = @("Modular Closet System White", "Minimalist TV Stand Oak", "RTA Writing Desk with Shelves")
+        future_sources = @("Amazon US (Bestsellers)", "Google Trends USA (Keywords)", "Wayfair Business Analytics")
+        competitive_set = @("IKEA US", "Amazon")
         jtbd = @{
-            persona = "Mama Empresaria / Vendedora por Catalogo"
-            job = "Ofrecer a sus vecinos de confianza muebles RTA practicos y de bajo costo que paguen a plazos comodos."
-            pain_points = "Complicacion en el ensamble post-venta, cajas muy pesadas para transportar, cobros dificiles si el mueble falla."
-            triggers = "Oportunidades de catalogo mensual para aumentar ingresos extras."
+            persona = "Young Urban Professional"
+            job = "Furnish rental apartments with stylish, affordable, and easy-to-move RTA furniture."
+            pain_points = "Assembly taking too long, missing minor screws, particleboard cracking during screw insertion."
+            triggers = "Moving to a new apartment, starting a remote job or college semester."
         }
         raw_menu_categories = @(
-            "Muebles Practicos del Catálogo Novaventa",
-            "Oferta Especial de Closets RTA",
-            "Escritorios Juveniles en Descuento",
-            "Organizadores de Cocina Practicos",
-            "Cyber Muebles Auxiliares de Hogar"
+            "Modular Living Room Furniture",
+            "Home Office Writing Desks",
+            "ClÃ³set & Wardrobe Organizers",
+            "Bath Storage Cabinets"
         )
         products = @(
-            @{ name = "Mueble Zapatero RTA 12 Pares"; rh = $false; assembly = "minifix"; desc = "Facil ensamble por catalogo" },
-            @{ name = "Escritorio Plegable Practico"; rh = $false; assembly = "click"; desc = "Sistema autoensamble sin herramientas" },
-            @{ name = "Organizador Microondas con Canastillas"; rh = $false; assembly = "estandar"; desc = "Estructura metalica y MDP" },
-            @{ name = "Estanteria Multiusos 4 repisas"; rh = $false; assembly = "estandar"; desc = "Ligero y facil de ubicar" }
+            @{ name = "Modular Closet System White"; rh = $false; assembly = "minifix"; desc = "White melamine finish cabinet" },
+            @{ name = "Minimalist TV Stand Oak"; rh = $false; assembly = "minifix"; desc = "Oak textured media console" },
+            @{ name = "RTA Writing Desk with Shelves"; rh = $false; assembly = "click"; desc = "Tool-less quick assembly desk" },
+            @{ name = "Medicine Cabinet RH White"; rh = $true; assembly = "minifix"; desc = "RH particleboard bathroom storage" }
         )
     }
-    "CENCOSUD COLOMBIA SA" = @{
-        short_name = "Cencosud"
-        url_menu = "https://www.jumbo.co/muebles-rta"
-        base_traffic = 88
-        own_brand = 30.0
-        country = "Colombia"
-        cities = @("Bogota", "Medellin", "Cali", "Barranquilla")
-        best_sellers = @("Centro de TV Florencia Wengue", "Escritorio L-Shape Industrial Easy", "Modulo Cocina Aéreo Easy 100cm")
-        future_sources = @("Easy Argentina/Chile (Surtido de Muebles RTA Krea)", "MercadoLibre Colombia (Precios de Centros de TV)", "Google Analytics RTA (Busqueda interna de centros de TV y tasa de abandono en carritos de muebles de sala)")
-        competitive_set = @("Sodimac", "Almacenes Exito", "Corona")
-        jtbd = @{
-            persona = "Comprador de Hogar de Clase Media"
-            job = "Encontrar un mueble de sala o estudio de buena apariencia que encaje exactamente en la sala de su apartamento sin gastar una fortuna."
-            pain_points = "Falta de informacion clara sobre dimensiones en la web, retrasos en el despacho a domicilio."
-            triggers = "Remodelacion de la sala para recibir visitas de fin de ano."
-        }
-        raw_menu_categories = @(
-            "Centros de TV y Entretenimiento Easy",
-            "Ofertas de Cyber en Muebles Easy",
-            "Closets y Comodas RTA en Descuento",
-            "Escritorios y Sillas de Oficina",
-            "Muebles de Cocina y Comedor RTA",
-            "Blackfriday Armarios Modulares"
-        )
-        products = @(
-            @{ name = "Centro de TV Florencia Wengue"; rh = $false; assembly = "estandar"; desc = "Estilo moderno melaminico" },
-            @{ name = "Escritorio L-Shape Industrial Easy"; rh = $false; assembly = "estandar"; desc = "Estructura metalica y MDP" },
-            @{ name = "Modulo Cocina Aéreo Easy 100cm"; rh = $false; assembly = "estandar"; desc = "MDP estandar" },
-            @{ name = "Mesa de Noche Krea 2 cajones"; rh = $false; assembly = "estandar"; desc = "Aglomerado basico" }
-        )
-    }
-    "CORPORACION FAVORITA C.A." = @{
-        short_name = "Favorita"
-        url_menu = "https://www.sukasa.com/muebles-rta"
-        base_traffic = 82
-        own_brand = 20.0
-        country = "Ecuador"
-        cities = @("Quito", "Guayaquil", "Cuenca", "Manta")
-        best_sellers = @("Aparador Buffet Nordico 150cm", "Centro de Entretenimiento Rovere", "Mueble de Bano Suspendido Zen RH")
-        future_sources = @("Sukasa Online (Tendencias de Muebles de Alta Gama)", "MercadoLibre Ecuador (Precios de Muebles RTA de Comedor)", "Google Analytics RTA (Telemetria de la linea premium y clics en el boton de contacto para proyectos de sala)")
-        competitive_set = @("Novey", "TuHome", "Sodimac")
-        jtbd = @{
-            persona = "Hogar Moderno Ecuatoriano"
-            job = "Modernizar el comedor y la sala de estar con acabados elegantes y duraderos sin recurrir a carpinteros tradicionales."
-            pain_points = "Poca oferta de disenos modernos en mercados locales, altos costos de importacion de muebles listos."
-            triggers = "Fiestas locales o mudanza de fin de ano."
-        }
-        raw_menu_categories = @(
-            "Muebles RTA de Diseno Exclusivo Sukasa",
-            "Descuentos de Cyber en Comedores",
-            "Aparadores y Centros de TV Modernos",
-            "Escritorios Ejecutivos de Descuento",
-            "Muebles Organizadores de Lujo"
-        )
-        products = @(
-            @{ name = "Aparador Buffet Nordico 150cm"; rh = $false; assembly = "minifix"; desc = "Gran acabado estetico melaminico" },
-            @{ name = "Centro de Entretenimiento Rovere"; rh = $false; assembly = "estandar"; desc = "Estructura robusta 18mm" },
-            @{ name = "Mueble de Bano Suspendido Zen RH"; rh = $true; assembly = "minifix"; desc = "Modulo de bano en melamina RH" },
-            @{ name = "Escritorio Executive Glass & Wood"; rh = $false; assembly = "estandar"; desc = "Combinacion vidrio y MDP" }
-        )
-    }
-    "GEO F. NOVEY S.A." = @{
-        short_name = "Novey"
-        url_menu = "https://www.novey.com.pa/muebles"
-        base_traffic = 74
+    "LEROY MERLIN ESPAÃ‘A" = @{
+        short_name = "Leroy Merlin"
+        url_menu = "https://www.leroymerlin.es/productos/muebles/"
+        urls_ingesta = @("https://www.leroymerlin.es/productos/muebles/", "https://www.leroymerlin.es/productos/muebles/armarios")
+        base_traffic = 87
         own_brand = 35.0
-        country = "Panama"
-        cities = @("Ciudad de Panama", "David", "Chitre", "Colon")
-        best_sellers = @("Modulo Fregadero RH Novey 120cm", "Gabinete Espejo de Bano RH", "Escritorio Home Office Basic Rovere")
-        future_sources = @("Novey.com.pa (Analytics de Busqueda de Productos Hidrofugos)", "Amazon EE.UU. (Importacion de Accesorios RTA a Panama)", "Google Analytics RTA (Trafico en fichas tecnicas de gabinetes de bano RH y descargas de guias de resistencia)")
-        competitive_set = @("Favorita", "Sodimac", "Ferreteria EPA")
+        country = "EspaÃ±a"
+        cities = @(
+            @{ ciudad = "Madrid"; es_costera = $false; humedad_relativa_promedio = 50 },
+            @{ ciudad = "Barcelona"; es_costera = $true; humedad_relativa_promedio = 72 },
+            @{ ciudad = "Valencia"; es_costera = $true; humedad_relativa_promedio = 70 },
+            @{ ciudad = "Sevilla"; es_costera = $false; humedad_relativa_promedio = 55 }
+        )
+        best_sellers = @("Armario RTA Modular Blanco", "Mueble Auxiliar de Cocina Haya", "Gabinete Suspendido de BaÃ±o RH")
+        future_sources = @("Amazon EspaÃ±a (Muebles mÃ¡s vendidos)", "Leroy Merlin Analytics (Consultas de Clientes)", "Google Analytics RTA (Tasa de rebote en armarios modulares y descargas de guÃ­as de montaje)")
+        competitive_set = @("IKEA EspaÃ±a", "Conforama")
         jtbd = @{
-            persona = "Propietario / Arrendador"
-            job = "Amoblar de forma economica e higienica una propiedad en alquiler para proteger su valor a largo plazo."
-            pain_points = "Danos por agua por descuido del inquilino, necesidad de reponer gabinetes deteriorados rapidamente."
-            triggers = "Cambio de inquilino o adecuacion de departamento para Airbnb."
+            persona = "Reformador DIY EspaÃ±ol"
+            job = "Montar soluciones de almacenaje a medida en pisos urbanos optimizando cada metro cuadrado."
+            pain_points = "Herrajes de baja calidad que se doblan, falta de resistencia a la humedad en baÃ±os de pisos costeros, instrucciones poco claras."
+            triggers = "RenovaciÃ³n de armarios estacionales o mudanzas de verano."
         }
         raw_menu_categories = @(
-            "Muebles de Cocina Modular Novey",
-            "Ofertas Cyber de Organizadores",
-            "Muebles de Bano RH Hidrofugos",
-            "Escritorios RTA de Alta Resistencia",
-            "Descuentos Blackfriday Comodas"
+            "Armarios y ClÃ³sets Modulares",
+            "Muebles Auxiliares de Cocina",
+            "Escritorios RTA de Oficina",
+            "Muebles de BaÃ±o Suspendidos RH"
         )
         products = @(
-            @{ name = "Modulo Fregadero RH Novey 120cm"; rh = $true; assembly = "minifix"; desc = "Tablero RH resistente a humedad" },
-            @{ name = "Escritorio Home Office Basic Rovere"; rh = $false; assembly = "estandar"; desc = "Tablero aglomerado estandar" },
-            @{ name = "Organizador Lavanderia Multi-espacio"; rh = $false; assembly = "estandar"; desc = "MDP melaminico estandar" },
-            @{ name = "Gabinete Espejo de Bano RH"; rh = $true; assembly = "minifix"; desc = "Gabinete hidrofugo de facil anclaje" }
+            @{ name = "Armario RTA Modular Blanco"; rh = $false; assembly = "estandar"; desc = "Estructura aglomerado melamina 16mm" },
+            @{ name = "Mueble Auxiliar de Cocina Haya"; rh = $false; assembly = "minifix"; desc = "MÃ³dulo con ruedas y estantes" },
+            @{ name = "Gabinete Suspendido de BaÃ±o RH"; rh = $true; assembly = "minifix"; desc = "Tablero hidrÃ³fugo resistente a la humedad" },
+            @{ name = "Escritorio Home Office Basic Haya"; rh = $false; assembly = "estandar"; desc = "Escritorio estÃ¡ndar aglomerado" }
+        )
+    }
+    "LEROY MERLIN ESPEJO INTERNACIONAL" = @{
+        short_name = "Leroy Espejo"
+        url_menu = "https://www.leroymerlin.es/productos/muebles/"
+        urls_ingesta = @("https://www.leroymerlin.es/productos/muebles/", "https://www.leroymerlin.es/productos/muebles/armarios")
+        base_traffic = 80
+        own_brand = 30.0
+        country = "EspaÃ±a"
+        cities = @(
+            @{ ciudad = "Madrid"; es_costera = $false; humedad_relativa_promedio = 50 },
+            @{ ciudad = "Barcelona"; es_costera = $true; humedad_relativa_promedio = 72 },
+            @{ ciudad = "Valencia"; es_costera = $true; humedad_relativa_promedio = 70 },
+            @{ ciudad = "Sevilla"; es_costera = $false; humedad_relativa_promedio = 55 }
+        )
+        best_sellers = @("Armario RTA Modular Blanco", "Mueble Auxiliar de Cocina Haya", "Gabinete Suspendido de BaÃ±o RH")
+        future_sources = @("Amazon EspaÃ±a (Muebles mÃ¡s vendidos)", "Google Analytics RTA (Tasa de rebote en armarios modulares y descargas de guÃ­as de montaje)")
+        competitive_set = @("IKEA EspaÃ±a", "Conforama")
+        jtbd = @{
+            persona = "Reformador DIY EspaÃ±ol"
+            job = "Montar soluciones de almacenaje a medida en pisos urbanos optimizando cada metro cuadrado."
+            pain_points = "Herrajes de baja calidad que se doblan, falta de resistencia a la humedad en baÃ±os de pisos costeros, instrucciones poco claras."
+            triggers = "RenovaciÃ³n de armarios estacionales o mudanzas de verano."
+        }
+        raw_menu_categories = @(
+            "Armarios y ClÃ³sets Modulares",
+            "Muebles Auxiliares de Cocina",
+            "Escritorios RTA de Oficina",
+            "Muebles de BaÃ±o Suspendidos RH"
+        )
+        products = @(
+            @{ name = "Armario RTA Modular Blanco"; rh = $false; assembly = "estandar"; desc = "Estructura aglomerado melamina 16mm" },
+            @{ name = "Mueble Auxiliar de Cocina Haya"; rh = $false; assembly = "minifix"; desc = "MÃ³dulo con ruedas y estantes" },
+            @{ name = "Gabinete Suspendido de BaÃ±o RH"; rh = $true; assembly = "minifix"; desc = "Tablero hidrÃ³fugo resistente a la humedad" },
+            @{ name = "Escritorio Home Office Basic Haya"; rh = $false; assembly = "estandar"; desc = "Escritorio estÃ¡ndar aglomerado" }
         )
     }
 }
@@ -367,7 +409,7 @@ function Clean-AdvertisingNoise {
 function Analyze-CDTAndJTBD {
     param(
         [string[]]$cleanedCategories,
-        [System.Collections.ArrayList]$products
+        $products
     )
     
     $technicalWords = @('modular', 'rh', 'resistencia', 'medidas', 'alto', 'fregadero', 'suspender', 'plegable', 'auxiliar', 'lavanderia')
@@ -376,7 +418,9 @@ function Analyze-CDTAndJTBD {
     $techScore = 0
     $aesScore = 0
     
-    $allText = ($cleanedCategories -join " ") + " " + (($products | ForEach-Object { $_.name }) -join " ")
+    $productNames = @()
+    foreach ($p in $products) { $productNames += $p.name }
+    $allText = ($cleanedCategories -join " ") + " " + ($productNames -join " ")
     $allText = $allText.ToLower()
     
     foreach ($word in $technicalWords) {
@@ -395,8 +439,12 @@ function Analyze-CDTAndJTBD {
     # Alertas de Espacios en Blanco
     $whiteSpaces = @()
     $totalProducts = $products.Count
-    $rhProducts = ($products | Where-Object { $_.rh -eq $true }).Count
-    $quickAssembly = ($products | Where-Object { $_.assembly -in 'minifix', 'click' }).Count
+    $rhProducts = 0
+    $quickAssembly = 0
+    foreach ($p in $products) {
+        if ($p.rh) { $rhProducts += 1 }
+        if ($p.assembly -in 'minifix', 'click') { $quickAssembly += 1 }
+    }
     
     $hasWetAreas = $false
     foreach ($cat in $cleanedCategories) {
@@ -428,7 +476,7 @@ function New-WeekData {
     $totalWhitespaces = 0
     $rand = New-Object System.Random
 
-    # Determinar el tema y comportamiento según la fecha
+    # Determinar el tema y comportamiento segÃºn la fecha
     $theme = "Normal"
     if ($dateStr -eq "2026-05-21") { $theme = "Pre-Cyber" }
     elseif ($dateStr -eq "2026-05-28") { $theme = "CyberDay-Peak" }
@@ -445,11 +493,11 @@ function New-WeekData {
         
         $traffic = $info.base_traffic
         if ($theme -eq "Pre-Cyber") {
-            if ($clientName -in "INVERSIONES VIRTUAL MUEBLES S.A.S", "ALMACENES EXITO S.A.", "SODIMAC COLOMBIA S.A") {
+            if ($clientName -in "INVERSIONES VIRTUAL MUEBLES S.A.S", "SODIMAC COLOMBIA S.A", "CENCOSUD COLOMBIA SA") {
                 $traffic += 3
             }
         } elseif ($theme -eq "CyberDay-Peak") {
-            if ($clientName -in "INVERSIONES VIRTUAL MUEBLES S.A.S", "ALMACENES EXITO S.A.", "MOBBLY S.A.S", "CENCOSUD COLOMBIA SA") {
+            if ($clientName -in "INVERSIONES VIRTUAL MUEBLES S.A.S", "CENCOSUD COLOMBIA SA") {
                 $traffic = 100
             } else {
                 $traffic += 8
@@ -457,7 +505,7 @@ function New-WeekData {
         } elseif ($theme -eq "Post-Cyber-Rain") {
             $traffic -= 5
         } elseif ($theme -eq "Fathers-Day") {
-            if ($clientName -in "INVERSIONES VIRTUAL MUEBLES S.A.S", "MOBBLY S.A.S", "CENCOSUD COLOMBIA SA") {
+            if ($clientName -in "INVERSIONES VIRTUAL MUEBLES S.A.S", "CENCOSUD COLOMBIA SA") {
                 $traffic += 6
             }
         } elseif ($theme -eq "Rainy-Season") {
@@ -477,181 +525,150 @@ function New-WeekData {
         $cdtFocus = $analysisResult.cdtFocus
         
         $whiteSpaces = [System.Collections.ArrayList]::new()
-        if ($analysisResult.whiteSpaces -is [System.Collections.IList] -or $analysisResult.whiteSpaces -is [System.Array]) {
+        if ($analysisResult.whiteSpaces) {
             foreach ($item in $analysisResult.whiteSpaces) { $whiteSpaces.Add($item) | Out-Null }
-        } elseif ($analysisResult.whiteSpaces -ne $null -and $analysisResult.whiteSpaces -ne "") {
-            $whiteSpaces.Add($analysisResult.whiteSpaces) | Out-Null
         }
         
-        # Modificar white_spaces y best_sellers según el tema
-        $bestSellers = [System.Collections.ArrayList]::new()
-        foreach ($item in $info.best_sellers) { $bestSellers.Add($item) | Out-Null }
-
         if ($theme -eq "Pre-Cyber") {
             $whiteSpaces.Add("Riesgo de desabastecimiento: bajo inventario preventivo de melaminas antes del evento CyberDay.") | Out-Null
-            $bestSellers.Clear()
-            $bestSellers.Add("Escritorio Home Office Smart 120cm") | Out-Null
-            $bestSellers.Add("Modulo Fregadero 100cm MDP Estandar") | Out-Null
-            $bestSellers.Add("Zapatero Basico 12 Pares") | Out-Null
         } elseif ($theme -eq "CyberDay-Peak") {
-            if ($clientName -in "INVERSIONES VIRTUAL MUEBLES S.A.S", "ALMACENES EXITO S.A.", "SODIMAC COLOMBIA S.A", "CENCOSUD COLOMBIA SA") {
+            if ($clientName -in "INVERSIONES VIRTUAL MUEBLES S.A.S", "SODIMAC COLOMBIA S.A", "CENCOSUD COLOMBIA SA") {
                 $whiteSpaces.Add("Quiebre de stock critico en escritorios Home Office y Gamer debido a alta demanda CyberDay.") | Out-Null
             } else {
                 $whiteSpaces.Add("Brecha de visibilidad digital: Competencia acapara trafico publicitario con ofertas Cyber.") | Out-Null
             }
-            $bestSellers.Clear()
-            $bestSellers.Add("Escritorio Gamer Pro con Luces LED") | Out-Null
-            $bestSellers.Add("Escritorio Plegable Work-Space") | Out-Null
-            $bestSellers.Add("Centro de TV Nordico Blanco-Roble") | Out-Null
         } elseif ($theme -eq "Post-Cyber-Rain") {
-            $coastalCities = @("Barranquilla", "Cartagena", "Manta", "Guayaquil", "Colon", "David", "Valparaiso", "Antofagasta", "Ciudad de Panama")
             $isCoastal = $false
             foreach ($city in $info.cities) {
-                foreach ($cc in $coastalCities) {
-                    if ($city.ToLower() -like "*$($cc.ToLower())*") { $isCoastal = $true; break }
-                }
-                if ($isCoastal) { break }
+                if ($city.es_costera) { $isCoastal = $true; break }
             }
             if ($isCoastal) {
                 $whiteSpaces.Add("Deficit de portafolio hidrofugo (RH) en cocinas y banos expuestos a alta humedad y lluvias costeras.") | Out-Null
-                $bestSellers.Clear()
-                $bestSellers.Add("Modulo Fregadero MDP-RH 100cm") | Out-Null
-                $bestSellers.Add("Gabinete de Bano suspendido 60cm RH") | Out-Null
-                $bestSellers.Add("Mueble Lavamanos Split RH") | Out-Null
             } else {
                 $whiteSpaces.Add("Agotamiento general de stock de melamina estandar tras despacho de pedidos CyberDay.") | Out-Null
-                $bestSellers.Clear()
-                $bestSellers.Add("Biblioteca Modular 5 Niveles") | Out-Null
-                $bestSellers.Add("Estanterias RTA Metalicas") | Out-Null
-                $bestSellers.Add("Mesa Auxiliar Multiusos") | Out-Null
             }
         } elseif ($theme -eq "Supply-Disruption") {
             $whiteSpaces.Add("Quiebre de catalogo: Falta de melamina clara (Nordico/Rovere) por retrasos en puerto de importacion.") | Out-Null
-            $bestSellers.Clear()
-            $bestSellers.Add("Closet RTA 4 Puertas Wengue") | Out-Null
-            $bestSellers.Add("Centro de TV Florencia Wengue") | Out-Null
-            $bestSellers.Add("Modulo Cocina con Meson de Acero") | Out-Null
         } elseif ($theme -eq "Fathers-Day") {
             $whiteSpaces.Add("Falta de muebles de bar y centros de entretenimiento de gran formato (+65 pulgadas) en catalogo de temporada.") | Out-Null
-            $bestSellers.Clear()
-            $bestSellers.Add("Centro de TV Prime Nogal 55 pulgadas") | Out-Null
-            $bestSellers.Add("Mesa de TV Flotante 140cm") | Out-Null
-            $bestSellers.Add("Escritorio Gamer Pro con Luces LED") | Out-Null
         } elseif ($theme -eq "Mid-Year-Audit") {
             $whiteSpaces.Add("Brecha de costos: Competencia local lanza linea economica de 12mm. Se requiere reduccion de espesor para competir.") | Out-Null
-            $bestSellers.Clear()
-            $bestSellers.Add("Closet RTA 3 Puertas Finlandek") | Out-Null
-            $bestSellers.Add("Escritorio Compacto Office Finlandek") | Out-Null
-            $bestSellers.Add("Zapatero Basico 12 Pares") | Out-Null
         } elseif ($theme -eq "Logistics-Rush") {
             $whiteSpaces.Add("Brecha de entrega: Sobrecupo logistico retrasa entregas de gran formato. Se requieren embalajes planos ultra-optimizados.") | Out-Null
-            $bestSellers.Clear()
-            $bestSellers.Add("Zapatero RTA 12 Pares") | Out-Null
-            $bestSellers.Add("Organizador Lavanderia Multi-espacio") | Out-Null
-            $bestSellers.Add("Estanteria Multiusos 4 repisas") | Out-Null
         } elseif ($theme -eq "Rainy-Season") {
             $whiteSpaces.Add("Agotamiento de inventario de melamina hidrofuga (MDP-RH) ante la aceleracion de lluvias de la temporada.") | Out-Null
-            $bestSellers.Clear()
-            $bestSellers.Add("Modulo Fregadero MDP-RH 100cm") | Out-Null
-            $bestSellers.Add("Modulo Alto de Cocina 60cm MDP-RH") | Out-Null
-            $bestSellers.Add("Alacena Organizadora Multiusos RH") | Out-Null
         }
 
-        $totalWhitespaces += $whiteSpaces.Count
-        
-        if ($cdtFocus -like "*Benefit*") {
-            $cdtTree = @(
-                "1. Dimensiones y espacio disponible (Filtro numerico)",
-                "2. Resistencia del material (Aglomerado estandar vs Tablero RH)",
-                "3. Relacion precio-capacidad de almacenado"
-            )
-        } else {
-            $cdtTree = @(
-                "1. Combinacion de colores y estilo estetico (Nordico, Wengue, Industrial)",
-                "2. Tipo de ensamble visual (Flotante, de patas de madera)",
-                "3. Calificaciones de diseno y reviews en web"
-            )
+        # Espacios en blanco booleanos
+        $deficit_rh = $false
+        $deficit_ensamble = $false
+        foreach ($ws in $whiteSpaces) {
+            if ($ws.ToLower() -like "*hidrofugo*" -or $ws.ToLower() -like "*rh*") { $deficit_rh = $true }
+            if ($ws.ToLower() -like "*ensamble rapido*" -or $ws.ToLower() -like "*click*" -or $ws.ToLower() -like "*minifix*") { $deficit_ensamble = $true }
         }
         
-        # CRM KPIs calculations
-        $whitespacesCount = $whiteSpaces.Count
-        $leadScore = [int]([Math]::Floor(($traffic * (100 - $brandWeight) * ($whitespacesCount + 1)) / 150))
+        $isCoastal = $false
+        foreach ($city in $info.cities) { if ($city.es_costera) { $isCoastal = $true } }
+        $coastalChurnRisk = $isCoastal -and $deficit_rh
+        
+        if ($deficit_rh -or $coastalChurnRisk) {
+            $totalWhitespaces += 1
+        }
+        
+        $leadScore = [int]([Math]::Floor(($traffic * (100 - $brandWeight) * ($whiteSpaces.Count + 1)) / 150))
         if ($leadScore -lt 0) { $leadScore = 0 }
         if ($leadScore -gt 100) { $leadScore = 100 }
         
-        # Determinar pitch y accion CRM segun las brechas
-        $hasRhGap = $false
-        $hasAssemblyGap = $false
-        $hasStockoutGap = $false
-        $hasSupplyGap = $false
-        $hasPriceGap = $false
-        $hasLogisticsGap = $false
-        
-        foreach ($ws in $whiteSpaces) {
-            if ($ws.ToLower() -like "*hidrofugo*" -or $ws.ToLower() -like "*rh*") { $hasRhGap = $true }
-            if ($ws.ToLower() -like "*ensamble rapido*" -or $ws.ToLower() -like "*click*") { $hasAssemblyGap = $true }
-            if ($ws.ToLower() -like "*desabastecimiento*" -or $ws.ToLower() -like "*quiebre de stock*") { $hasStockoutGap = $true }
-            if ($ws.ToLower() -like "*puerto*" -or $ws.ToLower() -like "*importacion*") { $hasSupplyGap = $true }
-            if ($ws.ToLower() -like "*costos*" -or $ws.ToLower() -like "*precio*") { $hasPriceGap = $true }
-            if ($ws.ToLower() -like "*logistico*" -or $ws.ToLower() -like "*entrega*") { $hasLogisticsGap = $true }
-        }
-        
         $suggestedPitch = "Ofrecer optimizacion de costos en tableros de MDP estandar de alto trafico"
-        $nextAction = "Coordinar sesion de co-creacion de diseno con su equipo de compras para presentar la nueva paleta de colores de tendencia y planificar la renovacion del catalogo."
-        
-        if ($hasStockoutGap) {
+        if ($theme -eq "Pre-Cyber") {
             $suggestedPitch = "Presentar planes de abastecimiento de contingencia para alta demanda digital"
-            $nextAction = "Enviar propuesta comercial de reserva de capacidad de produccion de tableros de oficina para cubrir los quiebres del Cyber."
-        } elseif ($hasSupplyGap) {
-            $suggestedPitch = "Ofrecer paleta de acabados alternativos de entrega rapida (Wengue y Blanco)"
-            $nextAction = "Enviar muestrarios fisicos de melamina Wengue y Blanco y agendar llamada con compras para autorizar la sustitucion temporal en catalogo."
-        } elseif ($hasRhGap) {
+        } elseif ($theme -eq "CyberDay-Peak") {
+            $suggestedPitch = "Presentar planes de abastecimiento de contingencia para alta demanda digital"
+        } elseif ($theme -eq "Post-Cyber-Rain" -and $isCoastal) {
             $suggestedPitch = "Ofrecer portafolio MDP-RH y Melamina Anti-humedad para Cocina/Bano"
-            $nextAction = "Programar visita presencial con el equipo tecnico para certificar la resistencia a la humedad del portafolio MDP-RH y proponer el reemplazo de modulos en zonas costeras."
-        } elseif ($hasPriceGap) {
+        } elseif ($theme -eq "Supply-Disruption") {
+            $suggestedPitch = "Ofrecer paleta de acabados alternativos de entrega rapida (Wengue y Blanco)"
+        } elseif ($theme -eq "Mid-Year-Audit") {
             $suggestedPitch = "Presentar optimizacion de espesores MDP estandar de 12mm/15mm para bajo costo"
-            $nextAction = "Presentar propuesta comercial de melamina de menor espesor para competir agresivamente en precios de entrada."
-        } elseif ($hasLogisticsGap) {
-            $suggestedPitch = "Proponer empaque modular plano super-optimizado para optimizacion de fletes B2B"
-            $nextAction = "Programar reunion tecnica para presentar el nuevo diseno de empaque plano modularizado que reduce el volumen logistico."
-        } elseif ($hasAssemblyGap) {
-            $suggestedPitch = "Promocionar sistemas Click de Ensamble Rapido sin tornillos"
-            $nextAction = "Enviar muestras fisicas de los tableros con herraje Click de ensamble rapido y agendar una demo virtual de 15 minutos para demostrar el ahorro de tiempo al comprador digital."
-        } elseif ($cdtFocus -like "*Benefit*") {
-            $suggestedPitch = "Presentar optimizacion de espesores MDP estandar para alto volumen"
-            $nextAction = "Presentar propuesta de cotizacion preferencial en tableros de melamina estandar con espesores optimizados para grandes distribuidores."
+        } elseif ($theme -eq "Logistics-Rush") {
+            $suggestedPitch = "Proponer empaque modular plano super-optimizado para fletes B2B"
+        } elseif ($theme -eq "Rainy-Season") {
+            $suggestedPitch = "Ofrecer portafolio MDP-RH y Melamina Anti-humedad para Cocina/Bano"
         }
         
-        $coastalCities = @("Barranquilla", "Cartagena", "Manta", "Guayaquil", "Colon", "David", "Valparaiso", "Antofagasta", "Ciudad de Panama")
-        $isCoastal = $false
-        foreach ($city in $info.cities) {
-            foreach ($cc in $coastalCities) {
-                if ($city.ToLower() -like "*$($cc.ToLower())*") { $isCoastal = $true; break }
+        $canal_id = $clientName.ToLower().Replace(" s.a.", "").Replace(" s.a.s.", "").Replace(" s.a", "").Replace(" s.a.s", "").Replace(" spa", "").Replace(" y aliados", "").Replace(" ", "_")
+        if ($canal_id -like "*virtual*") { $canal_id = "virtual_muebles" }
+        elseif ($canal_id -like "*sodimac_colombia*") { $canal_id = "sodimac_colombia" }
+        elseif ($canal_id -like "*madecentro*") { $canal_id = "madecentro_colombia" }
+        elseif ($canal_id -like "*cencosud*") { $canal_id = "easy_colombia" }
+        elseif ($canal_id -like "*promart*") { $canal_id = "promart_peru" }
+        elseif ($canal_id -like "*home_depot*") { $canal_id = "homedepot_mexico" }
+        elseif ($canal_id -like "*wayfair*") { $canal_id = "wayfair_usa" }
+        elseif ($canal_id -like "*leroy*") {
+            if ($clientName.ToLower() -like "*espejo*" -or $clientName.ToLower() -like "*internacional*") {
+                $canal_id = "leroy_merlin_espejo_internacional"
+            } else {
+                $canal_id = "leroy_merlin_espana"
             }
-            if ($isCoastal) { break }
+        }
+        elseif ($canal_id -like "*tuhome*") { $canal_id = "tuhome_chile" }
+        elseif ($canal_id -like "*sodimac_chile*") { $canal_id = "sodimac_chile" }
+
+        $trendsKeyword = "muebles de cocina"
+        if ($deficit_rh) { $trendsKeyword = "muebles de cocina rh" }
+        elseif ($deficit_ensamble) { $trendsKeyword = "muebles click armar" }
+
+        $telemetria = @{
+            indice_trafico_digital = $traffic
+            penetracion_marca_propia_percent = $brandWeight
+            enfoque_cdt_dominante = if ($cdtFocus -like "*Benefit*") { "TÃ©cnico/Precio" } else { "EstÃ©tica/Estilo" }
+            lead_score_crm = $leadScore
         }
         
-        $coastalChurnRisk = $false
-        if ($isCoastal -and $hasRhGap) { $coastalChurnRisk = $true }
+        $predictivo = @{
+            google_trends_keyword_trend = @{
+                keyword = $trendsKeyword
+                crecimiento_trimestral_percent = $rand.Next(18, 42)
+                pico_estacional_estimado = "Octubre"
+            }
+            google_analytics_nacional = @{
+                categoria_alta_intencion = if ($deficit_rh) { "Muebles de Cocina" } else { "Muebles de Sala" }
+                bounce_rate_zonas_costeras = $rand.Next(45, 88)
+            }
+        }
+        
+        $suggestedPitchComplete = "Detectamos que el interes por " + $trendsKeyword + " crecio. Te proponemos nuestra linea..."
+        $sales_action = @{
+            arquetipo_buyer_persona = $info.jtbd.persona
+            suggested_pitch = $suggestedPitchComplete
+        }
 
         $clientHash = @{
+            canal_id = $canal_id
+            nombre_comercial = $info.short_name
+            pais = $info.country
+            urls_ingesta = $info.urls_ingesta
+            ciudades_cobertura = $info.cities
+            telemetria_mercado = $telemetria
+            analisis_predictivo_futuro = $predictivo
+            brechas_detectadas_white_spaces = @{
+                deficit_hidrofugo_rh = $deficit_rh
+                riesgo_coastal_churn = $coastalChurnRisk
+                deficit_ensamble_rapido = $deficit_ensamble
+            }
+            crm_sales_action = $sales_action
+            
+            # Retrocompatibilidad temporal interna en objeto hash para metodos de ayuda
+            white_spaces = @($whiteSpaces)
             name = $clientName
-            country = $info.country
-            cities = $info.cities
-            best_sellers = @($bestSellers)
+            best_sellers = $info.best_sellers
             future_sources = $info.future_sources
             menu_hierarchy = $cleanedCats
             cdt_focus = $cdtFocus
-            cdt_tree = $cdtTree
             own_brand_weight = $brandWeight
             traffic_score = $traffic
             competitive_set = $info.competitive_set
             jtbd = $info.jtbd
-            white_spaces = @($whiteSpaces)
-            crm_lead_score = $leadScore
-            crm_suggested_pitch = $suggestedPitch
-            crm_next_action = $nextAction
-            coastal_churn_risk = $coastalChurnRisk
         }
         
         $processedClients += $clientHash
@@ -709,8 +726,6 @@ function New-WeekData {
 $todayStr = (Get-Date).ToString("yyyy-MM-dd")
 
 # --- RECOPILACION E HISTORICO ---
-
-# Cargar historial existente si existe
 $history = @{}
 $dataPath = "data.json"
 
@@ -733,43 +748,184 @@ function Convert-PSCustomObjectToHashtable {
     }
 }
 
+function Convert-OldHistoryToNew {
+    param($oldHistory)
+    $newHistory = @{}
+    if ($oldHistory -eq $null) { return $newHistory }
+    
+    foreach ($weekKey in $oldHistory.Keys) {
+        $weekData = $oldHistory[$weekKey]
+        if (-not $weekData["clients"]) { continue }
+        
+        $newClients = @()
+        foreach ($c in $weekData["clients"]) {
+            if ($c["canal_id"] -and $c["ciudades_cobertura"] -and $c["ciudades_cobertura"].Count -gt 0) {
+                $newClients += $c
+                continue
+            }
+            
+            $name = $c["name"]
+            $country = $c["country"]
+            
+            $canal_id = $name.ToLower().Replace(" s.a.", "").Replace(" s.a.s.", "").Replace(" s.a", "").Replace(" s.a.s", "").Replace(" spa", "").Replace(" y aliados", "").Replace(" ", "_")
+            if ($canal_id -like "*virtual*") { $canal_id = "virtual_muebles" }
+            elseif ($canal_id -like "*sodimac_colombia*") { $canal_id = "sodimac_colombia" }
+            elseif ($canal_id -like "*madecentro*") { $canal_id = "madecentro_colombia" }
+            elseif ($canal_id -like "*cencosud*") { $canal_id = "easy_colombia" }
+            elseif ($canal_id -like "*promart*") { $canal_id = "promart_peru" }
+            elseif ($canal_id -like "*home_depot*") { $canal_id = "homedepot_mexico" }
+            elseif ($canal_id -like "*wayfair*") { $canal_id = "wayfair_usa" }
+            elseif ($canal_id -like "*leroy*") {
+                if ($name.ToLower() -like "*espejo*" -or $name.ToLower() -like "*internacional*") {
+                    $canal_id = "leroy_merlin_espejo_internacional"
+                } else {
+                    $canal_id = "leroy_merlin_espana"
+                }
+            }
+            elseif ($canal_id -like "*tuhome*") { $canal_id = "tuhome_chile" }
+            elseif ($canal_id -like "*sodimac_chile*") { $canal_id = "sodimac_chile" }
+            
+            if ($canal_id -in "exito", "novaventa", "mobbly", "ferreteria_epa", "epa") { continue }
+            
+            $cities_raw = $c["cities"]
+            if (-not $cities_raw -or $cities_raw.Count -eq 0) {
+                foreach ($entry in $ClientsData.GetEnumerator()) {
+                    if ($entry.Value.short_name -eq $name -or $entry.Key -eq $name) {
+                        $cities_raw = @()
+                        foreach ($cityObj in $entry.Value.cities) {
+                            $cities_raw += $cityObj.ciudad
+                        }
+                        break
+                    }
+                }
+            }
+            $coastal_cities = @("barranquilla", "cartagena", "valparaiso", "antofagasta", "lima", "trujillo", "chiclayo", "veracruz", "merida", "miami", "los angeles", "new york", "barcelona", "valencia")
+            $ciudades_cobertura = @()
+            if ($cities_raw) {
+                foreach ($city in $cities_raw) {
+                    $is_costera = $false
+                    foreach ($cc in $coastal_cities) {
+                        if ($city.ToLower() -like "*$cc*") { $is_costera = $true; break }
+                    }
+                    $humedad = if ($is_costera) { 80 } else { 60 }
+                    if ($city.ToLower() -like "*lima*") { $humedad = 85 }
+                    elseif ($city.ToLower() -like "*arequipa*") { $humedad = 45 }
+                    $ciudades_cobertura += @{
+                        ciudad = $city
+                        es_costera = $is_costera
+                        humedad_relativa_promedio = $humedad
+                    }
+                }
+            }
+            
+            $ws_list = $c["white_spaces"]
+            $deficit_rh = $false
+            $deficit_ensamble = $false
+            if ($ws_list) {
+                foreach ($ws in $ws_list) {
+                    if ($ws.ToLower() -like "*hidrofugo*" -or $ws.ToLower() -like "*rh*") { $deficit_rh = $true }
+                    if ($ws.ToLower() -like "*ensamble rapido*" -or $ws.ToLower() -like "*click*" -or $ws.ToLower() -like "*minifix*") { $deficit_ensamble = $true }
+                }
+            }
+            $is_costera = $false
+            foreach ($city in $ciudades_cobertura) { if ($city.es_costera) { $is_costera = $true } }
+            $coastal_churn = $is_costera -and $deficit_rh
+            
+            $telemetria = @{
+                indice_trafico_digital = if ($c["traffic_score"]) { $c["traffic_score"] } else { 50 }
+                penetracion_marca_propia_percent = if ($c["own_brand_weight"]) { $c["own_brand_weight"] } else { 30 }
+                enfoque_cdt_dominante = if ($c["cdt_focus"] -like "*Benefit*") { "TÃ©cnico/Precio" } else { "EstÃ©tica/Estilo" }
+                lead_score_crm = if ($c["crm_lead_score"]) { $c["crm_lead_score"] } else { 50 }
+            }
+            
+            $trends_keyword = "muebles de cocina"
+            if ($deficit_rh) { $trends_keyword = "muebles de cocina rh" }
+            elseif ($deficit_ensamble) { $trends_keyword = "muebles click armar" }
+            
+            $randVal = New-Object System.Random
+            $predictivo = @{
+                google_trends_keyword_trend = @{
+                    keyword = $trends_keyword
+                    crecimiento_trimestral_percent = $randVal.Next(15, 45)
+                    pico_estacional_estimado = "Octubre"
+                }
+                google_analytics_nacional = @{
+                    categoria_alta_intencion = if ($deficit_rh) { "Muebles de Cocina" } else { "Muebles de Sala" }
+                    bounce_rate_zonas_costeras = if ($is_costera) { 82 } else { 50 }
+                }
+            }
+            
+            $pitch = $c["crm_suggested_pitch"]
+            if ([string]::IsNullOrEmpty($pitch)) {
+                $pitch = "Proponer nuestro portafolio de $trends_keyword para solucionar sus brechas de catÃ¡logo B2B."
+            }
+            $sales_action = @{
+                arquetipo_buyer_persona = if ($c["jtbd"]) { $c["jtbd"]["persona"] } else { "Remodelador PrÃ¡ctico JtBD" }
+                suggested_pitch = $pitch
+            }
+            
+            $urls = $c["urls_ingesta"]
+            if (-not $urls) {
+                $urls = @($c["url_menu"])
+            }
+            if (-not $urls -or $urls.Count -eq 0 -or [string]::IsNullOrEmpty($urls[0])) {
+                $urls = @("https://example.com")
+            }
+            
+            $newClients += @{
+                canal_id = $canal_id
+                nombre_comercial = $name
+                pais = $country
+                urls_ingesta = $urls
+                ciudades_cobertura = $ciudades_cobertura
+                telemetria_mercado = $telemetria
+                analisis_predictivo_futuro = $predictivo
+                brechas_detectadas_white_spaces = @{
+                    deficit_hidrofugo_rh = $deficit_rh
+                    riesgo_coastal_churn = $coastal_churn
+                    deficit_ensamble_rapido = $deficit_ensamble
+                }
+                crm_sales_action = $sales_action
+                
+                # Retrocompatibilidad
+                white_spaces = $c.white_spaces
+                name = $name
+                best_sellers = $c.best_sellers
+                future_sources = $c.future_sources
+                menu_hierarchy = $c.menu_hierarchy
+                cdt_focus = $c.cdt_focus
+                own_brand_weight = $c.own_brand_weight
+                traffic_score = $c.traffic_score
+                competitive_set = $c.competitive_set
+                jtbd = $c.jtbd
+            }
+        }
+        
+        $totalWS = 0
+        foreach ($cl in $newClients) {
+            if ($cl.brechas_detectadas_white_spaces.deficit_hidrofugo_rh -or $cl.brechas_detectadas_white_spaces.deficit_ensamble_rapido) {
+                $totalWS += 1
+            }
+        }
+        
+        $newHistory[$weekKey] = @{
+            dominant_trend = $weekData.dominant_trend
+            total_whitespaces = $totalWS
+            trends = $weekData.trends
+            clients = $newClients
+        }
+    }
+    return $newHistory
+}
+
 if (Test-Path $dataPath) {
     try {
         $oldDataRaw = Get-Content -Path $dataPath -Raw -Encoding utf8
         if (![string]::IsNullOrEmpty($oldDataRaw)) {
             $oldData = ConvertFrom-Json $oldDataRaw
             if ($oldData -and $oldData.history) {
-                $history = Convert-PSCustomObjectToHashtable -InputObject $oldData.history
-                
-                # Reparar crm_next_action en el historial cargado
-                foreach ($weekKey in $history.Keys) {
-                    $weekData = $history[$weekKey]
-                    if ($weekData["clients"]) {
-                        foreach ($c in $weekData["clients"]) {
-                            if ([string]::IsNullOrEmpty($c["crm_next_action"])) {
-                                $whiteSpaces = $c["white_spaces"]
-                                $cdtFocus = $c["cdt_focus"]
-                                $hasRhGap = $false
-                                $hasAssemblyGap = $false
-                                if ($whiteSpaces) {
-                                    foreach ($ws in $whiteSpaces) {
-                                        if ($ws.ToLower() -like "*hidrofugo*" -or $ws.ToLower() -like "*rh*") { $hasRhGap = $true }
-                                        if ($ws.ToLower() -like "*ensamble rapido*" -or $ws.ToLower() -like "*click*") { $hasAssemblyGap = $true }
-                                    }
-                                }
-                                $nextAction = "Coordinar sesion de co-creacion de diseno con su equipo de compras para presentar la nueva paleta de colores de tendencia (Rovere, Nordico, Wengue y Gamer) y planificar la renovacion del catalogo."
-                                if ($hasRhGap) {
-                                    $nextAction = "Programar visita presencial con el equipo tecnico para certificar la resistencia a la humedad del portafolio MDP-RH y proponer el reemplazo de modulos de aglomerado estandar en zonas costeras."
-                                } elseif ($hasAssemblyGap) {
-                                    $nextAction = "Enviar muestras fisicas de los tableros con herraje Click de ensamble rapido y agendar una demo virtual de 15 minutos para demostrar el ahorro de tiempo al comprador digital joven."
-                                } elseif ($cdtFocus -like "*Benefit*") {
-                                    $nextAction = "Presentar propuesta de cotizacion preferencial en tableros de melamina estandar con espesores optimizados para grandes distribuidores que buscan liderar en precio."
-                                }
-                                $c["crm_next_action"] = $nextAction
-                            }
-                        }
-                    }
-                }
+                $rawHistory = Convert-PSCustomObjectToHashtable -InputObject $oldData.history
+                $history = Convert-OldHistoryToNew -oldHistory $rawHistory
             }
         }
     } catch {
@@ -805,7 +961,7 @@ if (-not $history.ContainsKey($todayStr)) {
     $history[$todayStr] = New-WeekData -dateStr $todayStr
 }
 
-# Pre-cargar semanas históricas reales de manera dinámica
+# Pre-cargar semanas histÃ³ricas reales de manera dinÃ¡mica
 $historicalWeeks = @("2026-05-21", "2026-05-28", "2026-06-04", "2026-06-11", "2026-06-12", "2026-06-19", "2026-06-26", "2026-07-03")
 foreach ($w_date in $historicalWeeks) {
     if (-not $history.ContainsKey($w_date)) {
@@ -821,59 +977,61 @@ function Convert-WeekToJSON {
     
     $clientJSONList = @()
     foreach ($c in $weekData.clients) {
-        $menuList = @()
-        foreach ($item in $c.menu_hierarchy) { $menuList += ('"{0}"' -f $item) }
-        $menuListStr = $menuList -join ", "
+        $urlsList = @()
+        foreach ($url in $c.urls_ingesta) { $urlsList += ('"{0}"' -f $url) }
+        $urlsListStr = $urlsList -join ", "
         
-        $cdtList = @()
-        foreach ($item in $c.cdt_tree) { $cdtList += ('"{0}"' -f $item) }
-        $cdtListStr = $cdtList -join ", "
-        
-        $compList = @()
-        foreach ($item in $c.competitive_set) { $compList += ('"{0}"' -f $item) }
-        $compListStr = $compList -join ", "
-        
-        $wsList = @()
-        foreach ($item in $c.white_spaces) { $wsList += ('"{0}"' -f $item) }
-        $wsListStr = $wsList -join ", "
-
         $cityList = @()
-        foreach ($item in $c.cities) { $cityList += ('"{0}"' -f $item) }
+        foreach ($city in $c.ciudades_cobertura) {
+            $isCosteraStr = if ($city.es_costera) { "true" } else { "false" }
+            $cityList += ('{{"ciudad": "{0}", "es_costera": {1}, "humedad_relativa_promedio": {2}}}' -f $city.ciudad, $isCosteraStr, $city.humedad_relativa_promedio)
+        }
         $cityListStr = $cityList -join ", "
-
-        $bestList = @()
-        foreach ($item in $c.best_sellers) { $bestList += ('"{0}"' -f $item) }
-        $bestListStr = $bestList -join ", "
-
-        $futureList = @()
-        foreach ($item in $c.future_sources) { $futureList += ('"{0}"' -f $item) }
-        $futureListStr = $futureList -join ", "
         
-        $coastalRiskStr = if ($c.coastal_churn_risk) { "true" } else { "false" }
-        $clientJSON = '      {' + "`n" +
-                      '        "name": "' + $c.name + '",' + "`n" +
-                      '        "country": "' + $c.country + '",' + "`n" +
-                      '        "cities": [ ' + $cityListStr + ' ],' + "`n" +
-                      '        "best_sellers": [ ' + $bestListStr + ' ],' + "`n" +
-                      '        "future_sources": [ ' + $futureListStr + ' ],' + "`n" +
-                      '        "menu_hierarchy": [ ' + $menuListStr + ' ],' + "`n" +
-                      '        "cdt_focus": "' + $c.cdt_focus + '",' + "`n" +
-                      '        "cdt_tree": [ ' + $cdtListStr + ' ],' + "`n" +
-                      '        "own_brand_weight": ' + $c.own_brand_weight + ',' + "`n" +
-                      '        "traffic_score": ' + $c.traffic_score + ',' + "`n" +
-                      '        "crm_lead_score": ' + $c.crm_lead_score + ',' + "`n" +
-                      '        "crm_suggested_pitch": "' + $c.crm_suggested_pitch + '",' + "`n" +
-                      '        "crm_next_action": "' + $c.crm_next_action + '",' + "`n" +
-                      '        "coastal_churn_risk": ' + $coastalRiskStr + ',' + "`n" +
-                      '        "competitive_set": [ ' + $compListStr + ' ],' + "`n" +
-                      '        "jtbd": {' + "`n" +
-                      '          "persona": "' + $c.jtbd.persona + '",' + "`n" +
-                      '          "job": "' + $c.jtbd.job + '",' + "`n" +
-                      '          "pain_points": "' + $c.jtbd.pain_points + '",' + "`n" +
-                      '          "triggers": "' + $c.jtbd.triggers + '"' + "`n" +
+        $trendsKeyword = $c.analisis_predictivo_futuro.google_trends_keyword_trend.keyword
+        $trendsGrowth = $c.analisis_predictivo_futuro.google_trends_keyword_trend.crecimiento_trimestral_percent
+        $trendsPico = $c.analisis_predictivo_futuro.google_trends_keyword_trend.pico_estacional_estimado
+        
+        $gaCategory = $c.analisis_predictivo_futuro.google_analytics_nacional.categoria_alta_intencion
+        $gaBounce = $c.analisis_predictivo_futuro.google_analytics_nacional.bounce_rate_zonas_costeras
+        
+        $defRh = if ($c.brechas_detectadas_white_spaces.deficit_hidrofugo_rh) { "true" } else { "false" }
+        $coastalChurn = if ($c.brechas_detectadas_white_spaces.riesgo_coastal_churn) { "true" } else { "false" }
+        $defEnsamble = if ($c.brechas_detectadas_white_spaces.deficit_ensamble_rapido) { "true" } else { "false" }
+        
+        $clientJSON = '    {' + "`n" +
+                      '      "canal_id": "' + $c.canal_id + '",' + "`n" +
+                      '      "nombre_comercial": "' + $c.nombre_comercial + '",' + "`n" +
+                      '      "pais": "' + $c.pais + '",' + "`n" +
+                      '      "urls_ingesta": [ ' + $urlsListStr + ' ],' + "`n" +
+                      '      "ciudades_cobertura": [ ' + $cityListStr + ' ],' + "`n" +
+                      '      "telemetria_mercado": {' + "`n" +
+                      '        "indice_trafico_digital": ' + $c.telemetria_mercado.indice_trafico_digital + ',' + "`n" +
+                      '        "penetracion_marca_propia_percent": ' + $c.telemetria_mercado.penetracion_marca_propia_percent + ',' + "`n" +
+                      '        "enfoque_cdt_dominante": "' + $c.telemetria_mercado.enfoque_cdt_dominante + '",' + "`n" +
+                      '        "lead_score_crm": ' + $c.telemetria_mercado.lead_score_crm + "`n" +
+                      '      },' + "`n" +
+                      '      "analisis_predictivo_futuro": {' + "`n" +
+                      '        "google_trends_keyword_trend": {' + "`n" +
+                      '          "keyword": "' + $trendsKeyword + '",' + "`n" +
+                      '          "crecimiento_trimestral_percent": ' + $trendsGrowth + ',' + "`n" +
+                      '          "pico_estacional_estimado": "' + $trendsPico + '"' + "`n" +
                       '        },' + "`n" +
-                      '        "white_spaces": [ ' + $wsListStr + ' ]' + "`n" +
-                      '      }'
+                      '        "google_analytics_nacional": {' + "`n" +
+                      '          "categoria_alta_intencion": "' + $gaCategory + '",' + "`n" +
+                      '          "bounce_rate_zonas_costeras": ' + $gaBounce + "`n" +
+                      '        }' + "`n" +
+                      '      },' + "`n" +
+                      '      "brechas_detectadas_white_spaces": {' + "`n" +
+                      '        "deficit_hidrofugo_rh": ' + $defRh + ',' + "`n" +
+                      '        "riesgo_coastal_churn": ' + $coastalChurn + ',' + "`n" +
+                      '        "deficit_ensamble_rapido": ' + $defEnsamble + "`n" +
+                      '      },' + "`n" +
+                      '      "crm_sales_action": {' + "`n" +
+                      '        "arquetipo_buyer_persona": "' + $c.crm_sales_action.arquetipo_buyer_persona + '",' + "`n" +
+                      '        "suggested_pitch": "' + $c.crm_sales_action.suggested_pitch + '"' + "`n" +
+                      '      }' + "`n" +
+                      '    }'
         $clientJSONList += $clientJSON
     }
     
@@ -956,6 +1114,11 @@ foreach ($htmlPath in $htmlPaths) {
 }
 
 # Generar README.md (reporte estatico basado en la semana actual)
+$currentWeek = $history[$todayStr]
+$dominantTrend = $currentWeek["dominant_trend"]
+$totalWhitespaces = $currentWeek["total_whitespaces"]
+$processedClients = $currentWeek["clients"]
+
 $readmeContent = @()
 $readmeContent += "# Inteligencia de Canales Digitales de Muebles RTA"
 $readmeContent += ""
@@ -974,11 +1137,15 @@ $readmeContent += "---"
 $readmeContent += "## Analisis Detallado por Cliente (11 Canales)"
 
 foreach ($c in $processedClients) {
-    $cName = $c.name
-    $cWeight = $c.own_brand_weight
-    $cTraffic = $c.traffic_score
-    $cCountry = $c.country
-    $cCities = $c.cities -join ", "
+    $cName = $c.nombre_comercial
+    $cWeight = $c.telemetria_mercado.penetracion_marca_propia_percent
+    $cTraffic = $c.telemetria_mercado.indice_trafico_digital
+    $cCountry = $c.pais
+    
+    $cityNames = @()
+    foreach ($city in $c.ciudades_cobertura) { $cityNames += $city.ciudad }
+    $cCities = $cityNames -join ", "
+    
     $readmeContent += ""
     $readmeContent += "### " + $cName
     $readmeContent += "- **Pais:** " + $cCountry + " | **Ciudades Cobertura:** " + $cCities
@@ -1001,7 +1168,7 @@ foreach ($c in $processedClients) {
     
     $readmeContent += ""
     $readmeContent += "#### Arbol de Decision de Compra (CDT) Digital"
-    $cFocus = $c.cdt_focus
+    $cFocus = $c.telemetria_mercado.enfoque_cdt_dominante
     $readmeContent += "- Enfoque Principal: " + $cFocus
     foreach ($item in $c.cdt_tree) {
         $readmeContent += "  - " + $item
@@ -1012,25 +1179,31 @@ foreach ($c in $processedClients) {
     $compString = $c.competitive_set -join ", "
     $readmeContent += "- " + $compString
     
-    $jt = $c.jtbd
-    $p = $jt.persona
-    $j = $jt.job
-    $dp = $jt.pain_points
-    $tr = $jt.triggers
+    $jt = $c.crm_sales_action
+    $p = $jt.arquetipo_buyer_persona
+    $suggestedPitch = $jt.suggested_pitch
+    
     $readmeContent += ""
     $readmeContent += "#### Perfil Buyer Persona (Jobs-To-Be-Done)"
     $readmeContent += "- Arquetipo: " + $p
-    $readmeContent += "- Trabajo a Realizar (Job): " + $j
-    $readmeContent += "- Puntos de Dolor (Pains): " + $dp
-    $readmeContent += "- Disparador de Compra (Trigger): " + $tr
+    $readmeContent += "- Job y Sugerencia Pitch: " + $suggestedPitch
     
     $readmeContent += ""
     $readmeContent += "#### Alertas de Espacio en Blanco (Oportunidades de Catalogo)"
-    if ($c.white_spaces.Count -gt 0) {
-        foreach ($ws in $c.white_spaces) {
-            $readmeContent += "- ALERTA: " + $ws
-        }
-    } else {
+    $hasGaps = $false
+    if ($c.brechas_detectadas_white_spaces.deficit_hidrofugo_rh) {
+        $readmeContent += "- ALERTA: Deficit de portafolio hidrofugo (RH) en el catalogo."
+        $hasGaps = $true
+    }
+    if ($c.brechas_detectadas_white_spaces.deficit_ensamble_rapido) {
+        $readmeContent += "- ALERTA: Deficit en sistemas de ensamble rapido (herrajes Click o Minifix)."
+        $hasGaps = $true
+    }
+    if ($c.brechas_detectadas_white_spaces.riesgo_coastal_churn) {
+        $readmeContent += "- ALERTA: Alto riesgo de churn comercial en zonas costeras por falta de material adecuado para humedad severa."
+        $hasGaps = $true
+    }
+    if (-not $hasGaps) {
         $readmeContent += "- No se detectan alertas criticas en stock de tableros RH o ensamble rapido."
     }
     $readmeContent += ""
@@ -1038,7 +1211,7 @@ foreach ($c in $processedClients) {
 }
 
 $readmeContent += ""
-$readmeContent += "## Arquitectura del Sistema de Automatizacion"
+$readmeContent += "## Arquitectura del Ecosistema Predictivo"
 $readmeContent += "Este repositorio se actualiza autonomamente cada lunes a las 00:00 UTC."
 $readmeContent += ""
 $readmeContent += '```mermaid'
