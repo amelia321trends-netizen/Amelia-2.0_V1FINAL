@@ -14,14 +14,11 @@ from datetime import datetime
 # --- CONFIGURACIÓN DE CLIENTES Y PARÁMETROS ---
 CLIENTS_RAW_DATA = {
     "SODIMAC COLOMBIA S.A": {
-        "short_name": "Sodimac",
-        "url_menu": "https://www.homecenter.com.co/homecenter-co/category/cat10034/Muebles",
-        "urls_ingesta": [
-            "https://www.homecenter.com.co/homecenter-co/category/cat10034/Muebles",
-            "https://www.homecenter.com.co/homecenter-co/category/cat10002/Muebles-de-Cocina"
-        ],
-        "base_traffic": 92,
-        "own_brand": 45.5,
+        "short_name": "Sodimac Colombia",
+        "url_menu": "https://www.homecenter.com.co/homecenter-co/category/cat1770069/muebles-y-organizacion/",
+        "urls_ingesta": ["https://www.homecenter.com.co/homecenter-co/category/cat1770069/muebles-y-organizacion/"],
+        "base_traffic": 90,
+        "own_brand": 35.0,
         "country": "Colombia",
         "cities": [
             {"ciudad": "Bogotá", "es_costera": False, "humedad_relativa_promedio": 65},
@@ -39,12 +36,7 @@ CLIENTS_RAW_DATA = {
             "pain_points": "Aglomerados que se inflan con humedad, herrajes faltantes y manuales de ensamble confusos.",
             "triggers": "Renovación de arriendo o mudanza a departamento nuevo de interés social (VIS)."
         },
-        "raw_menu_categories": [
-            "Muebles de Cocina - Modulares",
-            "Muebles de TV y Centros de Entretenimiento",
-            "Estanterías y Clósets RTA",
-            "Muebles de Baño RH Resistentes a Humedad"
-        ],
+        "raw_menu_categories": ["Muebles de Cocina - Modulares", "Muebles de TV y Centros de Entretenimiento", "Estanterías y Clósets RTA", "Muebles de Baño RH Resistentes a Humedad"],
         "products": [
             {"name": "Módulo Fregadero 100cm MDP Estándar", "rh": False, "assembly": "estandar", "desc": "Estructura aglomerada 15mm"},
             {"name": "Escritorio Home Office Smart 120cm", "rh": False, "assembly": "minifix", "desc": "Ensamble rápido con tornillos minifix"},
@@ -52,49 +44,10 @@ CLIENTS_RAW_DATA = {
             {"name": "Centro de TV Prime Nogal 55 pulgadas", "rh": False, "assembly": "estandar", "desc": "Acabado estético melamínico"}
         ]
     },
-    "INVERSIONES VIRTUAL MUEBLES S.A.S": {
-        "short_name": "Virtual Muebles",
-        "url_menu": "https://www.virtualmuebles.com",
-        "urls_ingesta": [
-            "https://www.virtualmuebles.com",
-            "https://www.virtualmuebles.com/muebles-rta"
-        ],
-        "base_traffic": 78,
-        "own_brand": 90.0,
-        "country": "Colombia",
-        "cities": [
-            {"ciudad": "Medellín", "es_costera": False, "humedad_relativa_promedio": 68},
-            {"ciudad": "Bogotá", "es_costera": False, "humedad_relativa_promedio": 65},
-            {"ciudad": "Envigado", "es_costera": False, "humedad_relativa_promedio": 66}
-        ],
-        "best_sellers": ["Centro de TV Nórdico Blanco-Roble", "Escritorio Gamer Pro", "Escritorio Plegable Work-Space"],
-        "future_sources": ["Amazon Global (Tendencias de Diseño Industrial)", "Instagram Shopping (Engagement de Muebles RTA)", "Google Analytics RTA (Embudo de conversión de la línea Gamer y rebote en landings de escritorio flexible)"],
-        "competitive_set": ["TuHome", "Wayfair"],
-        "jtbd": {
-            "persona": "Comprador Digital Joven JtBD",
-            "job": "Amoblar su primer apartamento con diseños activos que se puedan comprar 100% en línea y recibir rápido.",
-            "pain_points": "Dificultad de envío, falta de soporte para piezas dañadas en transporte, desconfianza en fotos web.",
-            "triggers": "Primer empleo profesional, independencia de casa de los padres."
-        },
-        "raw_menu_categories": [
-            "Salas y Centros de TV Design",
-            "Escritorios Flexibles Modernos",
-            "Zapateros y Armarios Multifunción"
-        ],
-        "products": [
-            {"name": "Centro de TV Nórdico Blanco-Roble", "rh": False, "assembly": "minifix", "desc": "Diseño estético escandinavo"},
-            {"name": "Escritorio Plegable Work-Space", "rh": False, "assembly": "click", "desc": "Sistema de ensamble rápido click"},
-            {"name": "Mesa de Noche Minimalista con Cajón", "rh": False, "assembly": "estandar", "desc": " MDP texturizado"},
-            {"name": "Mueble Auxiliar Microondas MDP", "rh": False, "assembly": "estandar", "desc": "Mueble modular para electrodomésticos"}
-        ]
-    },
     "MADECENTRO S.A.S": {
         "short_name": "Madecentro",
-        "url_menu": "https://www.madecentro.com/muebles-rta",
-        "urls_ingesta": [
-            "https://www.madecentro.com/muebles-rta",
-            "https://www.madecentro.com/hogar"
-        ],
+        "url_menu": "https://madecentro.com/pages/muebles",
+        "urls_ingesta": ["https://madecentro.com/pages/muebles"],
         "base_traffic": 85,
         "own_brand": 20.0,
         "country": "Colombia",
@@ -114,12 +67,7 @@ CLIENTS_RAW_DATA = {
             "pain_points": "Hinchamiento de tableros de baja calidad por humedad, falta de herrajes en el kit de armado.",
             "triggers": "Renovación o instalación rápida de mobiliario de cocina o baño."
         },
-        "raw_menu_categories": [
-            "Muebles de Cocina Listos para Armar",
-            "Muebles de Oficina y Escritorios RTA",
-            "Alacenas y Organizadores",
-            "Muebles de Lavandería y Baño RH"
-        ],
+        "raw_menu_categories": ["Muebles de Cocina Listos para Armar", "Muebles de Oficina y Escritorios RTA", "Alacenas y Organizadores", "Muebles de Lavandería y Baño RH"],
         "products": [
             {"name": "Módulo Cocina RTA Premium", "rh": False, "assembly": "minifix", "desc": "Cocina modulada de ensamble rápido"},
             {"name": "Alacena Organizadora Multiusos Madecentro", "rh": False, "assembly": "minifix", "desc": "Organizador multiusos"},
@@ -127,13 +75,68 @@ CLIENTS_RAW_DATA = {
             {"name": "Escritorio Home Office Madecentro", "rh": False, "assembly": "click", "desc": "Escritorio rápido de armar"}
         ]
     },
-    "CENCOSUD COLOMBIA SA": {
-        "short_name": "Cencosud",
-        "url_menu": "https://www.easy.com.co/dormitorio-y-muebles",
-        "urls_ingesta": [
-            "https://www.easy.com.co/dormitorio-y-muebles",
-            "https://www.easy.com.co/muebles-de-cocina"
+    "INVERSIONES VIRTUAL MUEBLES S.A.S": {
+        "short_name": "Virtual Muebles",
+        "url_menu": "https://www.virtualmuebles.com",
+        "urls_ingesta": ["https://www.virtualmuebles.com"],
+        "base_traffic": 78,
+        "own_brand": 90.0,
+        "country": "Colombia",
+        "cities": [
+            {"ciudad": "Medellín", "es_costera": False, "humedad_relativa_promedio": 68},
+            {"ciudad": "Bogotá", "es_costera": False, "humedad_relativa_promedio": 65},
+            {"ciudad": "Envigado", "es_costera": False, "humedad_relativa_promedio": 66}
         ],
+        "best_sellers": ["Centro de TV Nórdico Blanco-Roble", "Escritorio Gamer Pro", "Escritorio Plegable Work-Space"],
+        "future_sources": ["Amazon Global (Tendencias de Diseño Industrial)", "Instagram Shopping (Engagement de Muebles RTA)", "Google Analytics RTA (Embudo de conversión de la línea Gamer y rebote en landings de escritorio flexible)"],
+        "competitive_set": ["TuHome", "Wayfair"],
+        "jtbd": {
+            "persona": "Comprador Digital Joven JtBD",
+            "job": "Amoblar su primer apartamento con diseños activos que se puedan comprar 100% en línea y recibir rápido.",
+            "pain_points": "Dificultad de envío, falta de soporte para piezas dañadas en transporte, desconfianza en fotos web.",
+            "triggers": "Primer empleo profesional, independencia de casa de los padres."
+        },
+        "raw_menu_categories": ["Salas y Centros de TV Design", "Escritorios Flexibles Modernos", "Zapateros y Armarios Multifunción"],
+        "products": [
+            {"name": "Centro de TV Nórdico Blanco-Roble", "rh": False, "assembly": "minifix", "desc": "Diseño estético escandinavo"},
+            {"name": "Escritorio Plegable Work-Space", "rh": False, "assembly": "click", "desc": "Sistema de ensamble rápido click"},
+            {"name": "Mesa de Noche Minimalista con Cajón", "rh": False, "assembly": "estandar", "desc": " MDP texturizado"},
+            {"name": "Mueble Auxiliar Microondas MDP", "rh": False, "assembly": "estandar", "desc": "Mueble modular para electrodomésticos"}
+        ]
+    },
+    "GRUPO CORONA Y ALIADOS": {
+        "short_name": "Grupo Corona",
+        "url_menu": "https://corona.co/productos/muebles-para-cocinas/c/muebles-para-cocinas",
+        "urls_ingesta": ["https://corona.co/productos/muebles-para-cocinas/c/muebles-para-cocinas"],
+        "base_traffic": 82,
+        "own_brand": 25.0,
+        "country": "Colombia",
+        "cities": [
+            {"ciudad": "Bogotá", "es_costera": False, "humedad_relativa_promedio": 65},
+            {"ciudad": "Medellín", "es_costera": False, "humedad_relativa_promedio": 68},
+            {"ciudad": "Cali", "es_costera": False, "humedad_relativa_promedio": 70},
+            {"ciudad": "Barranquilla", "es_costera": True, "humedad_relativa_promedio": 80}
+        ],
+        "best_sellers": ["Alacena de Cocina Corona", "Módulo de Baño suspendido Corona RH", "Módulo de Cocina Corona"],
+        "future_sources": ["Corona Retail Analytics", "Google Analytics RTA (Tasa de rebote en categoría de cocinas modulares y descargas de instructivos de armado)"],
+        "competitive_set": ["Sodimac", "Madecentro"],
+        "jtbd": {
+            "persona": "Maestro Especialista / Instalador",
+            "job": "Instalar gabinetes de alta durabilidad en zonas expuestas a humedad, garantizando calidad al cliente final.",
+            "pain_points": "Falsas promesas de resistencia al agua, herrajes que se oxidan en baños y cocinas costeras.",
+            "triggers": "Contratos de remodelación comercial o residencial en zonas húmedas."
+        },
+        "raw_menu_categories": ["Muebles de Cocina - Modulares", "Muebles de Oficina y Escritorios RTA", "Alacenas y Organizadores", "Muebles de Lavandería y Baño RH"],
+        "products": [
+            {"name": "Alacena de Cocina Corona", "rh": False, "assembly": "minifix", "desc": "Alacena clásica de cocina"},
+            {"name": "Módulo de Baño suspendido Corona RH", "rh": True, "assembly": "minifix", "desc": "Módulo de baño resistente a humedad"},
+            {"name": "Módulo de Cocina Corona", "rh": False, "assembly": "minifix", "desc": "Cocina modulada de ensamble rápido"}
+        ]
+    },
+    "CENCOSUD COLOMBIA SA": {
+        "short_name": "Easy Colombia",
+        "url_menu": "https://www.easy.com.co/muebles",
+        "urls_ingesta": ["https://www.easy.com.co/muebles"],
         "base_traffic": 88,
         "own_brand": 30.0,
         "country": "Colombia",
@@ -151,11 +154,7 @@ CLIENTS_RAW_DATA = {
             "pain_points": "Falta de información clara sobre dimensiones en la web, retrasos en el despacho a domicilio.",
             "triggers": "Remodelación de la sala para recibir visitas de fin de año."
         },
-        "raw_menu_categories": [
-            "Centros de TV y Entretenimiento Easy",
-            "Escritorios y Sillas de Oficina",
-            "Muebles de Cocina y Comedor RTA"
-        ],
+        "raw_menu_categories": ["Centros de TV y Entretenimiento Easy", "Escritorios y Sillas de Oficina", "Muebles de Cocina y Comedor RTA"],
         "products": [
             {"name": "Centro de TV Florencia Wengue", "rh": False, "assembly": "estandar", "desc": "Estilo moderno melamínico"},
             {"name": "Escritorio L-Shape Industrial Easy", "rh": False, "assembly": "estandar", "desc": "Estructura metálica y MDP"},
@@ -163,90 +162,10 @@ CLIENTS_RAW_DATA = {
             {"name": "Mesa de Noche Krea 2 cajones", "rh": False, "assembly": "estandar", "desc": "Aglomerado básico"}
         ]
     },
-    "TUHOME SPA": {
-        "short_name": "TuHome",
-        "url_menu": "https://www.tuhome.cl",
-        "urls_ingesta": [
-            "https://www.tuhome.cl",
-            "https://www.tuhome.cl/productos"
-        ],
-        "base_traffic": 80,
-        "own_brand": 95.0,
-        "country": "Chile",
-        "cities": [
-            {"ciudad": "Santiago", "es_costera": False, "humedad_relativa_promedio": 60},
-            {"ciudad": "Concepción", "es_costera": False, "humedad_relativa_promedio": 75},
-            {"ciudad": "Valparaíso", "es_costera": True, "humedad_relativa_promedio": 78},
-            {"ciudad": "Antofagasta", "es_costera": True, "humedad_relativa_promedio": 72}
-        ],
-        "best_sellers": ["Escritorio Home Office Z-60 Nogal", "Mueble Lavamanos Split RH", "Clóset RTA 4 Puertas Wengue"],
-        "future_sources": ["Falabella.com Chile (Surtido y Quiebres de Stock)", "MercadoLibre Chile (Palabras clave de Muebles)", "Google Analytics RTA (Porcentaje de abandono del checkout B2B y telemetría de visualización de clósets)"],
-        "competitive_set": ["Virtual Muebles", "Sodimac Chile"],
-        "jtbd": {
-            "persona": "Hogares en Crecimiento",
-            "job": "Adaptar el mobiliario del hogar según el crecimiento de los hijos con soluciones modulares y escalables.",
-            "pain_points": "Muebles pesados difíciles de mover, poca variedad en tonos de madera real, ensamble que requiere 2 personas.",
-            "triggers": "Llegada de un nuevo hijo o reorganización de dormitorios."
-        },
-        "raw_menu_categories": [
-            "Colección Cocina y Despensa Modulares",
-            "Centros de Entretenimiento Modernos",
-            "Línea Oficina y Escritorios RTA",
-            "Muebles Auxiliares de Baño",
-            "Novedades Diseño Industrial RTA"
-        ],
-        "products": [
-            {"name": "Escritorio Home Office Z-60 Nogal", "rh": False, "assembly": "minifix", "desc": "Ensamble rápido con minifix"},
-            {"name": "Módulo de Cocina Auxiliar 2 Puertas", "rh": False, "assembly": "estandar", "desc": "Tablero estándar MDP"},
-            {"name": "Mueble Lavamanos Split RH", "rh": True, "assembly": "minifix", "desc": "Base hidrófuga con herrajes rápidos"},
-            {"name": "Clóset RTA 4 Puertas Wengue", "rh": False, "assembly": "estandar", "desc": "Estructura aglomerada de gran capacidad"}
-        ]
-    },
-    "SODIMAC CHILE": {
-        "short_name": "Sodimac Chile",
-        "url_menu": "https://sodimac.falabella.com/sodimac-cl/category/cat3200008/Muebles",
-        "urls_ingesta": [
-            "https://sodimac.falabella.com/sodimac-cl/category/cat3200008/Muebles",
-            "https://sodimac.falabella.com/sodimac-cl/category/cat20088/Muebles-de-Cocina"
-        ],
-        "base_traffic": 85,
-        "own_brand": 40.0,
-        "country": "Chile",
-        "cities": [
-            {"ciudad": "Santiago", "es_costera": False, "humedad_relativa_promedio": 60},
-            {"ciudad": "Concepción", "es_costera": False, "humedad_relativa_promedio": 75},
-            {"ciudad": "Valparaíso", "es_costera": True, "humedad_relativa_promedio": 78},
-            {"ciudad": "Antofagasta", "es_costera": True, "humedad_relativa_promedio": 72}
-        ],
-        "best_sellers": ["Módulo Cocina Modular 120cm", "Clóset RTA Expandible", "Escritorio Compacto Madera"],
-        "future_sources": ["Falabella.com Chile (Surtido y Quiebres de Stock)", "Google Analytics RTA (Porcentaje de abandono del checkout B2B y telemetría de visualización de clósets)"],
-        "competitive_set": ["TuHome", "Easy Chile"],
-        "jtbd": {
-            "persona": "Hogares en Crecimiento",
-            "job": "Adaptar el mobiliario del hogar según el crecimiento de los hijos con soluciones modulares y escalables.",
-            "pain_points": "Muebles pesados difíciles de mover, poca variedad en tonos de madera real, ensamble que requiere 2 personas.",
-            "triggers": "Llegada de un nuevo hijo o reorganización de dormitorios."
-        },
-        "raw_menu_categories": [
-            "Colección Cocina y Despensa Modulares",
-            "Centros de Entretenimiento Modernos",
-            "Línea Oficina y Escritorios RTA",
-            "Muebles Auxiliares de Baño",
-            "Novedades Diseño Industrial RTA"
-        ],
-        "products": [
-            {"name": "Módulo Cocina Modular 120cm", "rh": False, "assembly": "minifix", "desc": "Ensamble rápido con minifix"},
-            {"name": "Clóset RTA Expandible", "rh": False, "assembly": "estandar", "desc": "Tablero estándar MDP"},
-            {"name": "Escritorio Compacto Madera", "rh": False, "assembly": "minifix", "desc": "Escritorio estudiantil simple"}
-        ]
-    },
     "PROMART HOMECENTER": {
         "short_name": "Promart",
-        "url_menu": "https://www.promart.pe/muebles-y-organizadores",
-        "urls_ingesta": [
-            "https://www.promart.pe/muebles-y-organizadores",
-            "https://www.promart.pe/muebles-de-cocina"
-        ],
+        "url_menu": "https://www.promart.pe/muebles",
+        "urls_ingesta": ["https://www.promart.pe/muebles"],
         "base_traffic": 83,
         "own_brand": 40.0,
         "country": "Perú",
@@ -258,20 +177,14 @@ CLIENTS_RAW_DATA = {
         ],
         "best_sellers": ["Centro de TV Máncora Roble", "Escritorio Gamer Pro", "Alacena RTA Multifunción"],
         "future_sources": ["MercadoLibre Perú (Tendencias de Búsqueda)", "Promart Analytics (Ventas RTA)", "Google Analytics RTA (Tasa de rebote en cocinas modulares y descargas de instructivos)"],
-        "competitive_set": ["Sodimac Perú", "Ripley"],
+        "competitive_set": ["Sodimac Perú", "IKEA USA"],
         "jtbd": {
             "persona": "Comprador Urbano Limeño",
             "job": "Optimizar el espacio en departamentos de metrajes reducidos en Lima Metropolitana de forma práctica.",
             "pain_points": "Humedad severa de la costa de Lima que infla los tableros aglomerados de baja densidad y herrajes deficientes.",
             "triggers": "Renovación de departamento de alquiler o mudanza a proyecto de vivienda VIS."
         },
-        "raw_menu_categories": [
-            "Muebles de Cocina - Modulares",
-            "Escritorios y Oficina RTA",
-            "Centros de TV y Entretenimiento",
-            "Roperos y Clósets en Descuento",
-            "Muebles de Baño RH Resistentes a Humedad"
-        ],
+        "raw_menu_categories": ["Muebles de Cocina - Modulares", "Escritorios y Oficina RTA", "Centros de TV y Entretenimiento", "Roperos y Clósets en Descuento", "Muebles de Baño RH Resistentes a Humedad"],
         "products": [
             {"name": "Centro de TV Máncora Roble", "rh": False, "assembly": "minifix", "desc": "Módulo de TV en melamina Rovere"},
             {"name": "Escritorio Gamer Pro", "rh": False, "assembly": "minifix", "desc": "Estructura gamer reforzada"},
@@ -279,15 +192,97 @@ CLIENTS_RAW_DATA = {
             {"name": "Mueble Lavamanos Suspendido RH", "rh": True, "assembly": "minifix", "desc": "Melamina RH resistente a humedad"}
         ]
     },
-    "THE HOME DEPOT MÉXICO": {
-        "short_name": "Home Depot MX",
-        "url_menu": "https://www.homedepot.com.mx/muebles",
-        "urls_ingesta": [
-            "https://www.homedepot.com.mx/muebles",
-            "https://www.homedepot.com.mx/muebles-de-cocina"
+    "SODIMAC PERÚ": {
+        "short_name": "Sodimac Perú",
+        "url_menu": "https://www.sodimac.com.pe",
+        "urls_ingesta": ["https://www.sodimac.com.pe"],
+        "base_traffic": 85,
+        "own_brand": 38.0,
+        "country": "Perú",
+        "cities": [
+            {"ciudad": "Lima", "es_costera": True, "humedad_relativa_promedio": 85},
+            {"ciudad": "Arequipa", "es_costera": False, "humedad_relativa_promedio": 45},
+            {"ciudad": "Trujillo", "es_costera": True, "humedad_relativa_promedio": 80}
         ],
-        "base_traffic": 90,
-        "own_brand": 30.0,
+        "best_sellers": ["Módulo Fregadero Sodimac Perú", "Escritorio Home Office Sodimac Perú", "Clóset RTA Sodimac Perú"],
+        "future_sources": ["Sodimac Perú Analytics", "Google Analytics RTA (Tasa de rebote en cocinas modulares y descargas de instructivos de armado)"],
+        "competitive_set": ["Promart", "IKEA USA"],
+        "jtbd": {
+            "persona": "Comprador Urbano Limeño",
+            "job": "Optimizar el espacio en departamentos de metrajes reducidos en Lima Metropolitana de forma práctica.",
+            "pain_points": "Humedad severa de la costa de Lima que infla los tableros aglomerados de baja densidad.",
+            "triggers": "Mudanza o renovación estacional de cocina."
+        },
+        "raw_menu_categories": ["Muebles de Cocina - Modulares", "Escritorios y Oficina RTA", "Centros de TV y Entretenimiento", "Muebles de Baño RH Resistentes a Humedad"],
+        "products": [
+            {"name": "Módulo Fregadero Sodimac Perú", "rh": False, "assembly": "minifix", "desc": "Cocina modulada de ensamble rápido"},
+            {"name": "Mueble de Baño Suspendido Sodimac Perú RH", "rh": True, "assembly": "minifix", "desc": "Módulo resistente a humedad"}
+        ]
+    },
+    "TUHOME SPA": {
+        "short_name": "TuHome",
+        "url_menu": "https://www.tuhome.cl",
+        "urls_ingesta": ["https://www.tuhome.cl"],
+        "base_traffic": 80,
+        "own_brand": 95.0,
+        "country": "Chile",
+        "cities": [
+            {"ciudad": "Santiago", "es_costera": False, "humedad_relativa_promedio": 60},
+            {"ciudad": "Concepción", "es_costera": False, "humedad_relativa_promedio": 75},
+            {"ciudad": "Valparaíso", "es_costera": True, "humedad_relativa_promedio": 78},
+            {"ciudad": "Antofagasta", "es_costera": True, "humedad_relativa_promedio": 72}
+        ],
+        "best_sellers": ["Escritorio Home Office Z-60 Nogal", "Mueble Lavamanos Split RH", "Clóset RTA 4 Puertas Wengue"],
+        "future_sources": ["Falabella.com Chile (Surtido y Quiebres de Stock)", "MercadoLibre Chile (Palabras clave de Muebles)", "Google Analytics RTA (Porcentaje de abandono del checkout B2B y telemetría de visualización de clósets)"],
+        "competitive_set": ["Sodimac Chile", "IKEA España"],
+        "jtbd": {
+            "persona": "Hogares en Crecimiento",
+            "job": "Adaptar el mobiliario del hogar según el crecimiento de los hijos con soluciones modulares y escalables.",
+            "pain_points": "Muebles pesados difíciles de mover, poca variedad en tonos de madera real, ensamble que requiere 2 personas.",
+            "triggers": "Llegada de un nuevo hijo o reorganización de dormitorios."
+        },
+        "raw_menu_categories": ["Colección Cocina y Despensa Modulares", "Centros de Entretenimiento Modernos", "Línea Oficina y Escritorios RTA", "Muebles Auxiliares de Baño", "Novedades Diseño Industrial RTA"],
+        "products": [
+            {"name": "Escritorio Home Office Z-60 Nogal", "rh": False, "assembly": "minifix", "desc": "Ensamble rápido con minifix"},
+            {"name": "Módulo de Cocina Auxiliar 2 Puertas", "rh": False, "assembly": "estandar", "desc": "Tablero estándar MDP"},
+            {"name": "Mueble Lavamanos Split RH", "rh": True, "assembly": "minifix", "desc": "Base hidrófuga con herrajes rápidos"},
+            {"name": "Clóset RTA 4 Puertas Wengue", "rh": False, "assembly": "estandar", "desc": "Estructura aglomerada de gran capacidad"}
+        ]
+    },
+    "SODIMAC CHILE": {
+        "short_name": "Sodimac Chile",
+        "url_menu": "https://www.sodimac.cl",
+        "urls_ingesta": ["https://www.sodimac.cl"],
+        "base_traffic": 86,
+        "own_brand": 40.0,
+        "country": "Chile",
+        "cities": [
+            {"ciudad": "Santiago", "es_costera": False, "humedad_relativa_promedio": 60},
+            {"ciudad": "Concepción", "es_costera": False, "humedad_relativa_promedio": 75},
+            {"ciudad": "Valparaíso", "es_costera": True, "humedad_relativa_promedio": 78}
+        ],
+        "best_sellers": ["Módulo Cocina Modular 120cm", "Clóset RTA Expandible", "Escritorio Compacto Madera"],
+        "future_sources": ["Falabella.com Chile (Surtido y Quiebres de Stock)", "Google Analytics RTA (Porcentaje de abandono del checkout B2B y telemetría de visualización de clósets)"],
+        "competitive_set": ["TuHome", "IKEA España"],
+        "jtbd": {
+            "persona": "Hogares en Crecimiento",
+            "job": "Adaptar el mobiliario del hogar según el crecimiento de los hijos con soluciones modulares y escalables.",
+            "pain_points": "Muebles pesados difíciles de mover, poca variedad en tonos de madera real, ensamble que requiere 2 personas.",
+            "triggers": "Llegada de un nuevo hijo o reorganización de dormitorios."
+        },
+        "raw_menu_categories": ["Colección Cocina y Despensa Modulares", "Centros de Entretenimiento Modernos", "Línea Oficina y Escritorios RTA", "Muebles Auxiliares de Baño", "Novedades Diseño Industrial RTA"],
+        "products": [
+            {"name": "Módulo Cocina Modular 120cm", "rh": False, "assembly": "minifix", "desc": "Ensamble rápido con minifix"},
+            {"name": "Clóset RTA Expandible", "rh": False, "assembly": "estandar", "desc": "Tablero estándar MDP"},
+            {"name": "Escritorio Compacto Madera", "rh": False, "assembly": "minifix", "desc": "Escritorio estudiantil simple"}
+        ]
+    },
+    "LIVERPOOL MÉXICO": {
+        "short_name": "Liverpool",
+        "url_menu": "https://www.liverpool.com.mx",
+        "urls_ingesta": ["https://www.liverpool.com.mx"],
+        "base_traffic": 88,
+        "own_brand": 15.0,
         "country": "México",
         "cities": [
             {"ciudad": "Ciudad de México", "es_costera": False, "humedad_relativa_promedio": 55},
@@ -296,72 +291,53 @@ CLIENTS_RAW_DATA = {
             {"ciudad": "Veracruz", "es_costera": True, "humedad_relativa_promedio": 78},
             {"ciudad": "Mérida", "es_costera": True, "humedad_relativa_promedio": 75}
         ],
-        "best_sellers": ["Gabinete de Cocina Modular Café", "Gabinete de Baño Suspendido RH", "Escritorio Home Office Café Oscuro"],
-        "future_sources": ["Amazon México (Tendencias de Búsqueda)", "Home Depot Analytics (Ventas de Muebles de Baño y Cocinas)", "Google Analytics RTA (Tasa de conversión en el configurador de muebles modulares)"],
-        "competitive_set": ["Sodimac México", "IKEA México"],
+        "best_sellers": ["Centro de TV Liverpool Maderado", "Escritorio Home Office Premium Liverpool", "Gabinete Baño Moderno Liverpool"],
+        "future_sources": ["Liverpool Analytics (Ventas de Muebles)", "Google Analytics RTA (Tasa de conversión en el configurador de muebles modulares)"],
+        "competitive_set": ["Elektra", "IKEA USA"],
         "jtbd": {
-            "persona": "Contratista / Dueño de Casa DIY",
-            "job": "Instalar de manera rápida y económica organizadores en cocheras, cocinas y baños de alta durabilidad.",
-            "pain_points": "Falta de herrajes en el empaque original, manuales de armado confusos e inestabilidad estructural.",
-            "triggers": "Remodelación antes de la temporada de lluvias o mejoras previas a las fiestas patrias."
+            "persona": "Comprador de Diseño Premium JtBD",
+            "job": "Encontrar mobiliario estético, moderno y listo para llevar con acabados tipo madera natural.",
+            "pain_points": "Precios elevados en mobiliario tradicional de madera maciza, dificultad de transporte.",
+            "triggers": "Remodelación de sala o alcoba principal."
         },
-        "raw_menu_categories": [
-            "Gabinetes de Cocina en Oferta",
-            "Muebles de Oficina RTA",
-            "Organizadores para Garaje y Clósets",
-            "Centros de TV Modernos"
-        ],
+        "raw_menu_categories": ["Centros de TV y Entretenimiento Liverpool", "Escritorios RTA Premium", "Organizadores de Baño y Hogar"],
         "products": [
-            {"name": "Gabinete de Cocina Modular Café", "rh": False, "assembly": "estandar", "desc": "Estructura aglomerada estándar"},
-            {"name": "Gabinete de Baño Suspendido RH", "rh": True, "assembly": "minifix", "desc": "Tablero hidrófugo resistente a la humedad"},
-            {"name": "Escritorio Home Office Café Oscuro", "rh": False, "assembly": "minifix", "desc": "Ensamble rápido con tornillos minifix"},
-            {"name": "Estantería Garaje Metálica RTA", "rh": False, "assembly": "estandar", "desc": "Estantería para herramientas"}
+            {"name": "Centro de TV Liverpool Maderado", "rh": False, "assembly": "minifix", "desc": "Estilo moderno melamínico"},
+            {"name": "Gabinete Baño Moderno Liverpool", "rh": False, "assembly": "minifix", "desc": "MDP estándar"}
         ]
     },
-    "WAYFAIR USA": {
-        "short_name": "Wayfair",
-        "url_menu": "https://www.wayfair.com/furniture",
-        "urls_ingesta": [
-            "https://www.wayfair.com/furniture",
-            "https://www.wayfair.com/furniture/office"
-        ],
-        "base_traffic": 95,
-        "own_brand": 15.0,
-        "country": "USA",
+    "ELEKTRA MÉXICO": {
+        "short_name": "Elektra",
+        "url_menu": "https://www.elektra.mx",
+        "urls_ingesta": ["https://www.elektra.mx"],
+        "base_traffic": 84,
+        "own_brand": 25.0,
+        "country": "México",
         "cities": [
-            {"ciudad": "Miami", "es_costera": True, "humedad_relativa_promedio": 75},
-            {"ciudad": "Los Ángeles", "es_costera": True, "humedad_relativa_promedio": 65},
-            {"ciudad": "Nueva York", "es_costera": True, "humedad_relativa_promedio": 68}
+            {"ciudad": "Ciudad de México", "es_costera": False, "humedad_relativa_promedio": 55},
+            {"ciudad": "Monterrey", "es_costera": False, "humedad_relativa_promedio": 50},
+            {"ciudad": "Guadalajara", "es_costera": False, "humedad_relativa_promedio": 58},
+            {"ciudad": "Veracruz", "es_costera": True, "humedad_relativa_promedio": 78}
         ],
-        "best_sellers": ["Modular Closet System White", "Minimalist TV Stand Oak", "RTA Writing Desk with Shelves"],
-        "future_sources": ["Amazon US (Bestsellers)", "Google Trends USA (Keywords)", "Wayfair Business Analytics"],
-        "competitive_set": ["IKEA US", "Amazon"],
+        "best_sellers": ["Clóset Básico Elektra", "Escritorio Home Office Elektra", "Centro de TV Compacto Elektra"],
+        "future_sources": ["Elektra Sales Analytics", "Google Analytics RTA (Tasa de conversión en el configurador de muebles modulares)"],
+        "competitive_set": ["Liverpool", "IKEA USA"],
         "jtbd": {
-            "persona": "Young Urban Professional",
-            "job": "Furnish rental apartments with stylish, affordable, and easy-to-move RTA furniture.",
-            "pain_points": "Assembly taking too long, missing minor screws, particleboard cracking during screw insertion.",
-            "triggers": "Moving to a new apartment, starting a remote job or college semester."
+            "persona": "Smart Shopper / Comprador de Presupuesto",
+            "job": "Encontrar mobiliario funcional, duradero y de bajo costo con facilidades de pago semanal o mensual.",
+            "pain_points": "Falta de información sobre las dimensiones en la tienda física, transporte difícil.",
+            "triggers": "Amoblar habitación infantil o estudio de bajo costo."
         },
-        "raw_menu_categories": [
-            "Modular Living Room Furniture",
-            "Home Office Writing Desks",
-            "Clóset & Wardrobe Organizers",
-            "Bath Storage Cabinets"
-        ],
+        "raw_menu_categories": ["Centros de TV y Comedores Elektra", "Escritorios y Sillas RTA", "Roperos y Organizadores Económicos"],
         "products": [
-            {"name": "Modular Closet System White", "rh": False, "assembly": "minifix", "desc": "White melamine finish cabinet"},
-            {"name": "Minimalist TV Stand Oak", "rh": False, "assembly": "minifix", "desc": "Oak textured media console"},
-            {"name": "RTA Writing Desk with Shelves", "rh": False, "assembly": "click", "desc": "Tool-less quick assembly desk"},
-            {"name": "Medicine Cabinet RH White", "rh": True, "assembly": "minifix", "desc": "RH particleboard bathroom storage"}
+            {"name": "Clóset Básico Elektra", "rh": False, "assembly": "estandar", "desc": "Aglomerado básico"},
+            {"name": "Escritorio Home Office Elektra", "rh": False, "assembly": "minifix", "desc": "MDP estándar"}
         ]
     },
     "LEROY MERLIN ESPAÑA": {
-        "short_name": "Leroy Merlin",
-        "url_menu": "https://www.leroymerlin.es/productos/muebles/",
-        "urls_ingesta": [
-            "https://www.leroymerlin.es/productos/muebles/",
-            "https://www.leroymerlin.es/productos/muebles/armarios"
-        ],
+        "short_name": "Leroy Merlin España",
+        "url_menu": "https://www.leroymerlin.es",
+        "urls_ingesta": ["https://www.leroymerlin.es"],
         "base_traffic": 87,
         "own_brand": 35.0,
         "country": "España",
@@ -373,19 +349,14 @@ CLIENTS_RAW_DATA = {
         ],
         "best_sellers": ["Armario RTA Modular Blanco", "Mueble Auxiliar de Cocina Haya", "Gabinete Suspendido de Baño RH"],
         "future_sources": ["Amazon España (Muebles más vendidos)", "Leroy Merlin Analytics (Consultas de Clientes)", "Google Analytics RTA (Tasa de rebote en armarios modulares y descargas de guías de montaje)"],
-        "competitive_set": ["IKEA España", "Conforama"],
+        "competitive_set": ["IKEA España", "IKEA USA"],
         "jtbd": {
             "persona": "Reformador DIY Español",
             "job": "Montar soluciones de almacenaje a medida en pisos urbanos optimizando cada metro cuadrado.",
             "pain_points": "Herrajes de baja calidad que se doblan, falta de resistencia a la humedad en baños de pisos costeros, instrucciones poco claras.",
             "triggers": "Renovación de armarios estacionales o mudanzas de verano."
         },
-        "raw_menu_categories": [
-            "Armarios y Clósets Modulares",
-            "Muebles Auxiliares de Cocina",
-            "Escritorios RTA de Oficina",
-            "Muebles de Baño Suspendidos RH"
-        ],
+        "raw_menu_categories": ["Armarios y Clósets Modulares", "Muebles Auxiliares de Cocina", "Escritorios RTA de Oficina", "Muebles de Baño Suspendidos RH"],
         "products": [
             {"name": "Armario RTA Modular Blanco", "rh": False, "assembly": "estandar", "desc": "Estructura aglomerado melamina 16mm"},
             {"name": "Mueble Auxiliar de Cocina Haya", "rh": False, "assembly": "minifix", "desc": "Módulo con ruedas y estantes"},
@@ -393,42 +364,151 @@ CLIENTS_RAW_DATA = {
             {"name": "Escritorio Home Office Basic Haya", "rh": False, "assembly": "estandar", "desc": "Escritorio estándar aglomerado"}
         ]
     },
-    "LEROY MERLIN ESPEJO INTERNACIONAL": {
-        "short_name": "Leroy Espejo",
-        "url_menu": "https://www.leroymerlin.es/productos/muebles/",
-        "urls_ingesta": [
-            "https://www.leroymerlin.es/productos/muebles/",
-            "https://www.leroymerlin.es/productos/muebles/armarios"
-        ],
-        "base_traffic": 80,
-        "own_brand": 30.0,
-        "country": "España",
+    "AMAZON USA": {
+        "short_name": "Amazon USA",
+        "url_menu": "https://www.amazon.com",
+        "urls_ingesta": ["https://www.amazon.com"],
+        "base_traffic": 96,
+        "own_brand": 20.0,
+        "country": "USA",
         "cities": [
-            {"ciudad": "Madrid", "es_costera": False, "humedad_relativa_promedio": 50},
-            {"ciudad": "Barcelona", "es_costera": True, "humedad_relativa_promedio": 72},
-            {"ciudad": "Valencia", "es_costera": True, "humedad_relativa_promedio": 70},
-            {"ciudad": "Sevilla", "es_costera": False, "humedad_relativa_promedio": 55}
+            {"ciudad": "New York", "es_costera": True, "humedad_relativa_promedio": 68},
+            {"ciudad": "Los Angeles", "es_costera": True, "humedad_relativa_promedio": 65},
+            {"ciudad": "Miami", "es_costera": True, "humedad_relativa_promedio": 75},
+            {"ciudad": "Chicago", "es_costera": False, "humedad_relativa_promedio": 62},
+            {"ciudad": "Houston", "es_costera": True, "humedad_relativa_promedio": 74}
         ],
-        "best_sellers": ["Armario RTA Modular Blanco", "Mueble Auxiliar de Cocina Haya", "Gabinete Suspendido de Baño RH"],
-        "future_sources": ["Amazon España (Muebles más vendidos)", "Google Analytics RTA (Tasa de rebote en armarios modulares y descargas de guías de montaje)"],
-        "competitive_set": ["IKEA España", "Conforama"],
+        "best_sellers": ["Amazon Basics Writing Desk", "Rustic Wood TV Stand Amazon", "3-Drawer Storage Drawer Organizer"],
+        "future_sources": ["Amazon US Bestsellers", "Google Analytics RTA (Embudo de conversión de la línea Gamer y descargas de manuales)"],
+        "competitive_set": ["Wayfair USA", "IKEA USA"],
         "jtbd": {
-            "persona": "Reformador DIY Español",
-            "job": "Montar soluciones de almacenaje a medida en pisos urbanos optimizando cada metro cuadrado.",
-            "pain_points": "Herrajes de baja calidad que se doblan, falta de resistencia a la humedad en baños de pisos costeros, instrucciones poco claras.",
-            "triggers": "Renovación de armarios estacionales o mudanzas de verano."
+            "persona": "Comprador de Conveniencia Digital",
+            "job": "Comprar mobiliario extremadamente económico con despacho prioritario de un día para otro.",
+            "pain_points": "Calidad inconsistente del aglomerado, piezas rotas por transporte, falta de soporte técnico de armado.",
+            "triggers": "Independencia estudiantil o armado rápido de oficina de teletrabajo."
         },
-        "raw_menu_categories": [
-            "Armarios y Clósets Modulares",
-            "Muebles Auxiliares de Cocina",
-            "Escritorios RTA de Oficina",
-            "Muebles de Baño Suspendidos RH"
-        ],
+        "raw_menu_categories": ["Home Office Furniture Amazon", "Living Room TV Stands", "Bedroom Dressers & Organizers"],
         "products": [
-            {"name": "Armario RTA Modular Blanco", "rh": False, "assembly": "estandar", "desc": "Estructura aglomerado melamina 16mm"},
-            {"name": "Mueble Auxiliar de Cocina Haya", "rh": False, "assembly": "minifix", "desc": "Módulo con ruedas y estantes"},
-            {"name": "Gabinete Suspendido de Baño RH", "rh": True, "assembly": "minifix", "desc": "Tablero hidrófugo resistente a la humedad"},
-            {"name": "Escritorio Home Office Basic Haya", "rh": False, "assembly": "estandar", "desc": "Escritorio estándar aglomerado"}
+            {"name": "Amazon Basics Writing Desk", "rh": False, "assembly": "click", "desc": "Simple writing table"},
+            {"name": "Rustic Wood TV Stand Amazon", "rh": False, "assembly": "minifix", "desc": "MDP textured TV stand"}
+        ]
+    },
+    "WALMART USA": {
+        "short_name": "Walmart USA",
+        "url_menu": "https://www.walmart.com",
+        "urls_ingesta": ["https://www.walmart.com"],
+        "base_traffic": 94,
+        "own_brand": 25.0,
+        "country": "USA",
+        "cities": [
+            {"ciudad": "New York", "es_costera": True, "humedad_relativa_promedio": 68},
+            {"ciudad": "Los Angeles", "es_costera": True, "humedad_relativa_promedio": 65},
+            {"ciudad": "Miami", "es_costera": True, "humedad_relativa_promedio": 75},
+            {"ciudad": "Chicago", "es_costera": False, "humedad_relativa_promedio": 62},
+            {"ciudad": "Houston", "es_costera": True, "humedad_relativa_promedio": 74}
+        ],
+        "best_sellers": ["Mainstays Writing Desk", "Mainstays 3-Drawer Dresser", "Mainstays Bathroom Cabinet RH"],
+        "future_sources": ["Walmart Retail Analytics", "Google Analytics RTA (Tasa de rebote en cocinas modulares y descargas de instructivos)"],
+        "competitive_set": ["Target", "IKEA USA"],
+        "jtbd": {
+            "persona": "Smart Shopper / Comprador de Presupuesto",
+            "job": "Encontrar mobiliario básico de hogar para llevar en caja el mismo día al menor costo.",
+            "pain_points": "Aglomerados débiles de 12mm que se cuelgan en el centro, herrajes plásticos frágiles.",
+            "triggers": "Mudanza temporal o amoblado estudiantil."
+        },
+        "raw_menu_categories": ["Walmart Mainstays Home Office", "Walmart Bathroom Storage", "Walmart Bedroom Organizers"],
+        "products": [
+            {"name": "Mainstays Writing Desk", "rh": False, "assembly": "estandar", "desc": "Basic study desk"},
+            {"name": "Mainstays Bathroom Cabinet RH", "rh": True, "assembly": "minifix", "desc": "RH particleboard cabinet"}
+        ]
+    },
+    "WAYFAIR USA": {
+        "short_name": "Wayfair USA",
+        "url_menu": "https://www.wayfair.com",
+        "urls_ingesta": ["https://www.wayfair.com"],
+        "base_traffic": 92,
+        "own_brand": 15.0,
+        "country": "USA",
+        "cities": [
+            {"ciudad": "New York", "es_costera": True, "humedad_relativa_promedio": 68},
+            {"ciudad": "Los Angeles", "es_costera": True, "humedad_relativa_promedio": 65},
+            {"ciudad": "Miami", "es_costera": True, "humedad_relativa_promedio": 75},
+            {"ciudad": "Chicago", "es_costera": False, "humedad_relativa_promedio": 62},
+            {"ciudad": "Houston", "es_costera": True, "humedad_relativa_promedio": 74}
+        ],
+        "best_sellers": ["Modular Closet System White", "Minimalist TV Stand Oak", "RTA Writing Desk with Shelves"],
+        "future_sources": ["Wayfair Business Analytics", "Google Analytics RTA (Embudo de conversión de la línea Gamer y descargas de manuales)"],
+        "competitive_set": ["IKEA USA", "Amazon USA"],
+        "jtbd": {
+            "persona": "Young Urban Professional",
+            "job": "Furnish rental apartments with stylish, affordable, and easy-to-move RTA furniture.",
+            "pain_points": "Assembly taking too long, missing minor screws, particleboard cracking during screw insertion.",
+            "triggers": "Moving to a new apartment, starting a remote job or college semester."
+        },
+        "raw_menu_categories": ["Modular Living Room Furniture", "Home Office Writing Desks", "Clóset & Wardrobe Organizers", "Bath Storage Cabinets"],
+        "products": [
+            {"name": "Modular Closet System White", "rh": False, "assembly": "minifix", "desc": "White melamine finish cabinet"},
+            {"name": "Minimalist TV Stand Oak", "rh": False, "assembly": "minifix", "desc": "Oak textured media console"},
+            {"name": "RTA Writing Desk with Shelves", "rh": False, "assembly": "click", "desc": "Tool-less quick assembly desk"},
+            {"name": "Medicine Cabinet RH White", "rh": True, "assembly": "minifix", "desc": "RH particleboard bathroom storage"}
+        ]
+    },
+    "HOME DEPOT USA": {
+        "short_name": "Home Depot USA",
+        "url_menu": "https://www.homedepot.com",
+        "urls_ingesta": ["https://www.homedepot.com"],
+        "base_traffic": 91,
+        "own_brand": 30.0,
+        "country": "USA",
+        "cities": [
+            {"ciudad": "New York", "es_costera": True, "humedad_relativa_promedio": 68},
+            {"ciudad": "Los Angeles", "es_costera": True, "humedad_relativa_promedio": 65},
+            {"ciudad": "Miami", "es_costera": True, "humedad_relativa_promedio": 75},
+            {"ciudad": "Chicago", "es_costera": False, "humedad_relativa_promedio": 62},
+            {"ciudad": "Houston", "es_costera": True, "humedad_relativa_promedio": 74}
+        ],
+        "best_sellers": ["Hampton Bay Kitchen Cabinet", "Hampton Bay Bath Vanity RH", "Hampton Bay Storage Closet"],
+        "future_sources": ["Home Depot US Sales Analytics", "Google Analytics RTA (Tasa de rebote en cocinas modulares y descargas de instructivos de armado)"],
+        "competitive_set": ["Lowe's USA", "IKEA USA"],
+        "jtbd": {
+            "persona": "Contratista / Dueño de Casa DIY",
+            "job": "Instalar de manera rápida y económica organizadores en cocheras, cocinas y baños de alta durabilidad.",
+            "pain_points": "Falta de herrajes en el empaque original, manuales de armado confusos e inestabilidad estructural.",
+            "triggers": "Remodelación antes de la temporada de lluvias o mejoras previas a las vacaciones."
+        },
+        "raw_menu_categories": ["Home Depot Kitchen Cabinets", "Home Depot Office Furniture", "Home Depot Closet Organizers"],
+        "products": [
+            {"name": "Hampton Bay Kitchen Cabinet", "rh": False, "assembly": "minifix", "desc": "Modular wood composite kitchen cabinet"},
+            {"name": "Hampton Bay Bath Vanity RH", "rh": True, "assembly": "minifix", "desc": "Water resistant bath cabinet"}
+        ]
+    },
+    "LOWE'S USA": {
+        "short_name": "Lowe's USA",
+        "url_menu": "https://www.lowes.com",
+        "urls_ingesta": ["https://www.lowes.com"],
+        "base_traffic": 89,
+        "own_brand": 28.0,
+        "country": "USA",
+        "cities": [
+            {"ciudad": "New York", "es_costera": True, "humedad_relativa_promedio": 68},
+            {"ciudad": "Los Angeles", "es_costera": True, "humedad_relativa_promedio": 65},
+            {"ciudad": "Miami", "es_costera": True, "humedad_relativa_promedio": 75},
+            {"ciudad": "Chicago", "es_costera": False, "humedad_relativa_promedio": 62},
+            {"ciudad": "Houston", "es_costera": True, "humedad_relativa_promedio": 74}
+        ],
+        "best_sellers": ["Project Source Kitchen Cabinet", "Project Source Bath Vanity RH", "Project Source Storage Closet"],
+        "future_sources": ["Lowe's US Sales Analytics", "Google Analytics RTA (Tasa de rebote en cocinas modulares y descargas de instructivos de armado)"],
+        "competitive_set": ["Home Depot USA", "IKEA USA"],
+        "jtbd": {
+            "persona": "Contratista / Dueño de Casa DIY",
+            "job": "Instalar de manera rápida y económica organizadores en cocheras, cocinas y baños de alta durabilidad.",
+            "pain_points": "Falta de herrajes en el empaque original, manuales de armado confusos e inestabilidad estructural.",
+            "triggers": "Remodelación antes de la temporada de lluvias o mejoras previas a las vacaciones."
+        },
+        "raw_menu_categories": ["Lowe's Kitchen Cabinets", "Lowe's Office Furniture", "Lowe's Closet Organizers"],
+        "products": [
+            {"name": "Project Source Kitchen Cabinet", "rh": False, "assembly": "minifix", "desc": "Modular composite kitchen cabinet"},
+            {"name": "Project Source Bath Vanity RH", "rh": True, "assembly": "minifix", "desc": "Water resistant bath cabinet"}
         ]
     }
 }
@@ -539,7 +619,7 @@ def generate_readme_report(data):
     content.append("\n*Para explorar las visualizaciones interactivas de Chart.js y aplicar filtros dinámicos por pestañas, abre el archivo [index.html](index.html) en tu navegador.*")
     
     content.append("\n---")
-    content.append(f"\n## 🔍 Análisis Detallado por Cliente (11 Canales)")
+    content.append(f"\n## 🔍 Análisis Detallado por Cliente ({len(data['history'][data['current_date']]['clients'])} Canales)")
     
     for client in data["history"][data["current_date"]]["clients"]:
         telemetria = client["telemetria_mercado"]
@@ -595,19 +675,17 @@ import urllib.error
 def generate_week_data_with_gemini(date_str, base_findings, api_key):
     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
     
-    system_instruction = """
-Actúa como AMELIA RTA, una Analista de Investigación de Mercado, Experta en Tendencias de Consumo y Especialista Senior en Auditoría de Canales Digitales y Category Management. Tu objetivo estratégico único es procesar datos de mercado, flujos de navegación e-commerce y estructuras de surtido para identificar patrones emergentes y brechas comerciales ("White Spaces") donde la empresa RTA MUEBLES pueda entrar y capturar mercado con un producto ganador de empaque plano (Ready-to-Assemble).
+    system_instruction = """Actúa como AMELIA RTA, una Analista de Investigación de Mercado, Experta en Tendencias de Consumo y Especialista Senior en Auditoría de Canales Digitales y Category Management. Tu objetivo estratégico único es procesar datos de mercado, flujos de navegación e-commerce y estructuras de surtido para identificar patrones emergentes y brechas comerciales ("White Spaces") donde la empresa RTA MUEBLES pueda entrar y capturar mercado con un producto ganador de empaque plano (Ready-to-Assemble).
 
 Tu universo de análisis se concentra de manera obligatoria en:
-1. COLOMBIA: SODIMAC COLOMBIA S.A, INVERSIONES VIRTUAL MUEBLES S.A.S, MADECENTRO S.A.S, CENCOSUD COLOMBIA SA.
-2. CHILE: TUHOME SPA, SODIMAC CHILE.
-3. PERÚ: PROMART HOMECENTER.
-4. MÉXICO: THE HOME DEPOT MÉXICO.
-5. USA: WAYFAIR USA.
-6. ESPAÑA: LEROY MERLIN ESPAÑA, LEROY MERLIN ESPEJO INTERNACIONAL.
+1. COLOMBIA: SODIMAC COLOMBIA S.A, MADECENTRO S.A.S, INVERSIONES VIRTUAL MUEBLES S.A.S, GRUPO CORONA Y ALIADOS, CENCOSUD COLOMBIA SA.
+2. PERÚ: PROMART HOMECENTER, SODIMAC PERÚ.
+3. CHILE: TUHOME SPA, SODIMAC CHILE.
+4. MÉXICO: LIVERPOOL MÉXICO, ELEKTRA MÉXICO.
+5. USA: AMAZON USA, WALMART USA, WAYFAIR USA, HOME DEPOT USA, LOWE'S USA.
+6. ESPAÑA: LEROY MERLIN ESPAÑA.
 
-Aplica el protocolo antirruido, aislando la estacionalidad del negocio estructural real de tableros y soluciones RTA. Usa JTBD y el ciclo de vida.
-"""
+Aplique el protocolo antirruido, aislando la estacionalidad del negocio estructural real de tableros y soluciones RTA. Usa JTBD y el ciclo de vida."""
     
     prompt = f"""
 Genera los datos métricos y analíticos predictivos estructurales en formato JSON para la semana del '{date_str}'.
@@ -891,30 +969,43 @@ def generate_week_data(date_str):
         growth = random.randint(18, 42)
         pico = random.choice(["Octubre", "Noviembre", "Diciembre"])
         
-        canal_id = client_name.lower().replace(" s.a.", "").replace(" s.a.s.", "").replace(" s.a", "").replace(" s.a.s", "").replace(" spa", "").replace(" y aliados", "").replace(" ", "_")
-        if "virtual" in canal_id:
-            canal_id = "virtual_muebles"
-        elif "sodimac_colombia" in canal_id:
+                # Clean up client_name to get canal_id
+        canal_id = client_name.lower().replace(" s.a.s", "").replace(" s.a.", "").replace(" s.a.s.", "").replace(" s.a", "").replace(" spa", "").replace(" y aliados", "").replace(" ", "_")
+        # Map cleanly:
+        if "sodimac_colombia" in canal_id:
             canal_id = "sodimac_colombia"
         elif "madecentro" in canal_id:
             canal_id = "madecentro_colombia"
+        elif "virtual" in canal_id:
+            canal_id = "virtual_muebles"
+        elif "corona" in canal_id:
+            canal_id = "corona_colombia"
         elif "cencosud" in canal_id:
             canal_id = "easy_colombia"
         elif "promart" in canal_id:
             canal_id = "promart_peru"
-        elif "home_depot" in canal_id:
-            canal_id = "homedepot_mexico"
-        elif "wayfair" in canal_id:
-            canal_id = "wayfair_usa"
-        elif "leroy" in canal_id:
-            if "espejo" in client_name.lower() or "internacional" in client_name.lower():
-                canal_id = "leroy_merlin_espejo_internacional"
-            else:
-                canal_id = "leroy_merlin_espana"
+        elif "sodimac_per" in canal_id:
+            canal_id = "sodimac_peru"
         elif "tuhome" in canal_id:
             canal_id = "tuhome_chile"
         elif "sodimac_chile" in canal_id:
             canal_id = "sodimac_chile"
+        elif "liverpool" in canal_id:
+            canal_id = "liverpool_mexico"
+        elif "elektra" in canal_id:
+            canal_id = "elektra_mexico"
+        elif "leroy" in canal_id:
+            canal_id = "leroy_merlin_espana"
+        elif "amazon" in canal_id:
+            canal_id = "amazon_usa"
+        elif "walmart" in canal_id:
+            canal_id = "walmart_usa"
+        elif "wayfair" in canal_id:
+            canal_id = "wayfair_usa"
+        elif "home_depot" in canal_id or "homedepot" in canal_id:
+            canal_id = "homedepot_usa"
+        elif "lowe" in canal_id:
+            canal_id = "lowes_usa"
 
         processed_clients.append({
             "canal_id": canal_id,
