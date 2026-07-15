@@ -2145,13 +2145,13 @@
         <div class="chart-box" style="margin-bottom: 24px;">
             <div class="chart-title" style="border-left-color: #10b981;">Análisis Agregado del Mercado RTA (Best Sellers)</div>
             <p class="desc-text" style="margin-bottom: 16px;">
-                Evaluando los productos más vendidos (Best Sellers) en los 17 distribuidores B2B para la semana seleccionada, Amelia RTA presenta el panorama del mercado para guiar la producción de tableros de melamina:
+                Evaluando los productos más vendidos (Best Sellers) en los 24 distribuidores B2B para la semana seleccionada, Amelia RTA presenta el panorama del mercado para guiar la producción de tableros de melamina:
             </p>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
                 <div style="background-color: #f8fafc; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 18px; display:flex; flex-direction:column; gap:8px;">
                     <h4 style="font-size: 13.5px; font-weight: 700; color: #059669;">📊 Participación por Categoría en Ventas</h4>
                     <p style="font-size: 12.5px; color: var(--text-secondary); line-height: 1.5;">
-                        Los Best Sellers de los 17 canales muestran la demanda agregada:
+                        Los Best Sellers de los 24 canales muestran la demanda agregada:
                     </p>
                     <ul class="list-unstyled" style="font-size: 12.5px; margin: 0; padding: 0;" id="strategy-category-shares">
                         <!-- Dynamic content -->
@@ -2376,7 +2376,7 @@
 
         <!-- DETAILED COMPARATIVE TABLE -->
         <div class="chart-box" style="margin-bottom: 24px;">
-            <div class="chart-title">Detalle Comparativo por Distribuidor (17 Canales)</div>
+            <div class="chart-title">Detalle Comparativo por Distribuidor (24 Canales)</div>
             <div class="crm-table-container" style="margin-bottom: 0;">
                 <table class="crm-table">
                     <thead>
@@ -6276,9 +6276,21 @@
         }
     }
 
-    function loadData() {
-        console.log("Cargando datos desde #market-data...");
-        const rawDataStr = document.getElementById('market-data').textContent;
+    async function loadData() {
+        console.log("Intentando cargar datos dinámicos desde ./data.json...");
+        let rawDataStr = "";
+        try {
+            const response = await fetch('./data.json');
+            if (response.ok) {
+                rawDataStr = await response.text();
+                console.log("Datos cargados dinámicamente desde ./data.json exitosamente.");
+            } else {
+                throw new Error("HTTP status " + response.status);
+            }
+        } catch (e) {
+            console.warn("No se pudo cargar data.json dinámicamente (CORS, file:// o archivo ausente). Usando #market-data como respaldo:", e);
+            rawDataStr = document.getElementById('market-data').textContent;
+        }
         try {
             const parsed = JSON.parse(rawDataStr);
             if (parsed.history) {
@@ -6298,8 +6310,8 @@
                 activeWeek = parsed.update_date;
                 console.log("JSON plano cargado. Semana única:", activeWeek);
             }
-        } catch (e) {
-            console.error("Fallo crítico al parsear JSON de mercado:", e);
+        } catch (err) {
+            console.error("Fallo crítico al parsear JSON de mercado:", err);
         }
     }
 
@@ -6355,9 +6367,9 @@
         if (targetContent) targetContent.classList.add('active');
     }
 
-    function initApp() {
+    async function initApp() {
         console.log("Inicializando aplicación RTA...");
-        loadData();
+        await loadData();
         setupBaseInfo();
         setupClientTabs();
         populateWeekSelector();
@@ -7392,7 +7404,7 @@
             `;
         }
         
-        // 3. Recomendaciones por Canal (Últimas Decisiones para los 17 canales)
+        // 3. Recomendaciones por Canal (Últimas Decisiones para los 24 canales)
         const recGrid = document.getElementById('strategy-recommendations-grid');
         if (recGrid) {
             recGrid.innerHTML = '';

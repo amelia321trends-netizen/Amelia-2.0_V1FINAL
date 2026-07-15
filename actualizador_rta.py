@@ -334,6 +334,190 @@ CLIENTS_RAW_DATA = {
             {"name": "Escritorio Home Office Elektra", "rh": False, "assembly": "minifix", "desc": "MDP estándar"}
         ]
     },
+    "KYWI ECUADOR": {
+        "short_name": "Kywi",
+        "url_menu": "https://www.kywi.com.ec",
+        "urls_ingesta": ["https://www.kywi.com.ec"],
+        "base_traffic": 75,
+        "own_brand": 25.0,
+        "country": "Ecuador",
+        "cities": [
+            {"ciudad": "Quito", "es_costera": False, "humedad_relativa_promedio": 62},
+            {"ciudad": "Guayaquil", "es_costera": True, "humedad_relativa_promedio": 78}
+        ],
+        "best_sellers": ["Módulo Cocina Kywi", "Mueble Auxiliar de Baño Kywi RH", "Escritorio RTA Kywi"],
+        "future_sources": ["Kywi Retail Analytics", "Google Analytics RTA (Tasa de rebote en cocinas modulares y descargas de instructivos)"],
+        "competitive_set": ["Sukasa", "IKEA USA"],
+        "jtbd": {
+            "persona": "Remodelador Práctico JtBD",
+            "job": "Encontrar módulos de cocina y baño económicos y resistentes para instalar rápido.",
+            "pain_points": "Humedad extrema en Guayaquil que infla la melamina estándar, falta de herrajes.",
+            "triggers": "Renovación o mejoras del hogar antes de lluvias estacionales."
+        },
+        "raw_menu_categories": ["Muebles de Cocina Kywi", "Muebles de Oficina RTA", "Muebles de Baño y Lavandería RH"],
+        "products": [
+            {"name": "Módulo Cocina Kywi", "rh": False, "assembly": "minifix", "desc": "Estructura aglomerada estándar"},
+            {"name": "Mueble Auxiliar de Baño Kywi RH", "rh": True, "assembly": "minifix", "desc": "MDP hidrófugo resistente a humedad"}
+        ]
+    },
+    "SUKASA ECUADOR": {
+        "short_name": "Sukasa",
+        "url_menu": "https://www.sukasa.com",
+        "urls_ingesta": ["https://www.sukasa.com"],
+        "base_traffic": 78,
+        "own_brand": 15.0,
+        "country": "Ecuador",
+        "cities": [
+            {"ciudad": "Quito", "es_costera": False, "humedad_relativa_promedio": 62},
+            {"ciudad": "Guayaquil", "es_costera": True, "humedad_relativa_promedio": 78}
+        ],
+        "best_sellers": ["Centro de TV Sukasa Design", "Escritorio Premium Sukasa", "Armario Modular Sukasa"],
+        "future_sources": ["Sukasa Sales Analytics", "Google Analytics RTA (Tasa de conversión en el configurador de muebles modulares)"],
+        "competitive_set": ["Kywi", "IKEA USA"],
+        "jtbd": {
+            "persona": "Comprador de Diseño Premium JtBD",
+            "job": "Amoblar salas y estudios con acabados modernos de tendencia y alta resistencia.",
+            "pain_points": "Poca variedad de colores, precios altos de la madera maciza.",
+            "triggers": "Establecimiento de nueva oficina en casa o renovación de sala."
+        },
+        "raw_menu_categories": ["Centros de TV y Entretenimiento Sukasa", "Escritorios RTA Premium", "Roperos y Clósets Modernos"],
+        "products": [
+            {"name": "Centro de TV Sukasa Design", "rh": False, "assembly": "minifix", "desc": "Estilo moderno melamínico"},
+            {"name": "Escritorio Premium Sukasa", "rh": False, "assembly": "minifix", "desc": "MDP texturizado"}
+        ]
+    },
+    "DO IT CENTER PANAMÁ": {
+        "short_name": "Do it Center",
+        "url_menu": "https://www.doitcenter.com.pa",
+        "urls_ingesta": ["https://www.doitcenter.com.pa"],
+        "base_traffic": 80,
+        "own_brand": 30.0,
+        "country": "Panamá",
+        "cities": [
+            {"ciudad": "Ciudad de Panamá", "es_costera": True, "humedad_relativa_promedio": 82},
+            {"ciudad": "Colón", "es_costera": True, "humedad_relativa_promedio": 85},
+            {"ciudad": "David", "es_costera": False, "humedad_relativa_promedio": 78}
+        ],
+        "best_sellers": ["Gabinete de Cocina Hampton Doit", "Mueble de Baño Suspendido Doit RH", "Escritorio Home Office Doit"],
+        "future_sources": ["Doit Center Retail Analytics", "Google Analytics RTA (Tasa de rebote en cocinas modulares y descargas de instructivos)"],
+        "competitive_set": ["Novey", "Cochez"],
+        "jtbd": {
+            "persona": "Contratista / Dueño de Casa DIY",
+            "job": "Instalar gabinetes de alta durabilidad en el clima húmedo de Panamá.",
+            "pain_points": "Hinchamiento rápido de melamina estándar por humedad ambiental extrema.",
+            "triggers": "Remodelación residencial antes del invierno panameño."
+        },
+        "raw_menu_categories": ["Gabinetes de Cocina Doit", "Muebles de Oficina RTA", "Muebles de Baño y Lavado RH"],
+        "products": [
+            {"name": "Gabinete de Cocina Hampton Doit", "rh": False, "assembly": "minifix", "desc": "Estructura aglomerada estándar"},
+            {"name": "Mueble de Baño Suspendido Doit RH", "rh": True, "assembly": "minifix", "desc": "Tablero hidrófugo resistente a humedad"}
+        ]
+    },
+    "NOVEY PANAMÁ": {
+        "short_name": "Novey",
+        "url_menu": "https://www.novey.com.pa",
+        "urls_ingesta": ["https://www.novey.com.pa"],
+        "base_traffic": 82,
+        "own_brand": 28.0,
+        "country": "Panamá",
+        "cities": [
+            {"ciudad": "Ciudad de Panamá", "es_costera": True, "humedad_relativa_promedio": 82},
+            {"ciudad": "Colón", "es_costera": True, "humedad_relativa_promedio": 85}
+        ],
+        "best_sellers": ["Módulo de Fregadero Novey", "Escritorio Gamer Pro Novey", "Alacena RTA Novey"],
+        "future_sources": ["Novey Sales Analytics", "Google Analytics RTA (Tasa de rebote en cocinas modulares y descargas)"],
+        "competitive_set": ["Do it Center", "Cochez"],
+        "jtbd": {
+            "persona": "Contratista / Dueño de Casa DIY",
+            "job": "Encontrar tableros y armarios rápidos de montar e instalar en remodelaciones comerciales.",
+            "pain_points": "Pandeo de estantes aglomerados, falta de manuales claros de ensamble.",
+            "triggers": "Apertura de nuevos locales comerciales u oficinas."
+        },
+        "raw_menu_categories": ["Muebles de Cocina Novey", "Escritorios RTA", "Alacenas y Organizadores"],
+        "products": [
+            {"name": "Módulo de Fregadero Novey", "rh": False, "assembly": "minifix", "desc": "Estructura aglomerada estándar"},
+            {"name": "Escritorio Gamer Pro Novey", "rh": False, "assembly": "minifix", "desc": "Mesa gamer resistente"}
+        ]
+    },
+    "COCHEZ PANAMÁ": {
+        "short_name": "Cochez",
+        "url_menu": "https://www.cochezycia.com",
+        "urls_ingesta": ["https://www.cochezycia.com"],
+        "base_traffic": 83,
+        "own_brand": 25.0,
+        "country": "Panamá",
+        "cities": [
+            {"ciudad": "Ciudad de Panamá", "es_costera": True, "humedad_relativa_promedio": 82},
+            {"ciudad": "Colón", "es_costera": True, "humedad_relativa_promedio": 85}
+        ],
+        "best_sellers": ["Cocina Modular Cochez", "Mueble Lavamanos Cochez RH", "Escritorio Home Office Cochez"],
+        "future_sources": ["Cochez Sales Analytics", "Google Analytics RTA (Tasa de rebote en cocinas modulares)"],
+        "competitive_set": ["Do it Center", "Novey"],
+        "jtbd": {
+            "persona": "Contratista / Dueño de Casa DIY",
+            "job": "Adquirir soluciones de almacenamiento y cocinas de melamina en volumen para proyectos de construcción.",
+            "pain_points": "Baja resistencia a la humedad severa del litoral panameño.",
+            "triggers": "Cierre de proyectos de construcción de viviendas modulares."
+        },
+        "raw_menu_categories": ["Cocinas Modulares Cochez", "Muebles de Oficina RTA", "Muebles de Baño y Lavandería RH"],
+        "products": [
+            {"name": "Cocina Modular Cochez", "rh": False, "assembly": "minifix", "desc": "Aglomerado estándar melamínico"},
+            {"name": "Mueble Lavamanos Cochez RH", "rh": True, "assembly": "minifix", "desc": "MDP hidrófugo resistente a humedad"}
+        ]
+    },
+    "EPA VENEZUELA": {
+        "short_name": "EPA Venezuela",
+        "url_menu": "https://ve.epa.biz",
+        "urls_ingesta": ["https://ve.epa.biz"],
+        "base_traffic": 76,
+        "own_brand": 35.0,
+        "country": "Venezuela",
+        "cities": [
+            {"ciudad": "Caracas", "es_costera": False, "humedad_relativa_promedio": 70},
+            {"ciudad": "Valencia", "es_costera": False, "humedad_relativa_promedio": 72},
+            {"ciudad": "Maracaibo", "es_costera": True, "humedad_relativa_promedio": 78}
+        ],
+        "best_sellers": ["Módulo Fregadero EPA", "Escritorio Home Office EPA", "Clóset RTA EPA"],
+        "future_sources": ["EPA Venezuela Analytics", "Google Analytics RTA (Tasa de rebote en cocinas modulares y descargas)"],
+        "competitive_set": ["Casalista", "IKEA España"],
+        "jtbd": {
+            "persona": "Smart Shopper / Comprador de Presupuesto",
+            "job": "Amoblar el hogar con muebles listos para armar duraderos y económicos.",
+            "pain_points": "Limitaciones de stock, falta de variedad en melaminas de diseño, instrucciones confusas.",
+            "triggers": "Remodelaciones del hogar previas a la temporada navideña."
+        },
+        "raw_menu_categories": ["Cocinas y Alacenas EPA", "Muebles de Oficina RTA", "Armarios y Roperos"],
+        "products": [
+            {"name": "Módulo Fregadero EPA", "rh": False, "assembly": "minifix", "desc": "Estructura aglomerada estándar"},
+            {"name": "Escritorio Home Office EPA", "rh": False, "assembly": "minifix", "desc": "Escritorio básico melamínico"}
+        ]
+    },
+    "CASALISTA VENEZUELA": {
+        "short_name": "Casalista",
+        "url_menu": "https://casalistatienda.com",
+        "urls_ingesta": ["https://casalistatienda.com"],
+        "base_traffic": 70,
+        "own_brand": 10.0,
+        "country": "Venezuela",
+        "cities": [
+            {"ciudad": "Caracas", "es_costera": False, "humedad_relativa_promedio": 70},
+            {"ciudad": "Valencia", "es_costera": False, "humedad_relativa_promedio": 72}
+        ],
+        "best_sellers": ["Cocina Premium Casalista", "Escritorio Moderno Casalista", "Mesa Auxiliar Casalista"],
+        "future_sources": ["Casalista Analytics", "Google Analytics RTA (Tasa de conversión en el configurador de muebles modulares)"],
+        "competitive_set": ["EPA Venezuela", "IKEA España"],
+        "jtbd": {
+            "persona": "Comprador de Diseño Premium JtBD",
+            "job": "Encontrar muebles modulares de alta estética para optimizar salas y cocinas en apartamentos.",
+            "pain_points": "Precios altos de productos importados, armado que requiere herramientas pesadas.",
+            "triggers": "Mejoras estéticas del apartamento o mudanza."
+        },
+        "raw_menu_categories": ["Cocinas Modulares Premium", "Muebles de Estudio RTA", "Mobiliario Auxiliar"],
+        "products": [
+            {"name": "Cocina Premium Casalista", "rh": False, "assembly": "minifix", "desc": "Cocina con acabados premium"},
+            {"name": "Escritorio Moderno Casalista", "rh": False, "assembly": "minifix", "desc": "Mesa de estudio texturizada"}
+        ]
+    },
     "LEROY MERLIN ESPAÑA": {
         "short_name": "Leroy Merlin España",
         "url_menu": "https://www.leroymerlin.es",
@@ -568,6 +752,11 @@ def analyze_cdt_and_jtbd(client_name, cleaned_categories, products):
 # --- PARTE 2: PIPELINE DE COMPILACIÓN E INYECCIÓN DE SUBCADENA ---
 
 def update_index_html(data):
+    # Escribir data.json en el directorio raíz
+    with open("data.json", "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
+    print("Base de datos data.json escrita de forma independiente en el directorio raíz.")
+
     files = ["index.html"]
     for file_path in files:
         if not os.path.exists(file_path):
@@ -682,8 +871,11 @@ Tu universo de análisis se concentra de manera obligatoria en:
 2. PERÚ: PROMART HOMECENTER, SODIMAC PERÚ.
 3. CHILE: TUHOME SPA, SODIMAC CHILE.
 4. MÉXICO: LIVERPOOL MÉXICO, ELEKTRA MÉXICO.
-5. USA: AMAZON USA, WALMART USA, WAYFAIR USA, HOME DEPOT USA, LOWE'S USA.
-6. ESPAÑA: LEROY MERLIN ESPAÑA.
+5. ECUADOR: KYWI ECUADOR, SUKASA ECUADOR.
+6. PANAMÁ: DO IT CENTER PANAMÁ, NOVEY PANAMÁ, COCHEZ PANAMÁ.
+7. VENEZUELA: EPA VENEZUELA, CASALISTA VENEZUELA.
+8. USA: AMAZON USA, WALMART USA, WAYFAIR USA, HOME DEPOT USA, LOWE'S USA.
+9. ESPAÑA: LEROY MERLIN ESPAÑA.
 
 Aplique el protocolo antirruido, aislando la estacionalidad del negocio estructural real de tableros y soluciones RTA. Usa JTBD y el ciclo de vida."""
     
@@ -970,6 +1162,7 @@ def generate_week_data(date_str):
         pico = random.choice(["Octubre", "Noviembre", "Diciembre"])
         
                 # Clean up client_name to get canal_id
+                # Clean up client_name to get canal_id
         canal_id = client_name.lower().replace(" s.a.s", "").replace(" s.a.", "").replace(" s.a.s.", "").replace(" s.a", "").replace(" spa", "").replace(" y aliados", "").replace(" ", "_")
         # Map cleanly:
         if "sodimac_colombia" in canal_id:
@@ -994,6 +1187,20 @@ def generate_week_data(date_str):
             canal_id = "liverpool_mexico"
         elif "elektra" in canal_id:
             canal_id = "elektra_mexico"
+        elif "kywi" in canal_id:
+            canal_id = "kywi_ecuador"
+        elif "sukasa" in canal_id:
+            canal_id = "sukasa_ecuador"
+        elif "do_it" in canal_id or "doit" in canal_id:
+            canal_id = "doitcenter_panama"
+        elif "novey" in canal_id:
+            canal_id = "novey_panama"
+        elif "cochez" in canal_id:
+            canal_id = "cochez_panama"
+        elif "epa" in canal_id:
+            canal_id = "epa_venezuela"
+        elif "casalista" in canal_id:
+            canal_id = "casalista_venezuela"
         elif "leroy" in canal_id:
             canal_id = "leroy_merlin_espana"
         elif "amazon" in canal_id:
@@ -1124,36 +1331,63 @@ def transform_old_history_to_new(history):
             name = c.get("name", "")
             country = c.get("country", "")
             
-            canal_id = name.lower().replace(" s.a.", "").replace(" s.a.s.", "").replace(" s.a", "").replace(" s.a.s", "").replace(" spa", "").replace(" y aliados", "").replace(" ", "_")
-            if "virtual" in canal_id:
-                canal_id = "virtual_muebles"
-            elif "sodimac_colombia" in canal_id:
+                        # Clean up client_name to get canal_id
+            canal_id = name.lower().replace(" s.a.s", "").replace(" s.a.", "").replace(" s.a.s.", "").replace(" s.a", "").replace(" spa", "").replace(" y aliados", "").replace(" ", "_")
+            # Map cleanly:
+            if "sodimac_colombia" in canal_id:
                 canal_id = "sodimac_colombia"
             elif "madecentro" in canal_id:
                 canal_id = "madecentro_colombia"
+            elif "virtual" in canal_id:
+                canal_id = "virtual_muebles"
+            elif "corona" in canal_id:
+                canal_id = "corona_colombia"
             elif "cencosud" in canal_id:
                 canal_id = "easy_colombia"
             elif "promart" in canal_id:
                 canal_id = "promart_peru"
-            elif "home_depot" in canal_id:
-                canal_id = "homedepot_mexico"
-            elif "wayfair" in canal_id:
-                canal_id = "wayfair_usa"
-            elif "leroy" in canal_id:
-                if "espejo" in name.lower() or "internacional" in name.lower():
-                    canal_id = "leroy_merlin_espejo_internacional"
-                else:
-                    canal_id = "leroy_merlin_espana"
+            elif "sodimac_per" in canal_id:
+                canal_id = "sodimac_peru"
             elif "tuhome" in canal_id:
                 canal_id = "tuhome_chile"
             elif "sodimac_chile" in canal_id:
                 canal_id = "sodimac_chile"
-                
+            elif "liverpool" in canal_id:
+                canal_id = "liverpool_mexico"
+            elif "elektra" in canal_id:
+                canal_id = "elektra_mexico"
+            elif "kywi" in canal_id:
+                canal_id = "kywi_ecuador"
+            elif "sukasa" in canal_id:
+                canal_id = "sukasa_ecuador"
+            elif "do_it" in canal_id or "doit" in canal_id:
+                canal_id = "doitcenter_panama"
+            elif "novey" in canal_id:
+                canal_id = "novey_panama"
+            elif "cochez" in canal_id:
+                canal_id = "cochez_panama"
+            elif "epa" in canal_id:
+                canal_id = "epa_venezuela"
+            elif "casalista" in canal_id:
+                canal_id = "casalista_venezuela"
+            elif "leroy" in canal_id:
+                canal_id = "leroy_merlin_espana"
+            elif "amazon" in canal_id:
+                canal_id = "amazon_usa"
+            elif "walmart" in canal_id:
+                canal_id = "walmart_usa"
+            elif "wayfair" in canal_id:
+                canal_id = "wayfair_usa"
+            elif "home_depot" in canal_id or "homedepot" in canal_id:
+                canal_id = "homedepot_usa"
+            elif "lowe" in canal_id:
+                canal_id = "lowes_usa"
+
             if canal_id in ["exito", "novaventa", "mobbly", "ferreteria_epa", "epa"]:
                 continue
                 
             cities_raw = c.get("cities", [])
-            coastal_cities = ["barranquilla", "cartagena", "valparaiso", "antofagasta", "lima", "trujillo", "chiclayo", "veracruz", "merida", "miami", "los angeles", "new york", "barcelona", "valencia"]
+            coastal_cities = ["barranquilla", "cartagena", "valparaiso", "antofagasta", "lima", "trujillo", "chiclayo", "veracruz", "merida", "miami", "los angeles", "new york", "barcelona", "valencia", "guayaquil", "panamá", "panama", "colón", "colon", "maracaibo"]
             ciudades_cobertura = []
             for city in cities_raw:
                 is_coastal = any(cc in city.lower() for cc in coastal_cities)

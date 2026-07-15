@@ -1,0 +1,42 @@
+name: Actualizar Dashboard Amelia RTA
+
+on:
+  schedule:
+    - cron: '0 13 * * 1' # Todos los lunes a las 8:00 AM COT (13:00 UTC)
+  workflow_dispatch: # Permite ejecución manual desde el botón en la web de GitHub
+
+permissions:
+  contents: write # Permite al token de GitHub realizar commits y push
+
+jobs:
+  update-dashboard:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Descargar Repositorio
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0 # Clonar historial completo para evitar conflictos en push
+
+    - name: Configurar Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Ejecutar Script de Actualización
+      env:
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }} # Opcional: Secreto seguro en GitHub para IA
+      run: python actualizador_rta.py
+
+    - name: Confirmar y Subir Cambios
+      run: |
+        git config --global user.name "Amelia Cloud Agent"
+        git config --global user.email "amelia-agent@github.com"
+        git add data.json index.html README.md
+        # Solo confirmar si hay cambios en los datos
+        if git diff --staged --quiet; then
+          echo "No hay cambios nuevos que confirmar."
+        else
+          git commit -m "chore(data): actualización semanal automática de Amelia RTA"
+          git push origin main
+        fi

@@ -320,6 +320,190 @@ $ClientsData = [ordered]@{
             @{ name = "Escritorio Home Office Elektra"; rh = $false; assembly = "minifix"; desc = "MDP estándar" }
         )
     }
+    "KYWI ECUADOR" = @{
+        short_name = "Kywi"
+        url_menu = "https://www.kywi.com.ec"
+        urls_ingesta = @("https://www.kywi.com.ec")
+        base_traffic = 75
+        own_brand = 25.0
+        country = "Ecuador"
+        cities = @(
+            @{ ciudad = "Quito"; es_costera = $false; humedad_relativa_promedio = 62 },
+            @{ ciudad = "Guayaquil"; es_costera = $true; humedad_relativa_promedio = 78 }
+        )
+        best_sellers = @("Módulo Cocina Kywi", "Mueble Auxiliar de Baño Kywi RH", "Escritorio RTA Kywi")
+        future_sources = @("Kywi Retail Analytics", "Google Analytics RTA (Tasa de rebote en cocinas modulares y descargas de instructivos)")
+        competitive_set = @("Sukasa", "IKEA USA")
+        jtbd = @{
+            persona = "Remodelador Práctico JtBD"
+            job = "Encontrar módulos de cocina y baño económicos y resistentes para instalar rápido."
+            pain_points = "Humedad extrema en Guayaquil que infla la melamina estándar, falta de herrajes."
+            triggers = "Renovación o mejoras del hogar antes de lluvias estacionales."
+        }
+        raw_menu_categories = @("Muebles de Cocina Kywi", "Muebles de Oficina RTA", "Muebles de Baño y Lavandería RH")
+        products = @(
+            @{ name = "Módulo Cocina Kywi"; rh = $false; assembly = "minifix"; desc = "Estructura aglomerada estándar" },
+            @{ name = "Mueble Auxiliar de Baño Kywi RH"; rh = $true; assembly = "minifix"; desc = "MDP hidrófugo resistente a humedad" }
+        )
+    }
+    "SUKASA ECUADOR" = @{
+        short_name = "Sukasa"
+        url_menu = "https://www.sukasa.com"
+        urls_ingesta = @("https://www.sukasa.com")
+        base_traffic = 78
+        own_brand = 15.0
+        country = "Ecuador"
+        cities = @(
+            @{ ciudad = "Quito"; es_costera = $false; humedad_relativa_promedio = 62 },
+            @{ ciudad = "Guayaquil"; es_costera = $true; humedad_relativa_promedio = 78 }
+        )
+        best_sellers = @("Centro de TV Sukasa Design", "Escritorio Premium Sukasa", "Armario Modular Sukasa")
+        future_sources = @("Sukasa Sales Analytics", "Google Analytics RTA (Tasa de conversión en el configurador de muebles modulares)")
+        competitive_set = @("Kywi", "IKEA USA")
+        jtbd = @{
+            persona = "Comprador de Diseño Premium JtBD"
+            job = "Amoblar salas y estudios con acabados modernos de tendencia y alta resistencia."
+            pain_points = "Poca variedad de colores, precios altos de la madera maciza."
+            triggers = "Establecimiento de nueva oficina en casa o renovación de sala."
+        }
+        raw_menu_categories = @("Centros de TV y Entretenimiento Sukasa", "Escritorios RTA Premium", "Roperos y Clósets Modernos")
+        products = @(
+            @{ name = "Centro de TV Sukasa Design"; rh = $false; assembly = "minifix"; desc = "Estilo moderno melamínico" },
+            @{ name = "Escritorio Premium Sukasa"; rh = $false; assembly = "minifix"; desc = "MDP texturizado" }
+        )
+    }
+    "DO IT CENTER PANAMÁ" = @{
+        short_name = "Do it Center"
+        url_menu = "https://www.doitcenter.com.pa"
+        urls_ingesta = @("https://www.doitcenter.com.pa")
+        base_traffic = 80
+        own_brand = 30.0
+        country = "Panamá"
+        cities = @(
+            @{ ciudad = "Ciudad de Panama"; es_costera = $true; humedad_relativa_promedio = 82 },
+            @{ ciudad = "Colon"; es_costera = $true; humedad_relativa_promedio = 85 },
+            @{ ciudad = "David"; es_costera = $false; humedad_relativa_promedio = 78 }
+        )
+        best_sellers = @("Gabinete de Cocina Hampton Doit", "Mueble de Baño Suspendido Doit RH", "Escritorio Home Office Doit")
+        future_sources = @("Doit Center Retail Analytics", "Google Analytics RTA (Tasa de rebote en cocinas modulares y descargas de instructivos)")
+        competitive_set = @("Novey", "Cochez")
+        jtbd = @{
+            persona = "Contratista / Dueño de Casa DIY"
+            job = "Instalar gabinetes de alta durabilidad en el clima húmedo de Panamá."
+            pain_points = "Hinchamiento rápido de melamina estándar por humedad ambiental extrema."
+            triggers = "Remodelación residencial antes del invierno panameño."
+        }
+        raw_menu_categories = @("Gabinetes de Cocina Doit", "Muebles de Oficina RTA", "Muebles de Baño y Lavado RH")
+        products = @(
+            @{ name = "Gabinete de Cocina Hampton Doit"; rh = $false; assembly = "minifix"; desc = "Estructura aglomerada estándar" },
+            @{ name = "Mueble de Baño Suspendido Doit RH"; rh = $true; assembly = "minifix"; desc = "Tablero hidrófugo resistente a humedad" }
+        )
+    }
+    "NOVEY PANAMÁ" = @{
+        short_name = "Novey"
+        url_menu = "https://www.novey.com.pa"
+        urls_ingesta = @("https://www.novey.com.pa")
+        base_traffic = 82
+        own_brand = 28.0
+        country = "Panamá"
+        cities = @(
+            @{ ciudad = "Ciudad de Panama"; es_costera = $true; humedad_relativa_promedio = 82 },
+            @{ ciudad = "Colon"; es_costera = $true; humedad_relativa_promedio = 85 }
+        )
+        best_sellers = @("Módulo de Fregadero Novey", "Escritorio Gamer Pro Novey", "Alacena RTA Novey")
+        future_sources = @("Novey Sales Analytics", "Google Analytics RTA (Tasa de rebote en cocinas modulares y descargas)")
+        competitive_set = @("Do it Center", "Cochez")
+        jtbd = @{
+            persona = "Contratista / Dueño de Casa DIY"
+            job = "Encontrar tableros y armarios rápidos de montar e instalar en remodelaciones comerciales."
+            pain_points = "Pandeo de estantes aglomerados, falta de manuales claros de ensamble."
+            triggers = "Apertura de nuevos locales comerciales u oficinas."
+        }
+        raw_menu_categories = @("Muebles de Cocina Novey", "Escritorios RTA", "Alacenas y Organizadores")
+        products = @(
+            @{ name = "Módulo de Fregadero Novey"; rh = $false; assembly = "minifix"; desc = "Estructura aglomerada estándar" },
+            @{ name = "Escritorio Gamer Pro Novey"; rh = $false; assembly = "minifix"; desc = "Mesa gamer resistente" }
+        )
+    }
+    "COCHEZ PANAMÁ" = @{
+        short_name = "Cochez"
+        url_menu = "https://www.cochezycia.com"
+        urls_ingesta = @("https://www.cochezycia.com")
+        base_traffic = 83
+        own_brand = 25.0
+        country = "Panamá"
+        cities = @(
+            @{ ciudad = "Ciudad de Panama"; es_costera = $true; humedad_relativa_promedio = 82 },
+            @{ ciudad = "Colon"; es_costera = $true; humedad_relativa_promedio = 85 }
+        )
+        best_sellers = @("Cocina Modular Cochez", "Mueble Lavamanos Cochez RH", "Escritorio Home Office Cochez")
+        future_sources = @("Cochez Sales Analytics", "Google Analytics RTA (Tasa de rebote en cocinas modulares)")
+        competitive_set = @("Do it Center", "Novey")
+        jtbd = @{
+            persona = "Contratista / Dueño de Casa DIY"
+            job = "Adquirir soluciones de almacenamiento y cocinas de melamina en volumen para proyectos de construcción."
+            pain_points = "Baja resistencia a la humedad severa del litoral panameño."
+            triggers = "Cierre de proyectos de construcción de viviendas modulares."
+        }
+        raw_menu_categories = @("Cocinas Modulares Cochez", "Muebles de Oficina RTA", "Muebles de Baño y Lavandería RH")
+        products = @(
+            @{ name = "Cocina Modular Cochez"; rh = $false; assembly = "minifix"; desc = "Aglomerado estándar melamínico" },
+            @{ name = "Mueble Lavamanos Cochez RH"; rh = $true; assembly = "minifix"; desc = "MDP hidrófugo resistente a humedad" }
+        )
+    }
+    "EPA VENEZUELA" = @{
+        short_name = "EPA Venezuela"
+        url_menu = "https://ve.epa.biz"
+        urls_ingesta = @("https://ve.epa.biz")
+        base_traffic = 76
+        own_brand = 35.0
+        country = "Venezuela"
+        cities = @(
+            @{ ciudad = "Caracas"; es_costera = $false; humedad_relativa_promedio = 70 },
+            @{ ciudad = "Valencia"; es_costera = $false; humedad_relativa_promedio = 72 },
+            @{ ciudad = "Maracaibo"; es_costera = $true; humedad_relativa_promedio = 78 }
+        )
+        best_sellers = @("Módulo Fregadero EPA", "Escritorio Home Office EPA", "Clóset RTA EPA")
+        future_sources = @("EPA Venezuela Analytics", "Google Analytics RTA (Tasa de rebote en cocinas modulares y descargas)")
+        competitive_set = @("Casalista", "IKEA España")
+        jtbd = @{
+            persona = "Smart Shopper / Comprador de Presupuesto"
+            job = "Amoblar el hogar con muebles listos para armar duraderos y económicos."
+            pain_points = "Limitaciones de stock, falta de variedad en melaminas de diseño, instrucciones confusas."
+            triggers = "Remodelaciones del hogar previas a la temporada navideña."
+        }
+        raw_menu_categories = @("Cocinas y Alacenas EPA", "Muebles de Oficina RTA", "Armarios y Roperos")
+        products = @(
+            @{ name = "Módulo Fregadero EPA"; rh = $false; assembly = "minifix"; desc = "Estructura aglomerada estándar" },
+            @{ name = "Escritorio Home Office EPA"; rh = $false; assembly = "minifix"; desc = "Escritorio básico melamínico" }
+        )
+    }
+    "CASALISTA VENEZUELA" = @{
+        short_name = "Casalista"
+        url_menu = "https://casalistatienda.com"
+        urls_ingesta = @("https://casalistatienda.com")
+        base_traffic = 70
+        own_brand = 10.0
+        country = "Venezuela"
+        cities = @(
+            @{ ciudad = "Caracas"; es_costera = $false; humedad_relativa_promedio = 70 },
+            @{ ciudad = "Valencia"; es_costera = $false; humedad_relativa_promedio = 72 }
+        )
+        best_sellers = @("Cocina Premium Casalista", "Escritorio Moderno Casalista", "Mesa Auxiliar Casalista")
+        future_sources = @("Casalista Analytics", "Google Analytics RTA (Tasa de conversión en el configurador de muebles modulares)")
+        competitive_set = @("EPA Venezuela", "IKEA España")
+        jtbd = @{
+            persona = "Comprador de Diseño Premium JtBD"
+            job = "Encontrar muebles modulares de alta estética para optimizar salas y cocinas en apartamentos."
+            pain_points = "Precios altos de productos importados, armado que requiere herramientas pesadas."
+            triggers = "Mejoras estéticas del apartamento o mudanza."
+        }
+        raw_menu_categories = @("Cocinas Modulares Premium", "Muebles de Estudio RTA", "Mobiliario Auxiliar")
+        products = @(
+            @{ name = "Cocina Premium Casalista"; rh = $false; assembly = "minifix"; desc = "Cocina con acabados premium" },
+            @{ name = "Escritorio Moderno Casalista"; rh = $false; assembly = "minifix"; desc = "Mesa de estudio texturizada" }
+        )
+    }
     "LEROY MERLIN ESPAÑA" = @{
         short_name = "Leroy Merlin España"
         url_menu = "https://www.leroymerlin.es"
@@ -497,6 +681,7 @@ $ClientsData = [ordered]@{
             @{ name = "Project Source Bath Vanity RH"; rh = $true; assembly = "minifix"; desc = "Water resistant bath cabinet" }
         )
     }
+
 }
 
 # --- FILTROS Y LOGICA DE NEGOCIO ---
@@ -703,18 +888,27 @@ function New-WeekData {
             $suggestedPitch = "Ofrecer portafolio MDP-RH y Melamina Anti-humedad para Cocina/Bano"
         }
         
-                $canal_id = $clientName.ToLower().Replace(" s.a.", "").Replace(" s.a.s.", "").Replace(" s.a", "").Replace(" s.a.s", "").Replace(" spa", "").Replace(" y aliados", "").Replace(" ", "_")
+                        # Clean up client_name to get canal_id
+        $canal_id = $clientName.ToLower().Replace(" s.a.s", "").Replace(" s.a.", "").Replace(" s.a.s.", "").Replace(" s.a", "").Replace(" spa", "").Replace(" y aliados", "").Replace(" ", "_")
+        # Map cleanly:
         if ($canal_id -like "*sodimac_colombia*") { $canal_id = "sodimac_colombia" }
         elseif ($canal_id -like "*madecentro*") { $canal_id = "madecentro_colombia" }
         elseif ($canal_id -like "*virtual*") { $canal_id = "virtual_muebles" }
         elseif ($canal_id -like "*corona*") { $canal_id = "corona_colombia" }
-        elseif ($canal_id -like "*cencosud*") { $canal_id = "easy_colombia" }
+        elseif ($canal_id -like "*cencosud*" -or $canal_id -like "*easy*") { $canal_id = "easy_colombia" }
         elseif ($canal_id -like "*promart*") { $canal_id = "promart_peru" }
         elseif ($canal_id -like "*sodimac_per*") { $canal_id = "sodimac_peru" }
         elseif ($canal_id -like "*tuhome*") { $canal_id = "tuhome_chile" }
         elseif ($canal_id -like "*sodimac_chile*") { $canal_id = "sodimac_chile" }
         elseif ($canal_id -like "*liverpool*") { $canal_id = "liverpool_mexico" }
         elseif ($canal_id -like "*elektra*") { $canal_id = "elektra_mexico" }
+        elseif ($canal_id -like "*kywi*") { $canal_id = "kywi_ecuador" }
+        elseif ($canal_id -like "*sukasa*") { $canal_id = "sukasa_ecuador" }
+        elseif ($canal_id -like "*doit*" -or $canal_id -like "*do_it*") { $canal_id = "doitcenter_panama" }
+        elseif ($canal_id -like "*novey*") { $canal_id = "novey_panama" }
+        elseif ($canal_id -like "*cochez*") { $canal_id = "cochez_panama" }
+        elseif ($canal_id -like "*epa*") { $canal_id = "epa_venezuela" }
+        elseif ($canal_id -like "*casalista*") { $canal_id = "casalista_venezuela" }
         elseif ($canal_id -like "*leroy*") { $canal_id = "leroy_merlin_espana" }
         elseif ($canal_id -like "*amazon*") { $canal_id = "amazon_usa" }
         elseif ($canal_id -like "*walmart*") { $canal_id = "walmart_usa" }
@@ -875,25 +1069,32 @@ function Convert-OldHistoryToNew {
             $name = $c["name"]
             $country = $c["country"]
             
-                        $canal_id = $name.ToLower().Replace(" s.a.", "").Replace(" s.a.s.", "").Replace(" s.a", "").Replace(" s.a.s", "").Replace(" spa", "").Replace(" y aliados", "").Replace(" ", "_")
+                                    $canal_id = $name.ToLower().Replace(" s.a.s", "").Replace(" s.a.", "").Replace(" s.a.s.", "").Replace(" s.a", "").Replace(" spa", "").Replace(" y aliados", "").Replace(" ", "_")
             if ($canal_id -like "*sodimac_colombia*") { $canal_id = "sodimac_colombia" }
             elseif ($canal_id -like "*madecentro*") { $canal_id = "madecentro_colombia" }
             elseif ($canal_id -like "*virtual*") { $canal_id = "virtual_muebles" }
             elseif ($canal_id -like "*corona*") { $canal_id = "corona_colombia" }
-            elseif ($canal_id -like "*cencosud*") { $canal_id = "easy_colombia" }
+            elseif ($canal_id -like "*cencosud*" -or $canal_id -like "*easy*") { $canal_id = "easy_colombia" }
             elseif ($canal_id -like "*promart*") { $canal_id = "promart_peru" }
             elseif ($canal_id -like "*sodimac_per*") { $canal_id = "sodimac_peru" }
             elseif ($canal_id -like "*tuhome*") { $canal_id = "tuhome_chile" }
             elseif ($canal_id -like "*sodimac_chile*") { $canal_id = "sodimac_chile" }
             elseif ($canal_id -like "*liverpool*") { $canal_id = "liverpool_mexico" }
             elseif ($canal_id -like "*elektra*") { $canal_id = "elektra_mexico" }
+            elseif ($canal_id -like "*kywi*") { $canal_id = "kywi_ecuador" }
+            elseif ($canal_id -like "*sukasa*") { $canal_id = "sukasa_ecuador" }
+            elseif ($canal_id -like "*doit*" -or $canal_id -like "*do_it*") { $canal_id = "doitcenter_panama" }
+            elseif ($canal_id -like "*novey*") { $canal_id = "novey_panama" }
+            elseif ($canal_id -like "*cochez*") { $canal_id = "cochez_panama" }
+            elseif ($canal_id -like "*epa*") { $canal_id = "epa_venezuela" }
+            elseif ($canal_id -like "*casalista*") { $canal_id = "casalista_venezuela" }
             elseif ($canal_id -like "*leroy*") { $canal_id = "leroy_merlin_espana" }
             elseif ($canal_id -like "*amazon*") { $canal_id = "amazon_usa" }
             elseif ($canal_id -like "*walmart*") { $canal_id = "walmart_usa" }
             elseif ($canal_id -like "*wayfair*") { $canal_id = "wayfair_usa" }
             elseif ($canal_id -like "*home_depot*" -or $canal_id -like "*homedepot*") { $canal_id = "homedepot_usa" }
             elseif ($canal_id -like "*lowe*") { $canal_id = "lowes_usa" }
-            
+
             if ($canal_id -in "exito", "novaventa", "mobbly", "ferreteria_epa", "epa") { continue }
             
             $cities_raw = $c["cities"]
@@ -908,7 +1109,7 @@ function Convert-OldHistoryToNew {
                     }
                 }
             }
-            $coastal_cities = @("barranquilla", "cartagena", "valparaiso", "antofagasta", "lima", "trujillo", "chiclayo", "veracruz", "merida", "miami", "los angeles", "new york", "barcelona", "valencia")
+            $coastal_cities = @("barranquilla", "cartagena", "valparaiso", "antofagasta", "lima", "trujillo", "chiclayo", "veracruz", "merida", "miami", "los angeles", "new york", "barcelona", "valencia", "guayaquil", "panamá", "panama", "colón", "colon", "maracaibo")
             $ciudades_cobertura = @()
             if ($cities_raw) {
                 foreach ($city in $cities_raw) {
@@ -1189,8 +1390,9 @@ function Convert-HistoryToJSON {
 
 $formattedJson = Convert-HistoryToJSON -currentDate $todayStr -historyObj $history
 
-# Guardar data.json
+# Escribir data.json en el directorio raíz
 [System.IO.File]::WriteAllText("data.json", $formattedJson, (New-Object System.Text.UTF8Encoding($false)))
+Write-Host "Base de datos data.json escrita de forma independiente en el directorio raiz" -ForegroundColor Green
 
 # Inyectar en archivos HTML usando reemplazo de subcadena exacto
 $htmlPaths = @("index.html")
